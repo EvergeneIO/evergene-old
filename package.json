@@ -1,10 +1,10 @@
 {
   "name": "evergene-website",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app",
     "start": "node app.js"
   },
   "repository": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/caelinj/discord.js-dashboard.git"
   },
   "keywords": [],
-  "author": "etcroot",
+  "author": "NewtTheWolf",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/etcroot/evergene/bugs"
@@ -21,17 +21,32 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "canvacord": "^5.0.8",
+    "chalk": "^4.1.0",
+    "cors": "^2.8.5",
     "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
+    "express-ping": "^1.4.0",
     "express-session": "^1.15.6",
     "form-data": "^2.3.2",
     "fs": "0.0.1-security",
+    "helmet": "^4.3.1",
+    "imgur": "^0.3.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "nekos.life": "^2.0.7",
     "node-fetch": "^2.6.1",
+    "node-rsa": "^1.1.1",
+    "ping-monitor": "^0.5.1",
     "random-puppy": "^1.1.0",
+    "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0",
+    "sweetalert2": "^10.13.0",
     "uid-safe": "^2.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

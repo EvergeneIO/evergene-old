@@ -74,7 +74,7 @@ html {
 }
 
 .safe-badge {
-  float:right;
+  float:left;
   padding-right:5px;
   padding-left:5px;
   font-weight:800;
@@ -86,7 +86,6 @@ html {
 .card-body {
   background: #0E1012 !important;
   border:0px !important;
-  padding-bottom:5px !important;
 }
 .card-header {
   padding: .75rem 1.25rem;
@@ -97,6 +96,7 @@ html {
 }
 .card {
   border:0px !important;
+  background: #0E1012 !important;
 }
 
 .card-link {
@@ -107,7 +107,7 @@ pre {
   padding:13px !important;
   background-color:#252B31 !important;
   color:#CC8EA5 !important;
-  display: inline-block !important;
+  display: block !important;
   font-size: 87.5% !important;
   border:1px solid #070809;
   border-radius:3px;
@@ -186,14 +186,12 @@ a:hover {
   -o-background-size: cover;
   background-size: cover;
   border-bottom:6px solid #a1bfe7;
-  height:400px;
+  height:auto;
 }
 
 .jumbotron img {
   text-align:center;
-  padding-left:50px;
-  margin-top:50px;
-  width:40%;
+
   vertical-align: middle;
 }
 
@@ -204,7 +202,7 @@ a:hover {
 .bg {
   background-color: rgba(0, 0, 0, 0.65);
   padding:50px;
-  height:395px;
+  height: 100%;
 }
 
 .navbar {
@@ -307,13 +305,6 @@ a:hover {
   color:#070809
 }
 
-.modal-open .container-fluid, .modal-open .card {
-  filter: blur(5px) grayscale(90%);
-}
-
-
-/*Neu hinzugefügt*/
-
 .bs{
   margin: 20px;        
 }
@@ -359,4 +350,97 @@ background-size: 1800% 1800%;
 
 .card-deck {
   margin-top: 10px;
+}
+
+/*Neu hinzugefügt*/
+
+.get-badge {
+  float:left;
+  padding-right:5px;
+  padding-left:5px;
+  font-weight:800;
+  background-color:#4DB74D;
+  border-radius:3px;
+  color:#fff;
+}
+
+.red {
+  background: red;
+}
+
+/* Contact form */
+
+.contact-form{
+  width: 100%;
+}
+
+.contact-form .form-control{
+  border-radius: 10px;
+}
+
+.contact-form .btnContact {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  background: #578FDB;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btnContactSubmit
+{
+  width: 50%;
+  border-radius: 10px;
+  padding: 1.5%;
+  color: #fff;
+  background-color: #0062cc;
+  border: none;
+  cursor: pointer;
+}
+
+.btnVisitContact
+{
+  margin-top: 10px;
+  width: 180px;
+  border-radius: 10px;
+  padding: 1.5%;
+  color: #fff;
+  background-color: #0062cc;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: larger;
+  text-align: center;
+}
+
+.social-link {
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.9rem;
+}
+
+.social-link i{
+  color: white;
+}
+
+.card-pic img{
+  border-color: #a1bfe7;
+  background-color: #a1bfe7;
+}
+
+.float-vertical-align {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+}
+
+#teams-partners-color .bg-darker{
+  background-color: #0E1012 !important;
 }
