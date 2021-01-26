@@ -1,8 +1,6 @@
 const chalk = require('chalk');
 console.log(chalk.yellow('OAtuh2 Client is starting...'))
 const router = require('express').Router();
-
-const { clientId, clientSecret, scopes, redirectUri } = require('../config.json');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const { response } = require('express');
@@ -27,11 +25,11 @@ router.get('/callback', (req, res) => {
     if (!accessCode) throw new Error('No access code returned from Discord');
 
     const data = new FormData();
-    data.append('client_id', clientId);
-    data.append('client_secret', clientSecret);
+    data.append('client_id', process.env.CLIENT_ID);
+    data.append('client_secret', process.env.CLIENT_SECRET);
     data.append('grant_type', 'authorization_code');
-    data.append('redirect_uri', redirectUri);
-    data.append('scope', scopes.join(' '));
+    data.append('redirect_uri', process.env.REDIRECT_URI);
+    data.append('scope', process.env.SCOPES);
     data.append('code', accessCode);
 
     fetch('https://discordapp.com/api/oauth2/token', {

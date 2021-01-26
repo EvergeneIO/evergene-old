@@ -67,8 +67,8 @@ router.get('/', (req, res) => {
 router.get('/profile', forceAuth, (req, res) => {
     con.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
         if (err) {
-            logger.error('Error in DB');
-            logger.debug(err);
+            console.log('Error in DB');
+            console.error(err);
             return;
         } else {
             if (result && result.length) {
