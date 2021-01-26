@@ -104,8 +104,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-package.json
-app.js
-router.js
-routes/
