@@ -94,7 +94,7 @@ router.get('/profile', forceAuth, (req, res) => {
 });
 
 // Render Settings Page
-router.get('/profile/settings', (req, res) => {
+router.get('/profile/settings', forceAuth, (req, res) => {
     con.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
         if (err) throw err;
         const json = JSON.stringify(result);
@@ -105,21 +105,21 @@ router.get('/profile/settings', (req, res) => {
             let permsJson = JSON.stringify(key);
             let permsObj = JSON.parse(permsJson);
             let perms = permsObj.perms;
-            if (perms & 3) {
-                if (req.param('key') == 'reset') {
-                    res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: true || null });
-                } else if (req.param('key') == 'request') {
-                    res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: true || null });
-                } else {
-                    res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: true || null });
-                }
-            } else {
+            if (perms & 2) {
                 if (req.param('key') == 'reset') {
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: false || null });
                 } else if (req.param('key') == 'request') {
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: false || null });
                 } else {
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: false || null });
+                }
+            } else {
+                if (req.param('key') == 'reset') {
+                    res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: true || null });
+                } else if (req.param('key') == 'request') {
+                    res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: true || null });
+                } else {
+                    res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: true || null });
                 }
             }
         })()
@@ -327,7 +327,8 @@ router.post('/clyde', jsonParser, urlencodedParser, (req, res) => {
             let permsObj = JSON.parse(permsJson);
             let perms = permsObj.perms;
             if (key) {
-                if (perms & 3) {
+                console.log(perms)
+                if (perms & 2) {
                     const text = obj.text;
                     canvacord.Canvas.clyde(text)
                         .then(buffer => {

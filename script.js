@@ -1,3 +1,15 @@
+/*const uuidAPIKey = require('uuid-apikey');
+ 
+console.log(uuidAPIKey.create());*/
+
+
+// UUID GENERATOR
+const { v4: uuidv4 } = require('uuid');
+const uuidAPIKey = require('uuid-apikey');
+console.log(uuidAPIKey.toAPIKey('6716cd8c-d41b-4262-8731-8855dd04b7b0'));
+
+/*
+// FOR DISCORD ID LOOKUP
 const fetch = require('node-fetch')
 
 // You might want to store this in an environment variable or something
@@ -20,3 +32,4 @@ const fetchUser = async id => {
 }
 
 fetchUser()
+*/
