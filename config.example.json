@@ -1,0 +1,10 @@
+{
+    "port": 36121,
+    "clientId": "ID",
+    "clientSecret": "SECRET",
+    "scopes": [
+        "identify",
+        "guilds"
+    ],
+    "redirectUri": "https://evergene.io/authorize/callback"
+}
