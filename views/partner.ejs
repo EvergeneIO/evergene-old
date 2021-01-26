@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body>
+  <%- include('partials/navbar.ejs') %>
+    <%- include('partials/header.ejs') %>
+      <!-- Render Content/ -->
+      <%- include('content/partner.ejs') %>
+        <%- include('partials/footer.ejs') %>
+
+          <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
+
+            new Crate({
+              server: '710781300100956170',
+              channel: '799435358349164554',
+              glyph: ['https://cdn.evergene.io/evergene-website/evergene-logo-bright.png', '100%']
+            })
+
+            crate.notify({
+              content: 'Request a partnership',
+              setTimeout: 5000,
+              avatar:"https://cdn.evergene.io/evergene-website/evergene-logo-bright.png"
+            })
+            
+            crate.notify({
+              content: 'Where?',
+              timeout: 5000,
+              avatar:"https://cdn.evergene.io/evergene-website/evergene-logo-bright.png"
+            })
+
+            crate.notify({
+              content: 'here! ',
+              setTimeout: 5000,
+              avatar:"https://cdn.evergene.io/evergene-website/evergene-logo-bright.png"
+            })
+
+          </script>
+</body>
+
+</html>

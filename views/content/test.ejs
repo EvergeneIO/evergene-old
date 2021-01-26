@@ -1,0 +1,20 @@
+<div class="container down">
+  <% if (alert) { %>
+    <p>ALERT TRUE</p>
+    <% if (nsfw) { %>
+      <p>NSFW TRUE</p>
+    <% } else { %>
+      <p>NSFW FALSE</p>
+      <% } %>
+
+  <% } else { %>
+    <p>ALERT FALSE</p>
+    <% if (nsfw) { %>
+      <p>NSFW TRUE</p>
+      <% } else { %>
+        <p>NSFW FALSE</p>
+        <% } %>
+      <p>ALERT FALSE</p>
+    <% } %>
+    
+</div>
