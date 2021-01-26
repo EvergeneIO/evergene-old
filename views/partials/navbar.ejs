@@ -1,0 +1,104 @@
+<!--<nav class="navbar navbar-expand-lg navbar-darker bg-darker">
+    <a class="navbar-brand" href="#">ETCROOT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/blog"><i class="fas fa-blog"></i> Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/safe"><i class="fas fa-cloud-upload-alt"></i> Safe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/extras"><i class="fab fa-buffer"></i> Extras</a>
+            </li>
+            <span class="navbar-text">
+                <% if (user) { %>
+                <a class="nav-link" href="/me"><%- user.tag %></a>
+                <a class="nav-link" href="/authorize/logout">Logout</a>
+                <% } else { %>
+                <a class="nav-link" href="/authorize" tabindex="-1">Login</a>
+                <% } %>
+            </span>
+        </ul>
+    </div>
+</nav>-->
+<nav class="navbar navbar-expand-md navbar-darker bg-darker">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/"><i class="far fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/games"><i class="fad fa-flask-potion"></i> Games</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about"><i class="fas fa-question-square"></i> About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact"><i class="fas fa-paper-plane"></i>
+                    Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/discord"><i class="fab fa-discord"></i>
+                    Discord</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fad fa-cat-space"></i> Extras
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/api"><i class="fad fa-rocket"></i> API</a>
+                    <a class="dropdown-item" href="/team"><i class="fad fa-hat-wizard"></i> The Team</a>
+                    <a class="dropdown-item" href="/bugs"><i class="far fa-debug"></i> Bugtracker</a>
+                    <a class="dropdown-item" href="/changelog"><i class="far fa-clipboard-list-check"></i> Changelog</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <% if (user) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile"><i class="fas fa-user-visor"></i> <%- user.tag %></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/authorize/logout"><i class="fal fa-sign-out"></i> Logout</a>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/authorize" tabindex="-1"><i class="far fa-sign-in"></i> Login</a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- 
+<div class="navbar">
+    <a href="/"><%- pageTitle %></a>
+
+    <div class="right">
+        <% if (user) { %>
+        <a href="/me"><%- user.tag %></a>
+        <a href="/authorize/logout">Logout</a>
+        <% } else { %>
+        <a href="/authorize">Login</a>
+        <% } %>
+    </div>
+</div>
+-->
