@@ -96,6 +96,30 @@ router.get('/profile', forceAuth, (req, res) => {
 // Render Settings Page
 router.get('/profile/settings', forceAuth, (req, res) => {
     con.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
+        if (err) {
+            console.log('Error in DB');
+            console.error(err);
+            return;
+        } else {
+            if (result && result.length) {
+                con.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
+                    if (err) throw err;
+                    const json = JSON.stringify(result);
+                    const obj = JSON.parse(json);
+                    const token = obj[0].token;
+                    let guildName = JSON.stringify(req.session.guildName);
+                    console.log('SELECT AND RENDER');
+                });
+            } else {
+                let token = makeid(24);
+                con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
+                    if (err) throw err;
+                    console.log('INSERT AND RENDER');
+                });
+            }
+        }
+    });
+    con.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
         if (err) throw err;
         const json = JSON.stringify(result);
         const obj = JSON.parse(json);
