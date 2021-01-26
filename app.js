@@ -1,11 +1,8 @@
-const chalk = require('chalk');
-console.log(chalk.yellow('Server is starting...'))
 const { resolveInclude } = require('ejs');
 const express = require('express');
 const app = express();
-require('dotenv').config();
-const port = process.env.APP_PORT
 
+let port = require('./config.json').port || 3000;
 app.set('port', port);
 
 const session = require('express-session');
@@ -19,6 +16,5 @@ app.use(session({
     expires: 604800000,
 }));
 require('./router')(app);
-  
 
-app.listen(port, () => console.log(chalk.bold.green(`Server started on port ${port}!`)));
+app.listen(port, () => console.info(`Listening on port ${port}`));

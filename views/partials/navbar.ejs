@@ -29,23 +29,25 @@
         </ul>
     </div>
 </nav>-->
-<nav class="navbar navbar-expand-md navbar-dark bg-darker">
-    <div class="navbar-collapse collapse w-80 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto row">
+<nav class="navbar navbar-expand-md navbar-darker bg-darker">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="/"><i class="far fa-home"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/api"><i class="fad fa-rocket"></i> API</a>
+                <a class="nav-link" href="/games"><i class="fad fa-flask-potion"></i> Games</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/about"><i class="fas fa-question-square"></i> About Us</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/contact"><i class="fas fa-paper-plane"></i> Contact</a>
+                <a class="nav-link" href="/contact"><i class="fas fa-paper-plane"></i>
+                    Contact</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/discord"><i class="fab fa-discord"></i> Discord</a>
+                <a class="nav-link" href="/discord"><i class="fab fa-discord"></i>
+                    Discord</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -53,10 +55,10 @@
                     <i class="fad fa-cat-space"></i> Extras
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/api"><i class="fad fa-rocket"></i> API</a>
                     <a class="dropdown-item" href="/team"><i class="fad fa-hat-wizard"></i> The Team</a>
                     <a class="dropdown-item" href="/bugs"><i class="far fa-debug"></i> Bugtracker</a>
                     <a class="dropdown-item" href="/changelog"><i class="far fa-clipboard-list-check"></i> Changelog</a>
-                    <a class="dropdown-item" href="/partner"><i class="far fa-handshake"></i> Partners</a>
                 </div>
             </li>
         </ul>
@@ -67,18 +69,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-    <div class="navbar-collapse collapse w-20 order-3 dual-collapse2">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <% if (user) { %>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/profile" id="navbarDropdownMenuLink" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <%- user.tag %>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/profile"><i class="fas fa-user-visor"></i> Profile</a>
-                    <a class="dropdown-item" href="/profile/settings"><i class="fas fa-cogs"></i> Settings</a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile"><i class="fas fa-user-visor"></i> <%- user.tag %></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/authorize/logout"><i class="fal fa-sign-out"></i> Logout</a>

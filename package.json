@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/caelinj/discord.js-dashboard.git"
   },
   "keywords": [],
-  "author": "NewtTheWolf",
+  "author": "etcroot",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/etcroot/evergene/bugs"
@@ -20,19 +20,18 @@
   "homepage": "https://github.com/etcroot/evergene#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "chalk": "^4.1.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "canvacord": "^5.0.8",
+    "discord.js": "^12.3.1",
     "ejs": "^2.6.1",
-    "express": "^4.17.1",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
     "form-data": "^2.3.2",
     "fs": "0.0.1-security",
-    "helmet": "^4.3.1",
-    "morgan": "^1.10.0",
-    "sweetalert2": "^10.13.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
+    "mysql": "^2.18.1",
+    "nekos.life": "^2.0.7",
+    "node-fetch": "^2.6.1",
+    "random-puppy": "^1.1.0",
+    "sqlite3": "^5.0.0",
+    "uid-safe": "^2.1.5"
   }
 }
