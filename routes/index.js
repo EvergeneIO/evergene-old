@@ -352,7 +352,7 @@ router.post('/clyde', jsonParser, urlencodedParser, (req, res) => {
             let perms = permsObj.perms;
             if (key) {
                 console.log(perms)
-                if (perms & 2) {
+                if (perms & 1) {
                     const text = obj.text;
                     canvacord.Canvas.clyde(text)
                         .then(buffer => {
