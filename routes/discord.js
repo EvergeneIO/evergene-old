@@ -13,6 +13,17 @@ let con = mysql.createConnection({
     database: process.env.DATABASE_DB
 });
 
+// GENERATING NEW TOKEN
+function makeid(length) {
+    var result = '';
+    var characters = '-ABCDEFGHIJKLMNOPQRSTUVWXYZ.0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+};
+
 const forceAuth = (req, res, next) => {
     if (!req.session.user) return res.redirect('/authorize')
     else return next();
