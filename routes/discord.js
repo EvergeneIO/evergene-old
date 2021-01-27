@@ -4,7 +4,14 @@ const router = require('express').Router();
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const { response } = require('express');
+let mysql = require('mysql');
 const { guildIcon } = require('canvacord/src/Canvacord');
+let con = mysql.createConnection({
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PW,
+    database: process.env.DATABASE_DB
+});
 
 const forceAuth = (req, res, next) => {
     if (!req.session.user) return res.redirect('/authorize')
@@ -86,7 +93,7 @@ router.get('/callback', (req, res) => {
             })
                 .then(res2 => res2.json())
                 .then(userResponse => {
-                    console.log(userResponse);
+                    console.log(userResponse.id);
                     userResponse.tag = `${userResponse.username}#${userResponse.discriminator}`;
                     if (userResponse.avatar) {
                         userResponse.avatarURL = userResponse.avatar ? `https://cdn.discordapp.com/avatars/${userResponse.id}/${userResponse.avatar}.png?size=1024` : null;
@@ -94,7 +101,30 @@ router.get('/callback', (req, res) => {
                         userResponse.avatarURL = userResponse.avatar ? `https://cdn.evergene.io/default.png` : null;
                     }
 
-
+                    con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
+                        if (err) {
+                            console.log('Error in DB');
+                            console.error(err);
+                            return;
+                        } else {
+                            if (result && result.length) {
+                                con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
+                                    if (err) throw err;
+                                    const json = JSON.stringify(result);
+                                    const obj = JSON.parse(json);
+                                    const token = obj[0].token;
+                                    let guildName = JSON.stringify(req.session.guildName);
+                                    console.log('SELECT AND RENDER');
+                                });
+                            } else {
+                                let token = makeid(24);
+                                con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${userResponse.id}", "${token}", 1)`, function (err, result) {
+                                    if (err) throw err;
+                                    console.log('INSERT AND RENDER');
+                                });
+                            }
+                        }
+                    });
                     req.session.user = userResponse;
                 });
         });
