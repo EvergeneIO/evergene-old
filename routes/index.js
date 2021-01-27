@@ -46,6 +46,7 @@ let con = mysql.createConnection({
     database: process.env.DATABASE_DB
 });
 
+
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
@@ -79,6 +80,7 @@ router.get('/profile', forceAuth, (req, res) => {
                     const token = obj[0].token;
                     let guildName = JSON.stringify(req.session.guildName);
                     console.log('SELECT AND RENDER');
+                                        
                     res.render('profile', { token: token, version: version, pageTitle: 'Profile', user: req.session.user, guildName: guildName || null });
                 });
             } else {
@@ -86,6 +88,7 @@ router.get('/profile', forceAuth, (req, res) => {
                 con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
+                    
                     res.render('profile', { token: token, version: version, pageTitle: 'Profile', user: req.session.user, guildName: req.session.guildName || null });
                 });
             }
@@ -108,6 +111,7 @@ router.get('/profile/settings', forceAuth, (req, res) => {
                     const obj = JSON.parse(json);
                     const token = obj[0].token;
                     let guildName = JSON.stringify(req.session.guildName);
+                    
                     console.log('SELECT AND RENDER');
                 });
             } else {
@@ -115,6 +119,7 @@ router.get('/profile/settings', forceAuth, (req, res) => {
                 con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
+                    
                 });
             }
         }
@@ -131,18 +136,24 @@ router.get('/profile/settings', forceAuth, (req, res) => {
             let perms = permsObj.perms;
             if (perms & 2) {
                 if (req.param('key') == 'reset') {
+                    
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: false || null });
                 } else if (req.param('key') == 'request') {
+                    
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: false || null });
                 } else {
+                    
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: false || null });
                 }
             } else {
                 if (req.param('key') == 'reset') {
+                    
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: true || null });
                 } else if (req.param('key') == 'request') {
+                    
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: true || null });
                 } else {
+                    
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: true || null });
                 }
             }
