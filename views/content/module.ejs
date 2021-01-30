@@ -2,173 +2,35 @@
     <div class="container down">
         <div class="accordion" id="accordionExample">
             <div class="card">
-                <a type="button" data-toggle="collapse"
-                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><div class="card-header" id="interaction" data-toggle="collapse" data-target="#demo">
+                <div class="card-header" id="interaction" data-toggle="collapse" data-target="#demo">
                     <h5 class="mb-0">
                         <p class="text-center">Interaction</p>
                     </h5>
-                </div></a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="interaction" data-parent="#accordionExample">
-                    <div class="red card-body">
-                        <div class="row row-cols-1 row-cols-md-2">
-                            <div class="col mb-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="get-badge"><strong>Get</strong></span>
-                                    </div>
-                                    
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Button #1
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                          <input type="radio" name="options" id="option2" autocomplete="off"> Button #2
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                          <input type="radio" name="options" id="option3" autocomplete="off"> Button #3
-                                        </label>
-                                      </div>
+                </div> 
 
-                                    <div class="card-body">
-                                        <p class="text-center"><strong>TITLE #1</strong></p>
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                            <pre><i><a href="https://evergene.io/api/hug"
-                                                    target="_blank">https://evergene.io/api/hug</a></i></pre>
-                                        </p>
-                                        <p class="text-left"><strong>Code:</strong>
-                                        <pre>Test Code #1</pre></p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }</pre>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="nsfw-badge-orange"><strong>Post</strong></span>
-                                    </div>
-
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                          <input type="radio" name="options" id="option4" autocomplete="off" checked> Button #1
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                          <input type="radio" name="options" id="option5" autocomplete="off"> Button #2
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                          <input type="radio" name="options" id="option6" autocomplete="off"> Button #3
-                                        </label>
-                                      </div>
-
-                                    <div class="card-body">
-                                        <p class="text-center"><strong>TITLE #2</strong></p>
-                                        <p class="text-left"><strong>Endpoint:</strong>
-                                            <pre><i><a href="https://evergene.io/api/tickle"
-                                                    target="_blank">https://evergene.io/api/tickle</a></i></pre>
-                                        </p>
-                                        <p class="text-left"><strong>Code:</strong></p>
-                                        <pre>Test Code #2</pre></p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/tickle/tickle_014.gif" }</pre>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="red card-body">
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <%- include('endpoints/hug.ejs') %>
+                        <%- include('endpoints/tickle.ejs') %>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-    <!--TEST AREA-->
     <div class="container down">
         <div class="accordion" id="accordionExample">
             <div class="card">
-                <a type="button" data-toggle="collapse"
-                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><div class="card-header" id="interaction" data-toggle="collapse" data-target="#demo">
+                <div class="card-header" id="interaction" data-toggle="collapse" data-target="#demo">
                     <h5 class="mb-0">
-                        <p class="text-center">TEST-Interaction</p>
+                        <p class="text-center">Test</p>
                     </h5>
-                </div></a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="interaction" data-parent="#accordionExample">
-                    <div class="red card-body">
-                        <div class="row row-cols-1 row-cols-md-2">
-                            <div class="col mb-4">
+                </div> 
 
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="get-badge"><strong>Get</strong></span>
-                                    </div>
-                                    
-                                    <div class="btn-group btn-group-toggle " data-toggle="buttons">
-                                        <label class="btn btn-secondary active" data-slide="next">
-                                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Button #1
-                                        </label>
-                                        <label class="btn btn-secondary" data-slide="next">
-                                          <input type="radio" name="options" id="option2" autocomplete="off"> Button #2
-                                        </label>
-                                        <label class="btn btn-secondary" data-slide="next">
-                                          <input type="radio" name="options" id="option3" autocomplete="off"> Button #3
-                                        </label>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                FIRST
-                                            </div>
-                                            <div class="carousel-item">
-                                                TWO
-                                            </div>
-                                            <div class="carousel-item">
-                                                IDK
-                                            </div>
-                                          </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="col mb-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="nsfw-badge-orange"><strong>Post</strong></span>
-                                    </div>
-
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                          <input type="radio" name="options" id="option4" autocomplete="off" checked> Button #1
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                          <input type="radio" name="options" id="option5" autocomplete="off"> Button #2
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                          <input type="radio" name="options" id="option6" autocomplete="off"> Button #3
-                                        </label>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <p class="text-center"><strong>TITLE #2</strong></p>
-                                        <p class="text-left"><strong>Endpoint:</strong>
-                                            <pre><i><a href="https://evergene.io/api/tickle"
-                                                    target="_blank">https://evergene.io/api/tickle</a></i></pre>
-                                        </p>
-                                        <p class="text-left"><strong>Code:</strong></p>
-                                        <pre>Test Code #2</pre></p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/tickle/tickle_014.gif" }</pre>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="red card-body">
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <%- include('endpoints/hug.ejs') %>
+                        <%- include('endpoints/tickle.ejs') %>
                     </div>
                 </div>
 
