@@ -612,7 +612,7 @@ router.get('/api/animewp', jsonParser, urlencodedParser, (req, res) => {
 // Render API MEMES Page
 router.get('/api/moe', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animegif != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return res.send(JSON.stringify({ error: "ENDPOINT NOT ACTIVE IN CONFIG FILE" }, null, 3));
     }
     try {
         randomPuppy('Moescape')
@@ -622,7 +622,7 @@ router.get('/api/moe', jsonParser, urlencodedParser, (req, res) => {
                     res.redirect('/api/moe');
                 } else {
                     res.header("Content-Type", "application/json")
-                    res.send(JSON.stringify({ url: image }, null, 3));
+                    res.send(JSON.stringify({ error: "ENDPOINT NOT ACTIVE IN CONFIG FILE" }, null, 3));
                 }
             })
     } catch (err) {
@@ -642,7 +642,7 @@ router.get('/api/puppy', jsonParser, urlencodedParser, (req, res) => {
                     res.redirect('/api/puppy');
                 } else {
                     res.header("Content-Type", "application/json")
-                    res.send(JSON.stringify({ url: image }, null, 3));
+                    res.send(JSON.stringify({ error: "ENDPOINT NOT ACTIVE IN CONFIG FILE" }, null, 3));
                 }
             })
     } catch (err) {
