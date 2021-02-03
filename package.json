@@ -1,6 +1,6 @@
 {
   "name": "evergene-website",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/etcroot/evergene#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "canvacord": "^5.0.8",
     "chalk": "^4.1.0",
@@ -27,7 +28,6 @@
     "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "express": "^4.17.1",
-    "express-ping": "^1.4.0",
     "express-session": "^1.15.6",
     "form-data": "^2.3.2",
     "fs": "0.0.1-security",
@@ -41,8 +41,6 @@
     "node-rsa": "^1.1.1",
     "ping-monitor": "^0.5.1",
     "random-puppy": "^1.1.0",
-    "sequelize": "^6.3.5",
-    "sqlite3": "^5.0.0",
     "sweetalert2": "^10.13.0",
     "uid-safe": "^2.1.5"
   },

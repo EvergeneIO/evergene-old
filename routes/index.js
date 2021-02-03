@@ -313,7 +313,6 @@ const { request } = require('express');
 const app = express();
 const imgur = require('imgur')
 const fs = require('fs')
-const health = require('express-ping');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
