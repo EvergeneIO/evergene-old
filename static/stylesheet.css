@@ -405,9 +405,9 @@ background-size: 1800% 1800%;
   margin-top: 10px;
   width: 180px;
   border-radius: 10px;
-  padding: 1.5%;
+  padding: 10px;
   color: #fff;
-  background-color: #0062cc;
+  background-color: #578FDB;
   border: none;
   cursor: pointer;
   font-weight: 600;
@@ -426,10 +426,6 @@ background-size: 1800% 1800%;
   font-size: 0.9rem;
 }
 
-.social-link i{
-  color: white;
-}
-
 .card-pic img{
   border-color: #a1bfe7;
   background-color: #a1bfe7;
@@ -443,4 +439,36 @@ background-size: 1800% 1800%;
 
 #teams-partners-color .bg-darker{
   background-color: #0E1012 !important;
+}
+
+.form-control{
+  color: white !important;
+}
+
+.form-group{
+  margin-bottom: 15px !important;
+}
+
+.socials{
+  padding-right: 30px;
+  padding-left: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.socials a{
+  display: block;
+  color: white !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  text-align: center;
+}
+
+.socials a:hover{
+  color: white !important;
+  opacity: 0.8;
+}
+
+.btnContact:hover, .btnVisitContact:hover{
+  opacity: 0.8 !important;
 }
