@@ -3,10 +3,11 @@ console.log(chalk.yellow('Server is starting...'))
 const { resolveInclude } = require('ejs');
 const express = require('express');
 const app = express();
-var health = require('express-ping');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const port = process.env.APP_PORT
-app.use(health.ping());
 
 app.set('port', port);
 
@@ -21,6 +22,6 @@ app.use(session({
     expires: 604800000,
 }));
 require('./router')(app);
-  
+
 
 app.listen(port, () => console.log(chalk.bold.green(`Server started on port ${port}!`)));
