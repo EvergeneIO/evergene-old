@@ -405,8 +405,7 @@ const endpoints = {
     "nsfw": 1,
     "animegif": 1,
     "interaction": 1,
-    "test": 1,
-    "nsfw": 1
+    "test": 1
 };
 
 ////////////////////////
