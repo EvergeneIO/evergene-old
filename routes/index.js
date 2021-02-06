@@ -85,7 +85,7 @@ router.get('/profile', forceAuth, (req, res) => {
                     const token = obj[0].token;
                     let guildName = JSON.stringify(req.session.guildName);
                     console.log('SELECT AND RENDER');
-                                        
+
                     res.render('profile', { token: token, version: version, pageTitle: 'Profile', user: req.session.user, guildName: guildName || null });
                 });
             } else {
@@ -93,7 +93,7 @@ router.get('/profile', forceAuth, (req, res) => {
                 con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
-                    
+
                     res.render('profile', { token: token, version: version, pageTitle: 'Profile', user: req.session.user, guildName: req.session.guildName || null });
                 });
             }
@@ -116,7 +116,7 @@ router.get('/profile/settings', forceAuth, (req, res) => {
                     const obj = JSON.parse(json);
                     const token = obj[0].token;
                     let guildName = JSON.stringify(req.session.guildName);
-                    
+
                     console.log('SELECT AND RENDER');
                 });
             } else {
@@ -124,7 +124,7 @@ router.get('/profile/settings', forceAuth, (req, res) => {
                 con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
-                    
+
                 });
             }
         }
@@ -141,24 +141,24 @@ router.get('/profile/settings', forceAuth, (req, res) => {
             let perms = permsObj.perms;
             if (perms & 2) {
                 if (req.param('key') == 'reset') {
-                    
+
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: false || null });
                 } else if (req.param('key') == 'request') {
-                    
+
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: false || null });
                 } else {
-                    
+
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: false || null });
                 }
             } else {
                 if (req.param('key') == 'reset') {
-                    
+
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'reset', nsfw: true || null });
                 } else if (req.param('key') == 'request') {
-                    
+
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: 'request', nsfw: true || null });
                 } else {
-                    
+
                     res.render('settings', { version: version, pageTitle: 'Settings', user: req.session.user, alert: false, nsfw: true || null });
                 }
             }
@@ -490,7 +490,9 @@ router.get('/test-three', jsonParser, urlencodedParser, (req, res) => {
 // Render API MEMES Page
 router.get('/api/dankmemes', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.dankmemes != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('dankmemes')
@@ -504,7 +506,9 @@ router.get('/api/dankmemes', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
     //res.render('dankmemes', { jsonData: JSON.stringify(url), image: image, version: version, pageTitle: 'API | DankMemes', user: req.session.user || null });
 
@@ -513,7 +517,9 @@ router.get('/api/dankmemes', jsonParser, urlencodedParser, (req, res) => {
 // Render API MEMES Page
 router.get('/api/awwnime', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.awwnime != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('awwnime')
@@ -527,14 +533,18 @@ router.get('/api/awwnime', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API MEMES Page
 router.get('/api/memes', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.memes != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('memes')
@@ -548,14 +558,18 @@ router.get('/api/memes', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API MEMES Page
 router.get('/api/animemes', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animemes != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('Animemes')
@@ -569,13 +583,17 @@ router.get('/api/animemes', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 // Render API MEMES Page
 router.get('/api/animegif', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animegif != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('animegifs')
@@ -589,13 +607,17 @@ router.get('/api/animegif', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 // Render API MEMES Page
 router.get('/api/animewp', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animegif != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('Animewallpaper')
@@ -609,7 +631,9 @@ router.get('/api/animewp', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 // Render API MEMES Page
@@ -629,13 +653,17 @@ router.get('/api/moe', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 // Render API MEMES Page
 router.get('/api/puppy', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animegif != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('puppies')
@@ -649,13 +677,17 @@ router.get('/api/puppy', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 // Render API MEMES Page
 router.get('/api/aww', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animegif != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('aww')
@@ -669,13 +701,17 @@ router.get('/api/aww', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 // Render API MEMES Page
 router.get('/api/floof', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.animegif != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         randomPuppy('floof')
@@ -689,14 +725,18 @@ router.get('/api/floof', jsonParser, urlencodedParser, (req, res) => {
                 }
             })
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Hug
 router.get('/api/hug', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -708,14 +748,18 @@ router.get('/api/hug', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Tickle
 router.get('/api/tickle', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -727,14 +771,18 @@ router.get('/api/tickle', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Slap
 router.get('/api/slap', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -746,14 +794,18 @@ router.get('/api/slap', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Poke
 router.get('/api/poke', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -765,14 +817,18 @@ router.get('/api/poke', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Pat
 router.get('/api/pat', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -784,14 +840,24 @@ router.get('/api/pat', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
+});
+
+router.get('/api/test', jsonParser, urlencodedParser, (req, res) => {
+    res.status('503').send({
+        status: "503", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
 });
 
 // Render API interaction Kiss
 router.get('/api/kiss', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -803,14 +869,18 @@ router.get('/api/kiss', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Feed
 router.get('/api/feed', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -822,14 +892,18 @@ router.get('/api/feed', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
 // Render API interaction Cuddle
 router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.interaction != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         async function outpud() {
@@ -841,7 +915,9 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
         outpud();
 
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });
 
@@ -849,7 +925,9 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
 
 /*router.get('/api/clyde', jsonParser, urlencodedParser, (req, res) => {
     if (endpoints.test != 1) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "ENDPOINT NOT ACTIVE IN CONFIG FILE" } }, null, 3));
+        return     res.status('503').send({
+        status: "503", "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+    }, null, 3);
     }
     try {
         const text = 'TEXT'
@@ -861,7 +939,9 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
             // res.send(JSON.stringify({ url: image }, null, 3));
         });
     } catch (err) {
-        return res.send(JSON.stringify({ error: { "API ERROR": "There was an error, please contact the administrator." } }, null, 3));
+        return res.status('500').send({
+        status: "500", "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+    }, null, 3);
     }
 });*/
 
