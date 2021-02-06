@@ -1,36 +1,122 @@
 <div class="col mb-4">
-    <div class="card">
-      <div class="card-header text-center">
-          <span class="get-badge"><strong>Get</strong></span>
-          <h5>Hug</h5>
-          
-      </div>
-      
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Javascript
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Python
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Java
-          </label>
-      </div>
-
-      <div class="card-body">
-          <p class="text-center"><strong>Javascript</strong></p>
-          <p class="card-text"><strong>Endpoint</strong>:
-              <pre><i><a href="https://evergene.io/api/hug"
-                      target="_blank">https://evergene.io/api/hug</a></i></pre>
-          </p>
-          <p class="text-left"><strong>Code:</strong>
-          <pre>Test Code #1</pre></p>
-          <p class="card-text"><strong>Output</strong>:
-          </p>
-          <pre>{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }</pre>
-          </p>
-      </div>
+  <div class="card">
+    <div class="card-header text-center">
+      <span class="get-badge"><strong>Get</strong></span>
+      <h5>Hug</h5>
 
     </div>
+
+    <script>
+      function jshug(id) {
+        if(document.getElementById(`${id}`).style.display == 'none') {
+          document.getElementById(`${id}`).style.display  = "inline";
+          document.getElementById(`py-hug`).style.display  = "none";
+          document.getElementById(`java-hug`).style.display  = "none";
+        }
+      }
+    
+      function pyhug(id) {
+        if(document.getElementById(`${id}`).style.display == 'none') {
+          document.getElementById(`${id}`).style.display  = "inline";
+          document.getElementById(`js-hug`).style.display  = "none";
+          document.getElementById(`java-hug`).style.display  = "none";
+        }
+      }
+    
+      function javahug(id) {
+        if(document.getElementById(`${id}`).style.display == 'none') {
+          document.getElementById(`${id}`).style.display  = "inline";
+          document.getElementById(`py-hug`).style.display  = "none";
+          document.getElementById(`js-hug`).style.display  = "none";
+        }
+      }
+    </script>
+  
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="options" onclick="jshug('js-hug');" id="option1" autocomplete="off" checked> Javascript
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" onclick="pyhug('py-hug');" id="option2" autocomplete="off"> Python
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" onclick="javahug('java-hug');" id="option3" autocomplete="off"> Java
+      </label>
+    </div>
+
+    <!-- ? JavaScript Body -->
+    <div class="card-body" id="js-hug" style="display: inline;">
+      <p class="text-center"><strong>Javascript</strong></p>
+      <p class="card-text"><strong>Endpoint</strong>:
+      <pre class="pre"><i><a href="https://evergene.io/api/hug" target="_blank">https://evergene.io/api/hug</a></i></pre>
+      </p>
+      <p class="text-left"><strong>Code:</strong>
+      <pre><code class="language-js">
+const fetch = require('node-fetch');
+
+fetch('https://evergene.io/api/hug')
+    .then(res => res.json())
+    .then(json => {
+        console.log(json)
+         //YOUR CODE
+     });
+      </code></pre>
+      </p>
+      <p class="card-text"><strong>Output</strong>:
+      </p>
+      <pre class="pre"><code class="language-json">
+{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }
+      </code></pre>
+      </p>
+    </div>
+
+    <!-- ? Python Body -->
+    <div class="card-body" id="py-hug" style="display: none;">
+      <p class="text-center"><strong>Python</strong></p>
+      <p class="card-text"><strong>Endpoint</strong>:
+      <pre class="pre"><i><a href="https://evergene.io/api/hug" target="_blank">https://evergene.io/api/hug</a></i></pre>
+      </p>
+      <p class="text-left"><strong>Code:</strong>
+      <pre><code class="language-py">
+import requests
+r = requests.get('https://evergene.io/api/hug')
+result = r.json()
+print(result)
+      </code></pre>
+      </p>
+      <p class="card-text"><strong>Output</strong>:
+      </p>
+      <pre><code class="language-json">
+{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }
+      </code></pre>
+      </p>
+    </div>
+
+    <!-- ? Java Body -->
+    <div class="card-body" id="java-hug" style="display: none;">
+      <p class="text-center"><strong>Java</strong></p>
+      <p class="card-text"><strong>Endpoint</strong>:
+      <pre class="pre"><i><a href="https://evergene.io/api/hug" target="_blank">https://evergene.io/api/hug</a></i></pre>
+      </p>
+      <p class="text-left"><strong>Code:</strong>
+      <pre><code class="language-java">
+HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create("https://evergene.io/api/hug"))
+      .build();
+client.sendAsync(request, BodyHandlers.ofString())
+      .thenApply(HttpResponse::body)
+      .thenAccept(System.out::println)
+      .join();
+      </code></pre>
+      </p>
+      <p class="card-text"><strong>Output</strong>:
+      </p>
+      <pre class="pre"><code class="language-json">
+{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }
+      </code></pre>
+      </p>
+    </div>
+
+  </div>
 </div>

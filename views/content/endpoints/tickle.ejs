@@ -1,36 +1,122 @@
 <div class="col mb-4">
-    <div class="card">
-      <div class="card-header text-center">
-          <span class="nsfw-badge-orange"><strong>Post</strong></span>
-          <h5>Tickle</h5>
-          
-      </div>
-      
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Javascript
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Python
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Java
-          </label>
-      </div>
-
-      <div class="card-body">
-          <p class="text-center"><strong>Javascript</strong></p>
-          <p class="card-text"><strong>Endpoint</strong>:
-              <pre><i><a href="https://evergene.io/api/hug"
-                      target="_blank">https://evergene.io/api/tickle</a></i></pre>
-          </p>
-          <p class="text-left"><strong>Code:</strong>
-          <pre>Test Code #1</pre></p>
-          <p class="card-text"><strong>Output</strong>:
-          </p>
-          <pre>{ "url": "https://cdn.nekos.life/tickle/tickle_014.gif" }</pre>
-          </p>
-      </div>
+  <div class="card">
+    <div class="card-header text-center">
+      <span class="get-badge"><strong>Get</strong></span>
+      <h5>tickle</h5>
 
     </div>
+
+    <script>
+      function jstickle(id) {
+        if(document.getElementById(`${id}`).style.display == 'none') {
+          document.getElementById(`${id}`).style.display  = "inline";
+          document.getElementById(`py-tickle`).style.display  = "none";
+          document.getElementById(`java-tickle`).style.display  = "none";
+        }
+      }
+    
+      function pytickle(id) {
+        if(document.getElementById(`${id}`).style.display == 'none') {
+          document.getElementById(`${id}`).style.display  = "inline";
+          document.getElementById(`js-tickle`).style.display  = "none";
+          document.getElementById(`java-tickle`).style.display  = "none";
+        }
+      }
+    
+      function javatickle(id) {
+        if(document.getElementById(`${id}`).style.display == 'none') {
+          document.getElementById(`${id}`).style.display  = "inline";
+          document.getElementById(`py-tickle`).style.display  = "none";
+          document.getElementById(`js-tickle`).style.display  = "none";
+        }
+      }
+    </script>
+  
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="options" onclick="jstickle('js-tickle');" id="option1" autocomplete="off" checked> Javascript
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" onclick="pytickle('py-tickle');" id="option2" autocomplete="off"> Python
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" onclick="javatickle('java-tickle');" id="option3" autocomplete="off"> Java
+      </label>
+    </div>
+
+    <!-- ? JavaScript Body -->
+    <div class="card-body" id="js-tickle" style="display: inline;">
+      <p class="text-center"><strong>Javascript</strong></p>
+      <p class="card-text"><strong>Endpoint</strong>:
+      <pre class="pre"><i><a href="https://evergene.io/api/tickle" target="_blank">https://evergene.io/api/tickle</a></i></pre>
+      </p>
+      <p class="text-left"><strong>Code:</strong>
+      <pre><code class="language-js">
+const fetch = require('node-fetch');
+
+fetch('https://evergene.io/api/tickle')
+    .then(res => res.json())
+    .then(json => {
+        console.log(json)
+         //YOUR CODE
+     });
+      </code></pre>
+      </p>
+      <p class="card-text"><strong>Output</strong>:
+      </p>
+      <pre class="pre"><code class="language-json">
+{ "url": "https://cdn.nekos.life/tickle/tickle_005.gif" }
+      </code></pre>
+      </p>
+    </div>
+
+    <!-- ? Python Body -->
+    <div class="card-body" id="py-tickle" style="display: none;">
+      <p class="text-center"><strong>Python</strong></p>
+      <p class="card-text"><strong>Endpoint</strong>:
+      <pre class="pre"><i><a href="https://evergene.io/api/tickle" target="_blank">https://evergene.io/api/tickle</a></i></pre>
+      </p>
+      <p class="text-left"><strong>Code:</strong>
+      <pre><code class="language-py">
+import requests
+r = requests.get('https://evergene.io/api/tickle')
+result = r.json()
+print(result)
+      </code></pre>
+      </p>
+      <p class="card-text"><strong>Output</strong>:
+      </p>
+      <pre><code class="language-json">
+{ "url": "https://cdn.nekos.life/tickle/tickle_005.gif" }
+      </code></pre>
+      </p>
+    </div>
+
+    <!-- ? Java Body -->
+    <div class="card-body" id="java-tickle" style="display: none;">
+      <p class="text-center"><strong>Java</strong></p>
+      <p class="card-text"><strong>Endpoint</strong>:
+      <pre class="pre"><i><a href="https://evergene.io/api/tickle" target="_blank">https://evergene.io/api/tickle</a></i></pre>
+      </p>
+      <p class="text-left"><strong>Code:</strong>
+      <pre><code class="language-java">
+HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create("https://evergene.io/api/tickle"))
+      .build();
+client.sendAsync(request, BodyHandlers.ofString())
+      .thenApply(HttpResponse::body)
+      .thenAccept(System.out::println)
+      .join();
+      </code></pre>
+      </p>
+      <p class="card-text"><strong>Output</strong>:
+      </p>
+      <pre class="pre"><code class="language-json">
+{ "url": "https://cdn.nekos.life/tickle/tickle_005.gif" }
+      </code></pre>
+      </p>
+    </div>
+
+  </div>
 </div>

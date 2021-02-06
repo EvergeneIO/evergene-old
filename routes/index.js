@@ -15,6 +15,7 @@ function makeid(length) {
     return result;
 };
 
+
 // CHECK API KEY
 function checkKey(key) {
     return new Promise((res, rej) => {
