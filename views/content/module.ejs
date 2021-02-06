@@ -1,21 +1,18 @@
-<div class="container">
-    <div class="container down">
-        <div class="accordion" id="accordion">
-            <div class="card">
-                <div class="card-header-normal" id="interaction" data-toggle="accordion" data-target="#accordion">
-                    <h5 class="mb-0">
-                        <p class="text-center">Interaction</p>
-                    </h5>
-                </div> 
+<div class="api">
+<div class="accordion" id="accordion">
+    <div class="card">
+        <div class="card-header-normal" id="interaction" data-toggle="accordion" data-target="#accordion">
+            <h5 class="mb-0">
+                <p class="text-center">Interaction</p>
+            </h5>
+        </div>
 
-                <div class="red card-body">
-                    <div class="row row-cols-1">
-                        <%- include('endpoints/hug.ejs') %>
-                        <%- include('endpoints/tickle.ejs') %>
-                    </div>
-                </div>
-
+        <div class="red card-body">
+            <div class="row row-cols-1">
+                <%- include('endpoints/hug.ejs') %>
             </div>
         </div>
+
     </div>
+</div>
 </div>

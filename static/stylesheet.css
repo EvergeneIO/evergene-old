@@ -83,6 +83,12 @@ html {
   color:#fff;
 }
 
+.api {
+  padding-right: 100px;
+  padding-left: 100px;
+  padding-top: 10px;
+}
+
 .card-body {
   background: #0E1012 !important;
   border:0px !important;

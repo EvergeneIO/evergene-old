@@ -65,6 +65,10 @@ router.get('/', (req, res) => {
     res.render('index', { version: version, pageTitle: 'Home', user: req.session.user || null });
 });
 
+router.get('/status', (req, res) => {
+    res.render('status', { version: version, pageTitle: 'Status', user: req.session.user || null });
+});
+
 // Render Profile Page
 router.get('/profile', forceAuth, (req, res) => {
     con.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
