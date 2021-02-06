@@ -1,42 +1,74 @@
 <div class="col mb-4">
   <div class="card">
-    <div class="card-header-get text-center">
-      <h3><span class="get-badge"><strong>Get</strong></span></h3>
-      <h5 class="text-left">/api/hug</h5>
-    </div>
+    <a class="card-header-get  p-3" href="#demo" data-toggle="collapse"> 
+      <h3 class="get-badge mb-0">Get</h3>
+      <h5 class="mb-0 pl-2">/api/hug</h5>
+    </a>
 
-    <div class="card-body-endpoint">
-      <p class="card-text"><strong>Endpoint</strong>:
-      <pre class="pre"><i><a href="https://evergene.io/api/hug" target="_blank">https://evergene.io/api/hug</a></i>
-      </pre>
-      </p>
-      <p class="text-left card-text"><strong>Code:</strong>
-
-      <div class="js-hug" style="display: inline;">
-
-        <pre><code class="language-js">
-const fetch = require('node-fetch');
+    <div class="card-body-endpoint p-3 collapse" id="demo">
+      <p class="card-text"><strong>Endpoint</strong>:</p>
+      <pre class="pre"><a href="https://evergene.io/api/hug" target="_blank">https://evergene.io/api/hug</a></pre>
+      
+      <p class="text-left card-text"><strong>Code:</strong></p>
+        <div class="js-hug" style="display: inline;">
+        <pre><code class="language-js">const fetch = require('node-fetch');
 
 fetch('https://evergene.io/api/hug')
    .then(res => res.json())
    .then(json => {
       console.log(json)
       //YOUR CODE
-    });
-          </code></pre>
+    });</code></pre>
 
+        </div>
+      
+
+      <p class="card-text"><strong>Output:</strong></p>
+      <pre class="pre"><code class="language-json">{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }</code></pre>
+      
+
+      <p class="card-text"><strong>Parameters</strong>:</p>
+      <table class="table">
+        <thead>
+          <tr class="d-flex">
+            <th class="col-4">Name</th>
+            <th class="col-8">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-flex">
+            <td class="col-4">name here</td>
+            <td class="col-8">desc here</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="d-flex" style="justify-content: space-between">
+        <p class="card-text"><strong>Responses</strong>:</p>
+        <p class="card-text">Content type: <strong>application/json</strong></p>
       </div>
-
-      </p>
-      <p class="card-text"><strong>Output</strong>:
-      </p>
-      <pre class="pre"><code class="language-json">
-{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }
-        </code></pre>
-      </p>
-<!-- TODO: Endpoint Information's -->
-<h5 class="card-title text-left">Responses <span class="text-right">Response content type: <strong>application/json</strong></span></h5>
-
+      <table class="table">
+        <thead>
+          <tr class="d-flex">
+            <th class="col-4">Code</th>
+            <th class="col-8">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-flex">
+            <td class="col-4">200</td>
+            <td class="col-8">A successful request</td>
+          </tr>
+          <tr class="d-flex">
+            <td class="col-4">400</td>
+            <td class="col-8">A successful request</td>
+          </tr>
+          <tr class="d-flex">
+            <td class="col-4">401</td>
+            <td class="col-8">A successful request</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
