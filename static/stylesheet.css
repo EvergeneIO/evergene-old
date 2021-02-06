@@ -84,8 +84,8 @@ html {
 }
 
 .api {
-  padding-right: 100px;
-  padding-left: 100px;
+  padding-right: 2rem;
+  padding-left: 2rem;
   padding-top: 10px;
 }
 
@@ -100,7 +100,8 @@ html {
 }
 
 .card-text {
-  margin: 5px;
+  margin: 0 10px;
+  margin-bottom: 0.5rem;
 }
 
 .card-header-normal {
@@ -112,12 +113,17 @@ html {
 }
 
 .card-header-get {
-  padding: .75rem 1.25rem;
   margin-bottom: 0;
   background-color: #6fff7bc2 !important;
   color:#0E1012 !important;
-  border-bottom: 6px solid #2eb93a77 !important;
+  border-bottom: 6px solid #00a000  !important;
   border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.card-header-get h5{
+  color: #0E1012 !important;
 }
 
 .card {
@@ -135,9 +141,7 @@ html {
   color:#CC8EA5 !important;
   display: block !important;
   font-size: 87.5% !important;
-  border:1px solid #070809;
   border-radius:6px;
-  margin: 5px;
 }
 
 h2 {
@@ -498,4 +502,21 @@ background-size: 1800% 1800%;
 
 .btnContact:hover, .btnVisitContact:hover{
   opacity: 0.8 !important;
+}
+
+pre{
+  border: 0 !important;
+}
+
+.table{
+  background-color: #252B31 !important;
+  color: #c9c9c9 !important;
+  border-top: 0;
+  border-radius: 6px;
+  margin-right: 5px !important;
+}
+
+.table th, .table td{
+  border-color: #383e44 !important;
+  border-bottom: 0 !important;
 }

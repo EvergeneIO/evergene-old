@@ -33,7 +33,7 @@ pre[class*="language-"] {
 /* Code blocks */
 pre[class*="language-"] {
 	padding: 1em;
-	margin: .5em 0;
+	margin-bottom: 1rem;
 	overflow: auto;
 }
 
@@ -46,7 +46,6 @@ pre[class*="language-"] {
 	font-size: 87.5% !important;
 	border:1px solid #070809;
 	border-radius:6px;
-	margin: 5px;
 }
 
 /* Inline code */
