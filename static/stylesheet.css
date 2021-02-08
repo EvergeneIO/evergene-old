@@ -63,6 +63,11 @@ html {
   color:#fff;
 }
 
+.btn-outline-secondary {
+  margin-left: 2px;
+  margin-bottom: 5px;
+}
+
 .nsfw-badge-orange {
   float:right;
   padding-right:5px;
