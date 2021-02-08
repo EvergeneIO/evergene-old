@@ -1,387 +1,52 @@
-<div class="container down">
-        <h1 style="font-weight:800;"><%- pageTitle %> Endpoints</h1>
-        <p>Base URL: <i><span style="color:#89C9ED">https://evergene.io/api/:endpoint</span></i>
-        <p>List of random image API's we provide.<br /><i>Got questions? Check the bottom of the page.</i></p>
-        <br />
-        <h1 style="font-weight:600;">Interaction API's</h1>
-        <div class="alert alert-primary">
-                These API endpoints are new and untested, please give me feedback on how you like them.
+<script>
+    function navigate(id) {
+        const base = id.substring(0, id.length - 4)
+        const responseList = [`${base}_200`, `${base}_500`, `${base}_503`];
+        document.getElementById(id).style.display = "inline";
+        responseList.filter((rid) => rid !== id).forEach((id) => {
+            document.getElementById(id).style.display = "none";
+        });
+    }
+</script>
+
+<!-- Endpunkt: Interaction -->
+<div class="api">
+    <div class="card">
+        <a class="card-header-normal" href="#interaction" data-toggle="collapse">
+            <h3 class="text-center">Interaction</h3>
+        </a>
+
+        <div class="card-body p-3 collapse interaction" id="interaction">
+            <%- include('api/interaction/hug.ejs') %>
+            <%- include('api/interaction/tickle.ejs') %>
+            <%- include('api/interaction/slap.ejs') %>
+            <%- include('api/interaction/poke.ejs') %>
+            <%- include('api/interaction/pat.ejs') %>
+            <%- include('api/interaction/kiss.ejs') %>
+            <%- include('api/interaction/feed.ejs') %>
+            <%- include('api/interaction/cuddle.ejs') %>
         </div>
-        <div class="row row-cols-1 row-cols-md-2">
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Hug</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/hug" target="_blank">https://evergene.io/api/hug</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/hug/hug_005.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Tickle</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/tickle" target="_blank">https://evergene.io/api/tickle</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/tickle/tickle_014.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Slap</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/slap" target="_blank">https://evergene.io/api/slap</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/slap/slap_014.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Poke</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/poke" target="_blank">https://evergene.io/api/poke</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/poke/poke_008.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Pat</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/pat" target="_blank">https://evergene.io/api/pat</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/pat/pat_047.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Kiss</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/kiss" target="_blank">https://evergene.io/api/kiss</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/kiss/kiss_127.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Feed</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/feed" target="_blank">https://evergene.io/api/feed</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/feed/feed_016.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Cuddle</strong>
-                                        <span class="nsfw-badge-orange">Not Tested</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/cuddle" target="_blank">https://evergene.io/api/cuddle</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://cdn.nekos.life/cuddle/cuddle_012.gif" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-               <!-- 
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon-null"></i>
-                                        <strong>Poke | COMING SOON</strong>
-                                        <span class="nsfw-badge">NOT ACTIVE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="#">https://evergene.io/api/poke</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                -->
+    </div>
+</div>
+
+<!-- Endpunkt: Reddit -->
+<div class="api">
+    <div class="card">
+        <a class="card-header-normal" href="#reddit" data-toggle="collapse">
+            <h3 class="text-center">Reddit API's</h3>
+        </a>
+
+        <div class="card-body p-3 collapse reddit" id="reddit">
+            <%- include('api/reddit/awwnime.ejs') %>
+            <%- include('api/reddit/memes.ejs') %>
+            <%- include('api/reddit/dankmemes.ejs') %>
+            <%- include('api/reddit/animemes.ejs') %>
+            <%- include('api/reddit/animegif.ejs') %>
+            <%- include('api/reddit/animewp.ejs') %>
+            <%- include('api/reddit/moe.ejs') %>
+            <%- include('api/reddit/puppy.ejs') %>
+            <%- include('api/reddit/aww.ejs') %>
+            <%- include('api/reddit/floof.ejs') %>
         </div>
-        <br />
-        <h1 style="font-weight:600;">Reddit API's</h1>
-        <div class="alert alert-primary">
-                These API endpoints are available for beta, please give feedback upon usage.
-        </div>
-        <div class="row row-cols-1 row-cols-md-2">
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Awwnime</strong>
-                                        <span class="nsfw-badge">NOT ACTIVE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="#"
-                                                                >https://evergene.io/api/awwnime</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Memes</strong>
-                                        <span class="safe-badge">SAFE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/memes"
-                                                                target="_blank">https://evergene.io/api/memes</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/DankMemes</strong>
-                                        <span class="safe-badge">SAFE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/dankmemes"
-                                                                target="_blank">https://evergene.io/api/dankmemes</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Animemes</strong>
-                                        <span class="safe-badge">SAFE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/animemes"
-                                                                target="_blank">https://evergene.io/api/animemes</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/animegifs</strong>
-                                        <span class="nsfw-badge-orange">QUESTIONABLE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/animegif"
-                                                                target="_blank">https://evergene.io/api/animegif</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Animewallpaper</strong>
-                                        <span class="nsfw-badge-orange">QUESTIONABLE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/animewp"
-                                                                target="_blank">https://evergene.io/api/animewp</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Moescape</strong>
-                                        <span class="nsfw-badge-orange">QUESTIONABLE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/moe"
-                                                                target="_blank">https://evergene.io/api/moe</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Puppies</strong>
-                                        <span class="safe-badge">SAFE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/puppy"
-                                                                target="_blank">https://evergene.io/api/puppy</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Aww</strong>
-                                        <span class="safe-badge">SAFE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/aww"
-                                                                target="_blank">https://evergene.io/api/aww</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-                <div class="col mb-4">
-                        <div class="card">
-                                <div class="card-header"><i class="fad fa-badge-check api-icon"></i>
-                                        <strong>r/Floof</strong>
-                                        <span class="safe-badge">SAFE</span>
-                                </div>
-                                <div class="card-body">
-                                        <p class="card-text"><strong>Endpoint</strong>:
-                                                <i><a href="https://evergene.io/api/floof"
-                                                                target="_blank">https://evergene.io/api/floof</a></i>
-                                        </p>
-                                        <p class="card-text"><strong>Output</strong>:
-                                        </p>
-                                        <pre>{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</pre>
-                                        </p>
-                                </div>
-                        </div>
-                </div>
-        </div>
-        <h1 style="font-weight:600;">NSFW API's</h1>
-            <% if (user) { %>
-        <a href="/api/nsfw"><div class="alert alert-danger">
-                These endpoints are all NSFW and you must be logged in to use these endpoints.
-        </div></a>
-        <% } else { %>
-                <div class="alert alert-danger">
-                        These endpoints are all NSFW and you must be logged in to use these endpoints.
-                </div>
-        <% } %>
-        <div style="padding-top:30px;">
-                <h1 style="font-weight:800;"><i class="fad fa-question-circle"></i> FAQ</h1>
-                <div style="padding-left:30px;margin-top:5px;">
-                        <p><i class="fad fa-circle"></i> <strong>Is there a ratelimit?</strong><br />As for now, no
-                                there isn't.
-                                Will be
-                                one soon though.</p>
-                        <p><i class="fad fa-circle"></i> <strong>Will there be more endpoints?</strong><br />Yes, will
-                                add more
-                                when we
-                                feel like it.</p>
-                        <p><i class="fad fa-circle"></i> <strong>Can i suggest more endpoints?</strong><br />Yes you
-                                can! Head
-                                over to the <a href="https://discord.gg/CDvNwja" target="_blank">discord</a> and suggest
-                                it
-                                there.</p>
-                        <p><i class="fad fa-circle"></i> <strong>What does the badges mean?</strong><br />Questionable
-                                is where
-                                we don't really know what the output is so there may be NSFW content.<br />NSFW is
-                                strictly NSFW
-                                content & SAFE is well... SFW content.</p>
-                </div>
-        </div>
+    </div>
 </div>
