@@ -256,11 +256,6 @@ router.get('/partner/request', (req, res) => {
     res.render('404', { version: version, pageTitle: '404 Not Found', user: req.session.user || null });
 });*/
 
-//Render Modul Page
-router.get('/module', function (req, res) {
-    res.render('module', { version: version, pageTitle: 'Module', user: req.session.user || null });
-});
-
 ////////////////////////
 //                    //
 //     TEST AREA      //
