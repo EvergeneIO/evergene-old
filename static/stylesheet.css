@@ -525,3 +525,8 @@ pre{
   border-color: #383e44 !important;
   border-bottom: 0 !important;
 }
+
+.card-header-normal:hover{
+  color: #0E1012 !important;
+  border-bottom: 6px solid #578FDB !important;
+}
