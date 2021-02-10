@@ -63,7 +63,17 @@ const forceAuth = (req, res, next) => {
 
 // Render Index Page
 router.get('/', (req, res) => {
-    res.render('index', { version: version, pageTitle: 'Home', user: req.session.user || null });
+    const lang = req.header('accept-language').split(',')[0];
+    if(lang == 'de') {
+        res.render('index', { version: version, pageTitle: 'Home', lang: lang, user: req.session.user || null });
+        console.log('Cookies: ', req.cookies);
+        console.log('Signed Cookies: ', req.signedCookies)
+    } else {
+        res.render('index', { version: version, pageTitle: 'Home', lang: lang, user: req.session.user || null });
+    }
+    
+    console.log(lang);
+    
 });
 
 router.get('/imprint', (req, res) => {
@@ -1218,6 +1228,10 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
     }, null, 3);
     }
 });*/
+
+router.get('/api/ananas', jsonParser, urlencodedParser, (req, res) => {
+    res.send('Hellu ich bin eine ANANAS')
+})
 
 console.log(chalk.bold.green(`Index started!`))
 module.exports = router;

@@ -1,0 +1,85 @@
+<div class="col mb-4">
+  <div class="card">
+    <a class="card-header-get  p-3" href="#animegif" data-toggle="collapse"> 
+      <h3 class="get-badge mb-0">Get</h3>
+      <h5 class="mb-0 pl-2">/api/animegif</h5>
+    </a>
+
+    <div class="card-body-endpoint p-3 collapse animegif" id="animegif">
+      <p class="card-text"><strong>Endpoint</strong>:</p>
+      <pre class="pre"><a href="https://evergene.io/api/animegif" target="_blank">https://evergene.io/api/animegif</a></pre>
+      <p class="text-left card-text"><strong>Code:</strong></p>
+        <div class="js-animegif" style="display: inline;">
+        <pre><code class="language-js">fetch('https://evergene.io/api/animegif')
+   .then(res => res.json())
+   .then(json => {
+      console.log(json);
+    });</code></pre>
+
+        </div>
+      
+
+      <p class="card-text"><strong>Result:</strong></p>
+      <button type="button" class="btn btn-outline-secondary" onclick="navigate('animegif_200');">200</button>
+      <button type="button" class="btn btn-outline-secondary" onclick="navigate('animegif_500');">500</button>
+      <button type="button" class="btn btn-outline-secondary" onclick="navigate('animegif_503');">503</button>
+      <div id="animegif_200" style="display: inline;"><pre class="pre"><code class="language-json">{ "url": "https://i.imgur.com/ZjiVsg3.jpg" }</code></pre></div>
+      <div id="animegif_500" style="display: none;"><pre class="pre"><code class="language-json">{
+"status":500,
+"reason":"Internal Server Error",
+"msg":"Please contact a Administrator",
+"url":"https://http.cat/500"
+}</code></pre></div>
+      <div id="animegif_503" style="display: none;"><pre class="pre"><code class="language-json">{
+"status":503,
+"reason":"Service Unavailable",
+"msg":"Endpoint not Active in Config file",
+"url":"https://http.cat/503"
+}</code></pre></div>
+      
+<!--
+      <p class="card-text"><strong>Parameters</strong>:</p>
+      <table class="table">
+        <thead>
+          <tr class="d-flex">
+            <th class="col-4">Name</th>
+            <th class="col-8">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-flex">
+            <td class="col-4">name here</td>
+            <td class="col-8">desc here</td>
+          </tr>
+        </tbody>
+      </table>
+-->
+      <div class="d-flex" style="justify-content: space-between">
+        <p class="card-text"><strong>Responses</strong>:</p>
+        <p class="card-text">Content type: <strong>application/json</strong></p>
+      </div>
+      <table class="table">
+        <thead>
+          <tr class="d-flex">
+            <th class="col-4">Code</th>
+            <th class="col-8">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-flex">
+            <td class="col-4">200</td>
+            <td class="col-8">A successful request</td>
+          </tr>
+          <tr class="d-flex">
+            <td class="col-4">500</td>
+            <td class="col-8">Internal Server Error</td>
+          </tr>
+          <tr class="d-flex">
+            <td class="col-4">503</td>
+            <td class="col-8">Service Unavailable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

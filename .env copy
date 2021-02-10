@@ -1,0 +1,14 @@
+#Main Settings
+APP_PORT=3001
+
+#Database Settings
+DATABASE_HOST="138.201.49.147"
+DATABASE_USER="evergene"
+DATABASE_PW="retO3A8iW8kiSoS7K8Jeju7Ata6ut8"
+DATABASE_DB="evergene"
+
+#Discord Settings
+CLIENT_ID="796536843755585588"
+CLIENT_SECRET="0F3QuoqV4iE5Bx6QERoPcdQZkCQBy7RK"
+SCOPES="identify guilds"
+REDIRECT_URI="https://evergene.io/authorize/callback"
