@@ -108,7 +108,11 @@
 
 <body>
     <!-- Render Content/ -->
-    <%- include('content/404.ejs') %>
+    <% if (lang == 'de') { %>
+      <%- include('content/de/404.ejs') %>
+  <% } else { %>
+      <%- include('content/en/404.ejs') %>
+  <% } %>
     <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
         new Crate({
           server: '710781300100956170',

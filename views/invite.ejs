@@ -48,7 +48,11 @@
 </head>
 
 <body>
-    <%- include('content/invite.ejs') %>
+    <% if (lang == 'de') { %>
+        <%- include('content/de/invite.ejs') %>
+    <% } else { %>
+        <%- include('content/en/invite.ejs') %>
+    <% } %>
 </body>
 
 </html>

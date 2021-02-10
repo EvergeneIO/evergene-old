@@ -9,7 +9,11 @@
     <%- include('partials/navbar.ejs') %>
     <%- include('partials/header.ejs') %>
     <!-- Render Content/ -->
-    <%- include('content/api.ejs') %>
+    <% if (lang == 'de') { %>
+        <%- include('content/de/api.ejs') %>
+    <% } else { %>
+        <%- include('content/en/api.ejs') %>
+    <% } %>
     <%- include('partials/footer.ejs') %>
     <%- include('partials/discord.ejs') %>
 </body>

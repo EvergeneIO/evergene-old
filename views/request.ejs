@@ -49,7 +49,11 @@
 
 <body>
     <!-- Render Content/ -->
-    <%- include('content/request.ejs') %>
+    <% if (lang == 'de') { %>
+        <%- include('content/de/request.ejs') %>
+    <% } else { %>
+        <%- include('content/en/request.ejs') %>
+    <% } %>
 </body>
 
 </html>
