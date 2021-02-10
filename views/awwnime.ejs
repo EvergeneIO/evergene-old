@@ -9,7 +9,11 @@
     <%- include('partials/navbar.ejs') %>
     <%- include('partials/header.ejs') %>
     <!-- Render Content/ -->
-    <%- include('content/api/awwnime.ejs') %>
+    <% if (lang == 'de') { %>
+        <%- include('content/de/awwnime.ejs') %>
+    <% } else { %>
+        <%- include('content/en/awwnime.ejs') %>
+    <% } %>
     <%- include('partials/footer.ejs') %>
     <%- include('partials/discord.ejs') %>
 </body>
