@@ -64,10 +64,11 @@ const forceAuth = (req, res, next) => {
 // Render Index Page
 router.get('/', (req, res) => {
     const lang = req.header('accept-language').split(',')[0];
+    console.log(chalk.red('HEADERS'));
+    console.log(lang);
+    console.log(req.headers)
     if(lang == 'de') {
         res.render('index', { version: version, pageTitle: 'Home', lang: lang, user: req.session.user || null });
-        console.log('Cookies: ', req.cookies);
-        console.log('Signed Cookies: ', req.signedCookies)
     } else {
         res.render('index', { version: version, pageTitle: 'Home', lang: lang, user: req.session.user || null });
     }
