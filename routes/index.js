@@ -5,41 +5,7 @@ const { version } = require("../package.json");
 const fetch = require('node-fetch');
 const pool = require('../database/connection');
 const cookie = require('cookie');
-
-// GENERATING NEW TOKEN
-function makeid(length) {
-    var result = '';
-    var characters = '-ABCDEFGHIJKLMNOPQRSTUVWXYZ.0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-};
-
-// CHECK API KEY
-function checkKey(key) {
-    return new Promise((res, rej) => {
-        pool.query(`SELECT * FROM user WHERE token="${key}"`,
-            function (err, result, fields) {
-                if (err) {
-                    console.log('Error in DB');
-                    console.log(err);
-                    rej(err);
-                } if (result && result.length) {
-                    if (err) throw err;
-                    console.log(chalk.green('TRUE'));
-                    let json = JSON.stringify(result);
-                    let obj = JSON.parse(json);
-                    let perms = obj[0].perms;
-                    res({ key: true, perms: perms });
-                } else {
-                    console.log(chalk.red('FALSE'));
-                    res(false);
-                }
-            });
-    });
-};
+const tools = require('../functions');
 
 const forceAuth = (req, res, next) => {
     if (!req.session.user) return res.redirect('/authorize')
@@ -48,10 +14,9 @@ const forceAuth = (req, res, next) => {
 
 // THIS IS THE MAIN FILE FOR PAGES & API
 
-// Render Index Page
 router.get('/', (req, res) => {
     const lang = req.header('accept-language').split(',')[0];
-    res.render('index', { version: version, pageTitle: 'Home', lang: lang, user: req.session.user || null });
+    res.render('home', { version: version, pageTitle: 'Home', lang: lang, user: req.session.user || null });
 });
 
 router.get('/imprint', (req, res) => {
@@ -90,7 +55,7 @@ router.get('/profile', forceAuth, (req, res) => {
                     res.render('profile', { token: token, version: version, pageTitle: 'Profile', lang: lang, user: req.session.user, guildName: guildName || null });
                 });
             } else {
-                let token = makeid(24);
+                let token = tools.makeid(24);
                 pool.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
@@ -122,7 +87,7 @@ router.get('/profile/settings', forceAuth, (req, res) => {
                     console.log('SELECT AND RENDER');
                 });
             } else {
-                let token = makeid(24);
+                let token = tools.makeid(24);
                 pool.query(`INSERT INTO user (discordId, token, perms) VALUES ("${req.session.user.id}", "${token}", 1)`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
@@ -137,7 +102,7 @@ router.get('/profile/settings', forceAuth, (req, res) => {
         const obj = JSON.parse(json);
         let token = obj[0].token;
         (async () => {
-            let key = await checkKey(token);
+            let key = await tools.checkKey(token);
             let permsJson = JSON.stringify(key);
             let permsObj = JSON.parse(permsJson);
             let perms = permsObj.perms;
@@ -276,9 +241,9 @@ router.get('/token/reset', function (req, res) {
         const obj = JSON.parse(json);
         const token = obj[0].token;
         (async () => {
-            let key = await checkKey(token)
+            let key = await tools.checkKey(token)
             if (key) {
-                let token = makeid(24);
+                let token = tools.makeid(24);
                 pool.query(`UPDATE user SET token = "${token}" WHERE discordId = ${req.session.user.id}`, function (err, result) {
                     if (err) throw err;
                     console.log('INSERT AND RENDER');
@@ -332,11 +297,6 @@ const imgur = require('imgur')
 const fs = require('fs')
 const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-};
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
@@ -347,7 +307,7 @@ function sleep(milliseconds) {
     }
 };
 
-/*function checkKey(key) {
+/*function tools.checkKey(key) {
     pool.query(`SELECT * FROM user WHERE token="${key}"`, function (err, result, fields) {
         if (err) {
             console.log('Error in DB');
@@ -366,14 +326,14 @@ function sleep(milliseconds) {
 //-----------------------------------//
 
 router.post('/clyde', jsonParser, urlencodedParser, (req, res) => {
-    if (endpoints.test != 1) {
+    if (tools.endpoints.test != 1) {
         return res.send(JSON.stringify({ error: "ENDPOINT NOT ACTIVE IN CONFIG FILE" }, null, 3));
     } try {
         const json = JSON.stringify(req.body);
         const obj = JSON.parse(json);
         const token = obj.token;
         (async () => {
-            let key = await checkKey(token);
+            let key = await tools.checkKey(token);
             let permsJson = JSON.stringify(key);
             let permsObj = JSON.parse(permsJson);
             let perms = permsObj.perms;
@@ -413,28 +373,6 @@ router.post('/clyde', jsonParser, urlencodedParser, (req, res) => {
 });
 
 //-----------------------------------//
-// Active Endpoints
-function endpoints(endpoint) {
-    return new Promise((res, rej) => {
-        pool.query(`SELECT * FROM endpoints WHERE name="${endpoint}"`,
-            function (err, result, fields) {
-                if (err) {
-                    console.log('Error in DB');
-                    console.log(err);
-                    rej(err);
-                } if (result && result.length) {
-                    if (err) throw err;
-                    let json = JSON.stringify(result);
-                    let obj = JSON.parse(json);
-                    let status = obj[0].status;
-                    res(status);
-                } else {
-                    console.log(chalk.red('FALSE'));
-                    res(false);
-                }
-            });
-    });
-};
 
 ////////////////////////
 //                    //
@@ -443,13 +381,13 @@ function endpoints(endpoint) {
 ////////////////////////
 
 /*router.post('/clyde', jsonParser, urlencodedParser, (req, res) => {
-    if (endpoints.test != 1) {
+    if (tools.endpoints.test != 1) {
         return res.send(JSON.stringify({ error: "ENDPOINT NOT ACTIVE IN CONFIG FILE" }, null, 3));
     } try {
         const json = JSON.stringify(req.body);
         const obj = JSON.parse(json);
         const token = obj.token;
-        let key = checkKey(token);
+        let key = tools.checkKey(token);
         if (key) {
             const text = obj.text;
             canvacord.Canvas.clyde(text)
@@ -513,7 +451,7 @@ router.get('/test-three', jsonParser, urlencodedParser, (req, res) => {
 router.post('/api/partner', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'partner';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -530,7 +468,7 @@ router.post('/api/partner', jsonParser, urlencodedParser, (req, res) => {
             }, null, 3);
         } else {
             (async () => {
-                let key = await checkKey(token);
+                let key = await tools.checkKey(token);
                 let permsJson = JSON.stringify(key);
                 let permsObj = JSON.parse(permsJson);
                 let perms = permsObj.perms;
@@ -583,7 +521,7 @@ router.post('/api/partner', jsonParser, urlencodedParser, (req, res) => {
 router.put('/api/partner', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'partner';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -600,7 +538,7 @@ router.put('/api/partner', jsonParser, urlencodedParser, (req, res) => {
             }, null, 3);
         } else {
             (async () => {
-                let key = await checkKey(token);
+                let key = await tools.checkKey(token);
                 let permsJson = JSON.stringify(key);
                 let permsObj = JSON.parse(permsJson);
                 let perms = permsObj.perms;
@@ -656,7 +594,7 @@ router.put('/api/partner', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/dankmemes', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'dankmemes';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -686,7 +624,7 @@ router.get('/api/dankmemes', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/awwnime', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'awwnime';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -715,7 +653,7 @@ router.get('/api/awwnime', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/memes', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'memes';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -744,7 +682,7 @@ router.get('/api/memes', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/animemes', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'animemes';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -772,7 +710,7 @@ router.get('/api/animemes', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/animegif', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'animegif';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -800,7 +738,7 @@ router.get('/api/animegif', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/animewp', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'animewp';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -828,7 +766,7 @@ router.get('/api/animewp', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/moe', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'moe';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -856,7 +794,7 @@ router.get('/api/moe', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/puppy', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'puppy';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -885,7 +823,7 @@ router.get('/api/puppy', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/aww', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'aww';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -913,7 +851,7 @@ router.get('/api/aww', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/floof', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'floof';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -938,11 +876,11 @@ router.get('/api/floof', jsonParser, urlencodedParser, (req, res) => {
     })()
 });
 
-// Endpoint: Hug \\
+/*// Endpoint: Hug \\
 router.get('/api/hug', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'hug';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -950,7 +888,7 @@ router.get('/api/hug', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -970,13 +908,13 @@ router.get('/api/hug', jsonParser, urlencodedParser, (req, res) => {
             }, null, 3);
         }
     })()
-});
+});*/
 
 // Endpoint: Tickle \\
 router.get('/api/tickle', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'tickle';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -984,7 +922,7 @@ router.get('/api/tickle', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1009,7 +947,7 @@ router.get('/api/tickle', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/slap', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'slap';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -1017,7 +955,7 @@ router.get('/api/slap', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1042,7 +980,7 @@ router.get('/api/slap', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/poke', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'poke';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -1050,7 +988,7 @@ router.get('/api/poke', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1075,7 +1013,7 @@ router.get('/api/poke', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/pat', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'pat';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -1083,7 +1021,7 @@ router.get('/api/pat', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1108,7 +1046,7 @@ router.get('/api/pat', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/kiss', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'kiss';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -1116,7 +1054,7 @@ router.get('/api/kiss', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1141,7 +1079,7 @@ router.get('/api/kiss', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/feed', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'feed';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -1149,7 +1087,7 @@ router.get('/api/feed', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1174,7 +1112,7 @@ router.get('/api/feed', jsonParser, urlencodedParser, (req, res) => {
 router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
     const endpoint = 'cuddle';
     (async () => {
-        let status = await endpoints(endpoint);
+        let status = await tools.endpoints(endpoint);
         if (status != 1) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
@@ -1182,7 +1120,7 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
         }
         try {
             async function output() {
-                let number = getRandomInt(200);
+                let number = tools.getRandomInt(200);
                 await fetch('https://cdn.evergene.io/image.json')
                     .then(res => res.json())
                     .then(json => {
@@ -1206,7 +1144,7 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
 // Render API TEST Clyde
 
 /*router.get('/api/clyde', jsonParser, urlencodedParser, (req, res) => {
-    if (endpoints.test != 1) {
+    if (tools.endpoints.test != 1) {
         return     res.status('503').send({
         status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
     }, null, 3);

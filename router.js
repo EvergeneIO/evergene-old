@@ -1,12 +1,12 @@
 module.exports = (app) => {
     // '/'
-    app.use('/', require('./routes/index'));
+    app.use('/', require('./handler/main'));
 
     // '/api'
-    app.use('/api', require('./routes/api'));
+    app.use('/api', require('./handler/api'));
 
     // '/authorize'
-    app.use('/authorize', require('./routes/discord'));
+    app.use('/authorize', require('./handler/authorize'));
 
-    app.use('/bot', require('./discord/bot'))
+    app.use(require('./discord/bot'));
 }
