@@ -33,6 +33,7 @@ function getFiles(filepath, apipath) {
 async function addPath(filename, filepath, path) {
     let fileStart = Date.now()
     let api = require(filepath + filename);
+    if(filename.toLowerCase() != "home") path += filename.toLowerCase();
     router[api.type ? api.type.toLowerCase() : "get"](path, async function (req, res) {
 
         let lang = tools.checkCookie(req, res)
