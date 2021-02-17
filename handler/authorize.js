@@ -29,8 +29,9 @@ function getFiles(filepath, authpath) {
   async function addPath(filename, filepath, path) {
     let fileStart = Date.now()
     let auth = require(filepath + filename);
+    let name = filename.split(".").shift()
+    if(name.toLowerCase() != "authorize") path += name;
     router[auth.type ? auth.type.toLowerCase() : "get"](path, async function (req, res) {
-     
         auth.execute(req, res);
     });
     if (process.env.APP_DEBUG == "true") console.log(`[AUTH] Loaded ${path}${filename} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
