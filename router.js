@@ -8,5 +8,7 @@ module.exports = (app) => {
     // '/authorize'
     app.use('/authorize', require('./handler/authorize'));
 
+    app.use('/test', require('./routes/test'));
+
     app.use(require('./discord/bot'));
 }
