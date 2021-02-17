@@ -33,7 +33,8 @@ function getFiles(filepath, apipath) {
 async function addPath(filename, filepath, path) {
     let fileStart = Date.now()
     let api = require(filepath + filename);
-    if(filename.toLowerCase() != "home") path += filename.toLowerCase();
+    let name = filename.split(".").shift()
+    if(name.toLowerCase() != "home") path += name.toLowerCase();
     router[api.type ? api.type.toLowerCase() : "get"](path, async function (req, res) {
 
         let lang = tools.checkCookie(req, res)
@@ -41,7 +42,7 @@ async function addPath(filename, filepath, path) {
 
         filename = filename.split(".").shift().toLowerCase()
         let title = filename.slice(0, 1).toUpperCase() + filename.slice(1).toLowerCase()
-        api.execute(req, res, filename, lang, version, title, req.session.user || null);
+        api.execute(req, res, name, lang, version, title, req.session.user || null);
     });
     if (process.env.APP_DEBUG == "true") console.log(`[MAIN] Loaded ${path}${filename} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
 }
