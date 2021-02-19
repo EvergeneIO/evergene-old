@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const router = require('express').Router();
 const fetch = require('node-fetch');
 const fs = require('fs');
+const pool = require('../database/connection');
 
     console.log("\n[AUTH] Loading...");
 let startAll = Date.now();
@@ -30,11 +31,11 @@ function getFiles(filepath, authpath) {
     let fileStart = Date.now()
     let auth = require(filepath + filename);
     let name = filename.split(".").shift()
-    if(name.toLowerCase() != "authorize") path += name;
+    if(name.toLowerCase() != "index") path += name;
     router[auth.type ? auth.type.toLowerCase() : "get"](path, async function (req, res) {
-        auth.execute(req, res);
+        auth.execute(req, res, pool, fetch);
     });
-    if (process.env.APP_DEBUG == "true") console.log(`[AUTH] Loaded ${path}${filename} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
+    if (process.env.APP_DEBUG == "true") console.log(`[AUTH] Loaded "${chalk.yellow(filename)}" as ${chalk.yellow(path)} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
   }
 
   module.exports = router;

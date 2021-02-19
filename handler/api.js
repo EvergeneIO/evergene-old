@@ -12,45 +12,76 @@ const chalk = require('chalk');
 const fetch = require('node-fetch');
 
 
-const load = (dirs) => {
-    const apis = fs.readdirSync(`./routes/api/${dirs}/`).filter(f => f.endsWith(".js"));
+console.log("\n[API] Loading...");
+let startAll = Date.now();
+getFiles(`${process.cwd()}/routes/api/`, "/", true);
+console.log(`[API] Finished loading - took ${chalk.blue(`${Date.now() - startAll}ms`)}\n`);
 
-    console.log(`[API] Loading "${dirs}"...`);
-    let folderTime = Date.now();
-    for (let file of apis) {
-        let fileStart = Date.now()
-        const fileName = file.split(".").shift().toLowerCase();
-        const api = require(`../routes/api/${dirs}/${file}`);
+function getFiles(filepath, apipath, first = false) {
+    let allFiles = fs.readdirSync(filepath, { withFileTypes: true });
+    let files = allFiles
+        .filter((f) => f.name.split(".").pop() == "js")
+        .map((f) => f.name);
+    files.forEach((file) => {
+        addPath(file, filepath, apipath);
+    });
 
-        router[api.type ? api.type.toLowerCase() : "get"](`/${fileName}`, jsonParser, urlencodedParser, async (req, res) => {
+    let dirs = allFiles
+        .filter((dirent) => !dirent.isFile())
+        .map((dirent) => dirent.name);
 
-            let status = await tools.endpoints(fileName);
-            if (status != 1) {
+
+    dirs.forEach((dir) => {
+        if (dir == "u") return;
+        let endpath = apipath;
+        if (!first)
+            endpath += `${dir}/`;
+
+
+        getFiles(`${filepath}${dir}/`, endpath);
+    });
+}
+
+async function addPath(filename, filepath, path) {
+    path = path.toLowerCase();
+    let fileStart = Date.now();
+    const fileName = filename.split(".").shift().toLowerCase();
+    const api = require(`${filepath}/${filename}`);
+    let endPath = `${path}${fileName}`
+
+    if (api.dynamic) {
+        if (typeof api.dynamic == "string") {
+            if (!api.dynamic.startsWith("/")) api.dynamic = "/" + api.dynamic
+            endPath += api.dynamic
+        }
+    }
+
+    for (let key in api.type) {
+        router[key ? key.toLowerCase() : "get"](endPath, jsonParser, urlencodedParser, async (req, res) => {
+
+
+            if (!tools.endpoints(fileName)) {
                 return res.status('503').send({
                     status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
                 }, null, 3);
             }
 
             try {
-                await api.execute(req, res, fileName, tools)
+                await api.type[key](req, res, fileName, tools)
             } catch (err) {
                 //Log error if debug mode is enabled
-                 if (process.env.APP_DEBUG == "true") console.error(err);
-                 
-                 //return error on error
+                if (process.env.APP_DEBUG == "true") console.error(err);
+
+                //return error on error
                 return res.status('500').send({
                     status: 500, "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
                 }, null, 3);
             }
         });
-        if (process.env.APP_DEBUG == "true") console.log(`[API] Loaded /${fileName} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
+        if (process.env.APP_DEBUG == "true") console.log(`[API] Loaded "${chalk.yellow(filename)}" as ${chalk.yellow(`api${endPath} (${key.toUpperCase()})`)} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
     }
-    console.log(`[API] Loaded "${dirs}" - took ${chalk.blue(`${Date.now() - folderTime}ms`)}`)
 }
 
-console.log(`\n[API] Loading...`);
-let startAll = Date.now();
-fs.readdirSync("./routes/api").forEach(dirs => load(dirs))
-console.log(`[API] Finished loading - took ${chalk.blue(`${Date.now() - startAll}ms`)}\n`);
+
 
 module.exports = router;

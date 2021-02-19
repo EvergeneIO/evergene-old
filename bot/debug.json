@@ -1,0 +1,45 @@
+{
+  "token": "ODEwODgxMzc1OTQzMDAwMDc0.YCqGIQ.PxR1XYVzAUZGh_1SlJLd4w35FpA",
+  "prefix": "!!",
+  "devs": {
+    "CuzImStantac#6239": "467414935530504192",
+    "N.T.W#9999": "310115562305093632"
+  },
+  "color": "#91bbff",
+  "colors": {
+    "blue": "#03bafc",
+    "red": "#db3535",
+    "yellow": "#e0ed51",
+    "green": "#2eff17"
+  },
+  "presences": {
+    "default": {
+      "activity": { "name": "with new code | !!help", "type": "WATCHING" },
+      "status": "online"
+    },
+    "reload": {
+      "activity": { "name": "reload . . .", "type": "PLAYING" },
+      "status": "dnd"
+    }
+  },
+  "servers": {
+    "Main": {
+      "id": "710781300100956170",
+      "invite": null,
+      "channels": {
+        "category": null,
+        "text": null,
+        "voice": null
+      }
+    },
+    "Stan-Dev": {
+      "id": "735128284676882503",
+      "invite": null,
+      "channels": {
+        "category": null,
+        "text": null,
+        "voice": null
+      }
+    }
+  }
+}

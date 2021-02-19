@@ -1,6 +1,7 @@
 const pool = require('./database/connection');
 const fetch = require('node-fetch');
 const cookie = require('cookie');
+const chalk = require('chalk')
 
 module.exports = {
 
@@ -53,7 +54,7 @@ module.exports = {
             res(status);
           } else {
             console.log(chalk.red('FALSE'));
-            res(false);
+            res(undefined);
           }
         });
     });
@@ -89,6 +90,28 @@ module.exports = {
       lang = lang
     }
     return lang;
+  },
+
+  forceAuth: async function (req, res, next) {
+    if (!req.session.user) return res.redirect('/authorize/discord')
+    else return next();
+  },
+
+  reddit: async function (res, reddit) {
+    try {
+      let url = `https://www.reddit.com/r/${reddit}/hot/.json?count=1000`;
+
+      let allPosts = await (await fetch(url)).json();
+
+      let posts = allPosts.data.children.filter((m) => !m.is_video && ["png","jpg", "jpeg","gif"].includes(m.data.url.split(".").pop()));
+      let post = posts[Math.floor(Math.random() * posts.length)].data;
+      res.header("Content-Type", "application/json")
+      return res.send(JSON.stringify({ url: post.url }, null, 3));
+    } catch (e) {
+      return res.status('500').send({
+        status: 500, "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+      }, null, 3);
+    }
   }
 
 }

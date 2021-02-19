@@ -1,7 +1,6 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
-config.json
 ### Node ###
 # Logs
 logs
@@ -45,7 +44,6 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-bot/
 package-lock.json
 # TypeScript v1 declaration files
 typings/
@@ -113,5 +111,4 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-.env
 # End of https://www.toptal.com/developers/gitignore/api/node

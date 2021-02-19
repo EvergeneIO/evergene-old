@@ -1,5 +1,8 @@
+const FormData = require('form-data');
+const { makeid, checkKey } = require("../../../functions");
+
 module.exports = {
-    execute: async (req, res) => {
+    execute: async (req, res, pool, fetch) => {
         if (req.session.user) return res.redirect('/');
 
         const accessCode = req.query.code;
@@ -75,14 +78,14 @@ module.exports = {
                             userResponse.avatarURL = userResponse.avatar ? `https://cdn.evergene.io/default.png` : null;
                         }
 
-                        con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
+                        pool.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
                             if (err) {
                                 console.log('Error in DB');
                                 console.error(err);
                                 return;
                             } else {
                                 if (result && result.length) {
-                                    con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
+                                    pool.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
                                         if (err) throw err;
                                         const json = JSON.stringify(result);
                                         const obj = JSON.parse(json);
@@ -92,7 +95,7 @@ module.exports = {
                                     });
                                 } else {
                                     let token = makeid(24);
-                                    con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${userResponse.id}", "${token}", 1)`, function (err, result) {
+                                    pool.query(`INSERT INTO user (discordId, token, perms) VALUES ("${userResponse.id}", "${token}", 1)`, function (err, result) {
                                         if (err) throw err;
                                         console.log('INSERT AND RENDER');
                                     });
