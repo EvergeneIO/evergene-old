@@ -72,6 +72,10 @@ async function addPath(filename, filepath, path) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
+                pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) { 
+                    
+                });
+
                 //return error on error
                 return res.status('500').send({
                     status: 500, "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
