@@ -10,7 +10,11 @@
     <%- include('partials/navbar.ejs') %>
     <%- include('partials/header.ejs') %>
     <!-- Render Content/ -->
-    <%- include('content/api/nsfw.ejs') %>
+    <% if (lang == 'de') { %>
+        <%- include('content/de/api/nsfw.ejs') %>
+    <% } else { %>
+        <%- include('content/en/api/nsfw.ejs') %>
+    <% } %>
     <%- include('partials/footer.ejs') %>
     <%- include('partials/discord.ejs') %>
 </body>

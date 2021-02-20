@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="container down">
+
+
+    <!-- 2-->
+    <div class="card mb-3 redirect-card">
+      <img src="https://data.newt.ch/evergene.png" class="card-img-top" alt="Evergene Banner">
+      <div class="card-body">
+        <h5 class="card-title">Evergene</h5>
+        <p class="card-text">You will be redirected to our channel for partner-requests<br \></p>
+        <div class="bs">
+          <!-- Progress bar HTML -->
+          <div class="progress" style="height: 30px; width: 100%;">
+            <div class="progress-bar rainbow"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- jQuery Script -->
+    <script>
+      var i = 0;
+      function makeProgress() {
+        if (i < 100) {
+          i = i + 1;
+          $(".progress-bar").css("width", i + "%");
+        }
+        // Wait for sometime before running this script again
+        setTimeout("makeProgress()", 50);
+      }
+      makeProgress();
+    </script>
+  </div>
+</div>

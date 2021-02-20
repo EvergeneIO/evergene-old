@@ -1,7 +1,6 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
-config.json
 ### Node ###
 # Logs
 logs
@@ -26,6 +25,8 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
+node_modules
+.env
 
 # nyc test coverage
 .nyc_output
@@ -45,7 +46,6 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-bot/
 package-lock.json
 # TypeScript v1 declaration files
 typings/
@@ -113,5 +113,4 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-
 # End of https://www.toptal.com/developers/gitignore/api/node

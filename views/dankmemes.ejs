@@ -9,7 +9,11 @@
     <%- include('partials/navbar.ejs') %>
     <%- include('partials/header.ejs') %>
     <!-- Render Content/ -->
-    <%- include('content/api/dankmemes.ejs') %>
+    <% if (lang == 'de') { %>
+        <%- include('content/de/dankmemes.ejs') %>
+    <% } else { %>
+        <%- include('content/en/dankmemes.ejs') %>
+    <% } %>
     <%- include('partials/footer.ejs') %>
     <%- include('partials/discord.ejs') %>
 </body>

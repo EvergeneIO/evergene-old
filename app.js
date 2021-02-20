@@ -4,6 +4,8 @@ const { resolveInclude } = require('ejs');
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
 dotenv.config();
 
@@ -12,9 +14,12 @@ const port = process.env.APP_PORT
 app.set('port', port);
 
 const session = require('express-session');
+const router = require('./router');
 
 app.set('view engine', 'ejs');
 app.use(express.static('static'));
+app.use(cookieParser());
+app.use(morgan('dev'))
 app.use(session({
     secret: '48738924783748273742398747238',
     resave: false,
@@ -22,6 +27,5 @@ app.use(session({
     expires: 604800000,
 }));
 require('./router')(app);
-
 
 app.listen(port, () => console.log(chalk.bold.green(`Server started on port ${port}!`)));

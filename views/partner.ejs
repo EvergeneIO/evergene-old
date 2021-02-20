@@ -9,9 +9,15 @@
 <body>
   <%- include('partials/navbar.ejs') %>
     <%- include('partials/header.ejs') %>
-      <!-- Render Content/ -->
-      <%- include('content/partner.ejs') %>
-        <%- include('partials/footer.ejs') %>
+
+    <!-- Render Content/ -->
+    <% if (lang == 'de') { %>
+        <%- include('content/de/partner.ejs') %>
+    <% } else { %>
+        <%- include('content/en/partner.ejs') %>
+    <% } %>
+
+    <%- include('partials/footer.ejs') %>
 
           <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
 

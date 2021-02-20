@@ -525,3 +525,29 @@ pre{
   border-color: #383e44 !important;
   border-bottom: 0 !important;
 }
+
+.card-header-normal:hover{
+  color: #0E1012 !important;
+  border-bottom: 6px solid #578FDB !important;
+}
+
+.cookie-card {
+  flex-direction: column;
+  min-width: 0;
+  color: white;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border-radius: 6px;
+}
+
+.cookie-learn-more {
+  text-decoration: none;
+  color: #000;
+  margin-top: 8px
+}
+
+.cookie-learn-more:hover {
+  text-decoration: none;
+  color: blue;
+  margin-top: 8px
+}
