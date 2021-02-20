@@ -6,7 +6,7 @@ module.exports = {
     execute: async (req, res, endpoint, tools) => {
         // Your Functions
 
-        let output = 'Your Output'
+        let output = 'I am Newt OwO'
         res.header("Content-Type", "application/json");
         res.send(JSON.stringify({ url: output }, null, 3));
     }

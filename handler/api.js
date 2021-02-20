@@ -10,6 +10,7 @@ var urlencodedParser = bodyParser.urlencoded({
 });
 const chalk = require('chalk');
 const fetch = require('node-fetch');
+const pool = require(`${process.cwd()}/database/connection`);
 
 
 console.log("\n[API] Loading...");
@@ -59,8 +60,9 @@ async function addPath(filename, filepath, path) {
     for (let key in api.type) {
         router[key ? key.toLowerCase() : "get"](endPath, jsonParser, urlencodedParser, async (req, res) => {
 
-
-            if (!tools.endpoints(fileName)) {
+            let endpointStatus = await tools.endpoints(fileName);
+            if (process.env.APP_DEBUG == "true") console.log(`[API] Status from "${fileName}" is "${endpointStatus}"`);
+            if (endpointStatus == false) {
                 return res.status('503').send({
                     status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
                 }, null, 3);
@@ -73,7 +75,7 @@ async function addPath(filename, filepath, path) {
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
                 pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) { 
-                    
+
                 });
 
                 //return error on error

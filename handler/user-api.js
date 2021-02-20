@@ -31,6 +31,7 @@ function getFiles(filepath, authpath) {
         .map((dirent) => dirent.name);
 
     dirs.forEach((dir) => {
+        if (dir == 'inv') return;
         getFiles(`${filepath}${dir}/`, `${authpath}${dir}/`);
     });
 }
