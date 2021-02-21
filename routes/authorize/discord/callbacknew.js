@@ -70,7 +70,6 @@ module.exports = {
                 })
                     .then(res2 => res2.json())
                     .then(userResponse => {
-                        console.log(userResponse.id);
                         userResponse.tag = `${userResponse.username}#${userResponse.discriminator}`;
                         if (userResponse.avatar) {
                             userResponse.avatarURL = userResponse.avatar ? `https://cdn.discordapp.com/avatars/${userResponse.id}/${userResponse.avatar}.png?size=1024` : null;
