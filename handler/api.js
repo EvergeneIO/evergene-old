@@ -11,7 +11,8 @@ var urlencodedParser = bodyParser.urlencoded({
 const chalk = require('chalk');
 const fetch = require('node-fetch');
 const pool = require(`${process.cwd()}/database/connection`);
-
+const Discord = require('discord.js');
+const webhookClient = new Discord.WebhookClient(process.env.WEBHOOK_ID || '813143436621643806', process.env.WEBHOOK_TOKEN || 'CZBAIJBwv2AiKAl7NfGTLmHigLhjS9P_X_eGN8Br1B6PM8B-uadkk1qomaokeK0B21eu');
 
 console.log("\n[API] Loading...");
 let startAll = Date.now();
@@ -74,13 +75,28 @@ async function addPath(filename, filepath, path) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
-                pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) { 
+                pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
+                    const embed = {
+                        "title": `API Internal Server Error (${fileName})`,
+                        "description": `The system has noticed that there is an internal server error and has therefore switched off ${fileName}.`,
+                        "color": 16711680,
+                        "author": {
+                            "name": "System",
+                            "url": `https://evergene.io/api/${fileName}`,
+                            "icon_url": "https://cdn.evergene.io/website/evergene-logo.png"
+                        }
+                    };
 
+                    webhookClient.send({
+                        username: 'Evergene System',
+                        avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
+                        embeds: [embed],
+                    });
                 });
 
                 //return error on error
                 return res.status('500').send({
-                    status: 500, "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
+                    status: 500, reason: "Internal Server Error", msg: "please contact a administrator", url: "https://http.cat/500"
                 }, null, 3);
             }
         });
