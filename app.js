@@ -32,7 +32,7 @@ require('./router')(app);
 
 app.listen(port, () => {
     console.log(chalk.bold.green(`Server started on port ${port}!`));
-    const embed = {
+    /*const embed = {
         "title": `System Starts`,
         "description": `The system was restarted.`,
         "color": 13311,
@@ -47,5 +47,5 @@ app.listen(port, () => {
         username: 'Evergene System',
         avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
         embeds: [embed],
-    });
+    });*/
 });
