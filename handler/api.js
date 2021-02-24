@@ -75,7 +75,7 @@ async function addPath(filename, filepath, path) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
-                pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
+               /* pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
                     const embed = {
                         "title": `API Internal Server Error (${fileName})`,
                         "description": `The system has noticed that there is an internal server error and has therefore switched off ${fileName}.`,
@@ -92,7 +92,7 @@ async function addPath(filename, filepath, path) {
                         avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
                         embeds: [embed],
                     });
-                });
+                });*/
 
                 //return error on error
                 return res.status('500').send({
