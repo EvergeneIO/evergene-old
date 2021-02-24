@@ -36,24 +36,38 @@ function getFiles(filepath, authpath) {
     });
 }
 
-async function addPath(filename, filepath, path) {
+async function addPath(filename, filepath, path, currentDir) {
     path = path.toLowerCase();
     let fileStart = Date.now();
     const fileName = filename.split(".").shift().toLowerCase();
     const api = require(`${filepath}/${filename}`);
     let endPath = `${path}${fileName}`
-        if (api.dynamic) {
+    if (api.dynamic) {
         if (typeof api.dynamic == "string") {
-            if(!api.dynamic.startsWith("/")) api.dynamic = "/" + api.dynamic
+            if (!api.dynamic.startsWith("/")) api.dynamic = "/" + api.dynamic
             endPath += api.dynamic
         }
     }
-    router["get"](endPath, jsonParser, urlencodedParser, async (req, res) => {
 
+    // if(currentDir == "private") {
+    //     let keys = null;
+        
+    //     tools.checkKey()
+    // }
+
+    router["get"](endPath, jsonParser, urlencodedParser, async (req, res) => {
+        const privateKeys = null;
 
         if (!api.status) {
             return res.status('503').send({
                 status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+            }, null, 3);
+        }
+
+        if (privateKeys) {
+            let key = req.headers('Authorization');
+            if (!keys.includes(key)) return res.status('401').send({
+                status: 401, "reason": "Unauthorized", "url": "https://http.cat/401"
             }, null, 3);
         }
 
@@ -74,3 +88,4 @@ async function addPath(filename, filepath, path) {
 
 
 module.exports = router;
+

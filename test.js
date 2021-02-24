@@ -1,13 +1,9 @@
-const Discord = require('discord.js');
-
-const webhookClient = new Discord.WebhookClient(process.env.WEBHOOK_ID || '813143436621643806', process.env.WEBHOOK_TOKEN || 'CZBAIJBwv2AiKAl7NfGTLmHigLhjS9P_X_eGN8Br1B6PM8B-uadkk1qomaokeK0B21eu');
-
-const embed = new Discord.MessageEmbed()
-	.setTitle('Some Title')
-	.setColor('#0099ff');
-
-webhookClient.send('Webhook test', {
-	username: 'some-username',
-	avatarURL: 'https://i.imgur.com/wSTFkRM.png',
-	embeds: [embed],
-});
+fetch(`https://discord.com/api/v8/webhooks/${process.env.WEBHOOK_ID}/${process.env.WEBHOOK_TOKEN}/messages/813418848015351818`, {
+	method: "PATCH",
+	headers: {
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify(embed),
+})
+	.then(res => res.json())
+	.then(json => console.log(json));
