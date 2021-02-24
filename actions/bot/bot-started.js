@@ -15,7 +15,7 @@ const start = fs.readFileSync('start.txt');
 
 const embed = {
     embeds: [{
-        title: `System Online`,
+        title: `Bot Online`,
         color: 65280,
         footer: {
             text: `took ${Date.now() - start}ms`

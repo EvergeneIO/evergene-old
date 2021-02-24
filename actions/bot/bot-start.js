@@ -15,7 +15,7 @@ fs.writeFileSync('start.txt', `${Date.now()}`)
 
 const embed = {
     embeds: [{
-        title: `System Starting...`,
+        title: `Bot Starting...`,
         color: 65280,
     }]
 };
