@@ -2,21 +2,18 @@
 <html lang="en">
 
 <head>
-    <%- include('partials/head.ejs') %>
+    <%- include('utils/head.ejs') %>
 </head>
 
 <body onload="checkuser();">
     
-    <%- include('partials/navbar.ejs') %>
-    <%- include('partials/header.ejs') %>
+    <%- include('utils/navbar.ejs') %>
+    <%- include('utils/header.ejs') %>
     <!-- Render Content/ -->
-    <% if (lang == 'de') { %>
-        <%- include('content/de/api/nsfw.ejs') %>
-    <% } else { %>
-        <%- include('content/en/api/nsfw.ejs') %>
-    <% } %>
-    <%- include('partials/footer.ejs') %>
-    <%- include('partials/discord.ejs') %>
+
+    <%- include('content/api/nsfw.ejs') %>
+    <%- include('utils/footer.ejs') %>
+    <%- include('utils/discord.ejs') %>
 </body>
 
 </html>
