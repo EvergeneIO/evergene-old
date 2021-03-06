@@ -19,6 +19,7 @@ module.exports = new Event(
 
     let date = Date.now();
     setTimeout(() => {
+      console.log("dingsda");
       new Embed('817546914781593650', 'Bot', Embed.STARTED, {
         webID: process.env.WEBHOOK_ID,
         webTOKEN: process.env.WEBHOOK_TOKEN
