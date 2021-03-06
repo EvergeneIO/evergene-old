@@ -190,6 +190,6 @@ module.exports = class Embed {
         return `${formatDate.getMonth() + 1 < 10 ? "0" : ""
             }${formatDate.getMonth() + 1}/${formatDate.getDate() < 10 ? "0" : ""}${formatDate.getDate()}/${formatDate.getFullYear()} at ${formatDate.getHours() < 10 ? "0" : ""
             }${formatDate.getHours()}:${formatDate.getMinutes() < 10 ? "0" : ""
-            }${formatDate.getMinutes()}`;
+            }${formatDate.getMinutes()} (UTC${formatDate.getTimezoneOffset() / 60 * -1 >= 0 : "+" : ""}${formatDate.getTimezoneOffset() / 60 * -1})`;
     }
 }
