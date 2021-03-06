@@ -20,7 +20,7 @@ module.exports = new Event(
     new Embed('817546914781593650', 'Bot', Embed.STARTED, {
       webID: process.env.WEBHOOK_ID,
       webTOKEN: process.env.WEBHOOK_TOKEN
-  }, `${cwd}/actions/temp.txt`, Date.now(), process.env.APP_MODE);
+  }, `${cwd}/actions/data/temp.txt`, Date.now(), process.env.APP_MODE);
 
     //Inform the user that the bot is logged in
     console.log(`${client.user.username} is ready!`);

@@ -61,43 +61,28 @@ module.exports = class Endpoint {
     }
 
     /**
+     * @param {Express.Application} server Server
      * @param {Object} config Endpoint config
      * @param {Number} config.method Endpoint mehtod
      * @param {String} [config.dynamic=false] Dynamic route
      * @param {String} [path=/] Path to use
      * @param {Function} execute Code to execute on request
      */
-    constructor({ method, dynamic, path } = {}, code) {
+    constructor(server, { method, dynamic, path } = {}, code) {
         if (method && typeof method != "number") {
             throw new Error(`Expected a number but received "${typeof method}"`);
         }
         if (dynamic && typeof dynamic != "string") {
             throw new Error(`Expected a string but received "${typeof dynamic}"`);
         }
+        if (path && typeof path != "string") {
+            throw new Error(`Expected a string but received "${typeof path}"`);
+        }
 
+        this._path = path || this.path;
         this._method = method || this.method;
         this._dynamic = dynamic || this.dynamic;
 
-
-    }
-
-    /** 
-     * Handle Api routing
-     * @param {Express.Application} server Server
-     */
-    static router(server) {
-        
-        // '/api'
-        server.use('/api', require('../handler/api'));
-
-        // '/user-api'
-        server.use('/api/u', require('../handler/user-api'));
-
-        // '/authorize'
-        server.use('/authorize', require('../handler/authorize'));
-
-        server.use('/test', require('../routes/test'));
-
-        server.use(require('../database/migration'));
+        server[this.method.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {});
     }
 }
