@@ -6,7 +6,7 @@ const moment = require("moment");
 
 /**
  * Emitted when the client becomes ready to start working
- * @author @ACertainCoder
+ * @author @ACertainCoder @CuzImStantac
  */
 module.exports = new Event(
   {
@@ -15,13 +15,26 @@ module.exports = new Event(
     type: Event.DISCORD,
   },
   async function () {
-    const { client, config, tools, restart } = Bot;
+    const { client, config, tools, restart, cwd } = Bot;
+    
+    new Embed('817546914781593650', 'Bot', Embed.STARTED, {
+      webID: process.env.WEBHOOK_ID,
+      webTOKEN: process.env.WEBHOOK_TOKEN
+  }, `${cwd}/actions/temp.txt`, Date.now(), process.env.APP_MODE);
 
     //Inform the user that the bot is logged in
     console.log(`${client.user.username} is ready!`);
 
     //Set the bot presence
     client.user.setPresence(config.presences.default);
+
+
+    if(restart.done) {
+    client.channels.cache.get("813148581933482044").messages.fetch(Bot.ping).delete();
+    let pingmsg = await client.channels.cache.get("813148581933482044").send("System restarted [<@&817532515644342292>]");
+    Bot.ping = pingmsg.id;
+    await tools.saveData.call();
+    }
 
     //Edit the restart message (if there is one)
     if (!restart.done && restart.guild && restart.channel && restart.message) {

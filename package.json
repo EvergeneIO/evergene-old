@@ -6,7 +6,13 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "bot": "nodemon discord/bot.js"
+    "bot": "nodemon discord/bot.js",
+
+    "system-stop": "cross-env ID=817546892065505290 NAME=System MODE=STOPPING node ./actions/start.js",
+    "system-stopped": "cross-env ID=817546892065505290 NAME=System MODE=STOPPED node ./actions/start.js",
+
+    "bot-stop": "cross-env ID=817546914781593650 NAME=Bot MODE=STOPPING node ./actions/start.js",
+    "bot-stopped": "cross-env ID=817546914781593650 NAME=Bot MODE=STOPPED node ./actions/start.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +33,7 @@
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
@@ -46,7 +53,8 @@
     "ping-monitor": "^0.5.1",
     "random-puppy": "^1.1.0",
     "sweetalert2": "^10.13.0",
-    "uid-safe": "^2.1.5"
+    "uid-safe": "^2.1.5",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

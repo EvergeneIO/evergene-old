@@ -1,0 +1,128 @@
+Response {
+  size: 0,
+  timeout: 0,
+  [Symbol(Body internals)]: {
+    body: PassThrough {
+      _readableState: ReadableState {
+        objectMode: false,
+        highWaterMark: 16384,
+        buffer: BufferList { head: null, tail: null, length: 0 },
+        length: 0,
+        pipes: [],
+        flowing: null,
+        ended: true,
+        endEmitted: false,
+        reading: false,
+        sync: false,
+        needReadable: false,
+        emittedReadable: false,
+        readableListening: false,
+        resumeScheduled: false,
+        errorEmitted: false,
+        emitClose: true,
+        autoDestroy: true,
+        destroyed: false,
+        errored: false,
+        closed: false,
+        closeEmitted: false,
+        defaultEncoding: 'utf8',
+        awaitDrainWriters: null,
+        multiAwaitDrain: false,
+        readingMore: false,
+        decoder: null,
+        encoding: null,
+        [Symbol(kPaused)]: null
+      },
+      _events: [Object: null prototype] {
+        prefinish: [Function: prefinish],
+        error: [Function (anonymous)]
+      },
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      _writableState: WritableState {
+        objectMode: false,
+        highWaterMark: 16384,
+        finalCalled: false,
+        needDrain: false,
+        ending: true,
+        ended: true,
+        finished: true,
+        destroyed: false,
+        decodeStrings: true,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        corked: 0,
+        sync: true,
+        bufferProcessing: false,
+        onwrite: [Function: bound onwrite],
+        writecb: null,
+        writelen: 0,
+        afterWriteTickInfo: null,
+        buffered: [],
+        bufferedIndex: 0,
+        allBuffers: true,
+        allNoop: true,
+        pendingcb: 0,
+        prefinished: true,
+        errorEmitted: false,
+        emitClose: true,
+        autoDestroy: true,
+        errored: false,
+        closed: false
+      },
+      allowHalfOpen: true,
+      _transformState: {
+        afterTransform: [Function: bound afterTransform],
+        needTransform: false,
+        transforming: false,
+        writecb: null,
+        writechunk: null,
+        writeencoding: null
+      },
+      [Symbol(kCapture)]: false
+    },
+    disturbed: false,
+    error: null
+  },
+  [Symbol(Response internals)]: {
+    url: 'https://discord.com/api/webhooks/813143436621643806/CZBAIJBwv2AiKAl7NfGTLmHigLhjS9P_X_eGN8Br1B6PM8B-uadkk1qomaokeK0B21eu',
+    status: 204,
+    statusText: 'No Content',
+    headers: Headers {
+      [Symbol(map)]: [Object: null prototype] {
+        date: [ 'Sat, 06 Mar 2021 00:17:04 GMT' ],
+        'content-type': [ 'text/html; charset=utf-8' ],
+        'content-length': [ '0' ],
+        connection: [ 'close' ],
+        'set-cookie': [
+          '__cfduid=d6760ad43f344a496a7b12d9cbacc1bf41614989824; expires=Mon, 05-Apr-21 00:17:04 GMT; path=/; domain=.discord.com; HttpOnly; SameSite=Lax; Secure'
+        ],
+        'strict-transport-security': [ 'max-age=31536000; includeSubDomains; preload' ],
+        'x-ratelimit-bucket': [ '3cd1f278bd0ecaf11e0d2391374c011d' ],
+        'x-ratelimit-limit': [ '5' ],
+        'x-ratelimit-remaining': [ '3' ],
+        'x-ratelimit-reset': [ '1614989827' ],
+        'x-ratelimit-reset-after': [ '2' ],
+        'x-envoy-upstream-service-time': [ '157' ],
+        via: [ '1.1 google' ],
+        'alt-svc': [
+          'h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400'
+        ],
+        'cf-cache-status': [ 'DYNAMIC' ],
+        'cf-request-id': [ '08a67e2a4700003745bb87c000000001' ],
+        'expect-ct': [
+          'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+        ],
+        'report-to': [
+          '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report?s=A5UfKm7h02ixNgiVEhrhBZo1xUxW%2BUvNYOdZZ%2BcBp9mNwBK3qCMHfmU0Uog%2FTLcLRFqeHuYnDL3h55F1NTHEPARPuopdkyGIPXe8tA%3D%3D"}],"group":"cf-nel","max_age":604800}'
+        ],
+        nel: [ '{"report_to":"cf-nel","max_age":604800}' ],
+        'x-content-type-options': [ 'nosniff' ],
+        server: [ 'cloudflare' ],
+        'cf-ray': [ '62b76623acb03745-MXP' ]
+      }
+    },
+    counter: 0
+  }
+}
