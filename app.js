@@ -5,7 +5,7 @@ console.log(chalk.yellow('Server is starting...'))
 new Embed('817546892065505290', 'System', Embed.STARTING, {
         webID: process.env.WEBHOOK_ID,
         webTOKEN: process.env.WEBHOOK_TOKEN
-    }, "./actions/temp.txt", Date.now(), process.env.APP_MODE);
+    }, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
 
 const { resolveInclude } = require('ejs');
 const express = require('express');
@@ -42,5 +42,5 @@ app.listen(port, () => {
     new Embed('817546892065505290', 'System', Embed.STARTED, {
         webID: process.env.WEBHOOK_ID,
         webTOKEN: process.env.WEBHOOK_TOKEN
-    }, "./actions/temp.txt", Date.now(), process.env.APP_MODE);
+    }, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
 });
