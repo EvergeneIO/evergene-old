@@ -15,12 +15,12 @@ module.exports = new Event(
     type: Event.DISCORD,
   },
   async function () {
-    const { client, config, tools, restart, cwd } = Bot;
+    const { client, config, tools, restart } = Bot;
     
     new Embed('817546914781593650', 'Bot', Embed.STARTED, {
       webID: process.env.WEBHOOK_ID,
       webTOKEN: process.env.WEBHOOK_TOKEN
-  }, `${cwd}/actions/data/temp.txt`, Date.now(), process.env.APP_MODE);
+  }, `${process.cwd()}/actions/data/temp.txt`, Date.now(), process.env.APP_MODE);
 
     //Inform the user that the bot is logged in
     console.log(`${client.user.username} is ready!`);
