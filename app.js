@@ -3,9 +3,9 @@ const Embed = require('./actions/Embed')
 console.log(chalk.yellow('Server is starting...'))
 
 new Embed('817546892065505290', 'System', Embed.STARTING, {
-        webID: process.env.WEBHOOK_ID,
-        webTOKEN: process.env.WEBHOOK_TOKEN
-    }, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
+    webID: process.env.WEBHOOK_ID,
+    webTOKEN: process.env.WEBHOOK_TOKEN
+}, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
 
 const { resolveInclude } = require('ejs');
 const express = require('express');
@@ -39,8 +39,12 @@ require('./router')(app);
 
 app.listen(port, () => {
     console.log(chalk.bold.green(`Server started on port ${port}!`));
-    new Embed('817546892065505290', 'System', Embed.STARTED, {
-        webID: process.env.WEBHOOK_ID,
-        webTOKEN: process.env.WEBHOOK_TOKEN
-    }, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
+    let date = Date.now();
+    setTimeout(() => {
+        new Embed('817546892065505290', 'System', Embed.STARTED, {
+            webID: process.env.WEBHOOK_ID,
+            webTOKEN: process.env.WEBHOOK_TOKEN
+        }, "./actions/data/temp.txt", date, process.env.APP_MODE);
+    }, 1000);
+
 });
