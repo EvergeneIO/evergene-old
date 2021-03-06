@@ -7,6 +7,7 @@
 
 const Bot = require("./classes/Bot.js");
 const router = require("express").Router();
+const Embed = require("../actions/Embed.js");
 require("dotenv").config();
 
 module.exports = router;

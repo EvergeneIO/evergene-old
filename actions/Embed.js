@@ -51,7 +51,7 @@ module.exports = class Embed {
                 let tookStart = Embed.formatTime(Date.now() - time);
 
                 embed.setTitle(`» ${name} - Started`).setColor("GREEN");
-                Embed.infos(`./${name}.json`, { lastStart, tookStart }, embed);
+                Embed.infos(`./actions/${name}.json`, { lastStart, tookStart }, embed);
                 break;
             case 2:
                 if (!value) throw new Error("No value was provided!");
@@ -61,7 +61,7 @@ module.exports = class Embed {
             case 3:
                 time = Embed.loadValue(path);
                 embed.setTitle(`» ${name} - Stopped`).setFooter(`Took ▸ ${Embed.formatTime(Date.now() - time)}`).setColor("RED");
-                Embed.saveValue(`./${name}.json`, JSON.stringify({
+                Embed.saveValue(`./actions/${name}.json`, JSON.stringify({
                     lastStop: Date.now(),
                     tookStop: Embed.formatTime(Date.now() - time),
                 }, null, 4));
