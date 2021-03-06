@@ -1,5 +1,12 @@
 const chalk = require('chalk');
+const Embed = require('./actions/Embed')
 console.log(chalk.yellow('Server is starting...'))
+
+new Embed('817546892065505290', 'System', Embed.STARTING, {
+        webID: process.env.WEBHOOK_ID,
+        webTOKEN: process.env.WEBHOOK_TOKEN
+    }, "./actions/temp.txt", Date.now(), process.env.APP_MODE);
+
 const { resolveInclude } = require('ejs');
 const express = require('express');
 const app = express();
@@ -32,20 +39,8 @@ require('./router')(app);
 
 app.listen(port, () => {
     console.log(chalk.bold.green(`Server started on port ${port}!`));
-    /*const embed = {
-        "title": `System Starts`,
-        "description": `The system was restarted.`,
-        "color": 13311,
-        "author": {
-            "name": "System",
-            "url": `https://evergene.io/`,
-            "icon_url": "https://cdn.evergene.io/website/evergene-logo.png"
-        }
-    };
-
-    webhookClient.send({
-        username: 'Evergene System',
-        avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
-        embeds: [embed],
-    });*/
+    new Embed('817546892065505290', 'System', Embed.STARTED, {
+        webID: process.env.WEBHOOK_ID,
+        webTOKEN: process.env.WEBHOOK_TOKEN
+    }, "./actions/temp.txt", Date.now(), process.env.APP_MODE);
 });

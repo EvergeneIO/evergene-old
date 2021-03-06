@@ -11,4 +11,9 @@ require("dotenv").config();
 
 module.exports = router;
 
+ new Embed('817546914781593650', 'Bot', Embed.STARTING, {
+      webID: process.env.WEBHOOK_ID,
+      webTOKEN: process.env.WEBHOOK_TOKEN
+  }, `${Bot.cwd}/actions/temp.txt`, Date.now(), process.env.APP_MODE);
+
 Bot.boot();

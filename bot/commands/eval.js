@@ -136,14 +136,14 @@ module.exports = new Command(
     }
 
     //Check if the text is too long to display in Discord
-    if (evaluationData.output.length > 1500) {
+    if (evaluationData.output.length > 1000) {
       //Slice it if needed
-      evaluationData.output = evaluationData.output.slice(0, 1500) + "\n...";
+      evaluationData.output = evaluationData.output.slice(0, 1000) + "\n...";
     }
 
-    if (evaluationData.input.length > 1500) {
+    if (evaluationData.input.length > 1000) {
       //Slice it if needed
-      evaluationData.input = evaluationData.input.slice(0, 1500) + "\n...";
+      evaluationData.input = evaluationData.input.slice(0, 1000) + "\n...";
     }
 
     //Display the result in Discord

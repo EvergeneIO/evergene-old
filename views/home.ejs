@@ -3,19 +3,17 @@
 
 <head>
     
-    <%- include('partials/head.ejs') %>
+    <%- include('utils/head.ejs') %>
 </head>
 
 <body>
-    <%- include('partials/navbar.ejs') %>
-    <%- include('partials/header.ejs') %>
+    <%- include('utils/navbar.ejs') %>
+    <%- include('utils/header.ejs') %>
     <!-- Render Content/ -->
-    <% if (lang == 'de') { %>
-        <%- include('content/de/home.ejs') %>
-    <% } else { %>
-        <%- include('content/en/home.ejs') %>
-    <% } %>
-    <%- include('partials/discord.ejs') %>
+
+    <%- include('content/home.ejs') %>
+    <%- include('utils/discord.ejs') %>
+    <%- include('utils/footer.ejs') %>
 </body>
 
 </html>

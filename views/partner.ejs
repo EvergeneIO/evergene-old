@@ -3,21 +3,18 @@
 
 <head>
 
-  <%- include('partials/head.ejs') %>
+  <%- include('utils/head.ejs') %>
 </head>
 
 <body>
-  <%- include('partials/navbar.ejs') %>
-    <%- include('partials/header.ejs') %>
+  <%- include('utils/navbar.ejs') %>
+    <%- include('utils/header.ejs') %>
 
     <!-- Render Content/ -->
-    <% if (lang == 'de') { %>
-        <%- include('content/de/partner.ejs') %>
-    <% } else { %>
-        <%- include('content/en/partner.ejs') %>
-    <% } %>
 
-    <%- include('partials/footer.ejs') %>
+      <%- include('content/partner.ejs') %>
+
+    <%- include('utils/footer.ejs') %>
 
           <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
 
