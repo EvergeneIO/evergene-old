@@ -1,6 +1,7 @@
 const Bot = require("../classes/Bot.js");
 const Event = require("../classes/Event.js");
 const Embed = require("../classes/Embed.js");
+const StatusEmbed = require("../../actions/Embed.js");
 
 const moment = require("moment");
 
@@ -19,11 +20,11 @@ module.exports = new Event(
 
     let date = Date.now();
     setTimeout(() => {
-      new Embed('817546914781593650', 'Bot', Embed.STARTED, {
+      new StatusEmbed('817546914781593650', 'Bot', Embed.STARTED, {
         webID: process.env.WEBHOOK_ID,
         webTOKEN: process.env.WEBHOOK_TOKEN
       }, `${process.cwd()}/actions/data/temp.txt`, date, process.env.APP_MODE);
-    }, 1500);
+    }, 1000);
 
     //Inform the user that the bot is logged in
     console.log(`${client.user.username} is ready!`);
