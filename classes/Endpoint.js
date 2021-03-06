@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const pool = require('../database/connection.js');
-const tools = require("../functions.js")
+const tools = require("../functions.js");
 
 /**
  * Api Handler
@@ -98,7 +98,7 @@ module.exports = class Endpoint {
             }
 
             try {
-                await api.type[key](req, res, fileName, tools)
+                await code(req, res, fileName, tools);
             } catch (err) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
