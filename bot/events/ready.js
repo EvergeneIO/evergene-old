@@ -20,7 +20,7 @@ module.exports = new Event(
 
     let date = Date.now();
     setTimeout(() => {
-      new StatusEmbed('817546914781593650', 'Bot', Embed.STARTED, {
+      new StatusEmbed('817546914781593650', 'Bot', StatusEmbed.STARTED, {
         webID: process.env.WEBHOOK_ID,
         webTOKEN: process.env.WEBHOOK_TOKEN
       }, `${process.cwd()}/actions/data/temp.txt`, date, process.env.APP_MODE);
