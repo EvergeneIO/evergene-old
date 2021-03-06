@@ -30,7 +30,8 @@ module.exports = new Event(
 
 
     if(restart.done) {
-    client.channels.cache.get("813148581933482044").messages.fetch(Bot.ping).delete();
+    let delmsg = await client.channels.cache.get("813148581933482044").messages.fetch(Bot.ping);
+    await delmsg.delete();
     let pingmsg = await client.channels.cache.get("813148581933482044").send("System restarted [<@&817532515644342292>]");
     Bot.ping = pingmsg.id;
     await tools.saveData.call();
