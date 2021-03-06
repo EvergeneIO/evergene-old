@@ -19,12 +19,11 @@ module.exports = new Event(
 
     let date = Date.now();
     setTimeout(() => {
-      console.log("dingsda");
       new Embed('817546914781593650', 'Bot', Embed.STARTED, {
         webID: process.env.WEBHOOK_ID,
         webTOKEN: process.env.WEBHOOK_TOKEN
       }, `${process.cwd()}/actions/data/temp.txt`, date, process.env.APP_MODE);
-    }, 1000);
+    }, 1500);
 
     //Inform the user that the bot is logged in
     console.log(`${client.user.username} is ready!`);
