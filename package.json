@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "bot": "nodemon discord/bot.js",
+    "bot": "node bot/bot.js",
 
     "system-stop": "cross-env ID=817546892065505290 NAME=System MODE=STOPPING node ./actions/start.js",
     "system-stopped": "cross-env ID=817546892065505290 NAME=System MODE=STOPPED node ./actions/start.js",
