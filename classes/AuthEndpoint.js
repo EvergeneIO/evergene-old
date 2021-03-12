@@ -58,7 +58,7 @@ module.exports = class AuthEndpoint extends Endpoint {
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
             try {
-                await this.code(req, res, filename, tools);
+                await this.code(req, res, fileName, tools);
             } catch (err) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
