@@ -38,9 +38,9 @@ module.exports = {
     return result;
   },
 
-  endpoints: function (endpoint) {
+  endpoints: function (endpoint, table = "endpoints") {
     return new Promise((res, rej) => {
-      pool.query(`SELECT * FROM endpoints WHERE name="${endpoint}"`,
+      pool.query(`SELECT * FROM ${table} WHERE name="${endpoint}"`,
         function (err, result, fields) {
           if (err) {
             console.log('Error in DB');

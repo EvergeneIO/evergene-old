@@ -1,3 +1,4 @@
+const chalk = require("chalk");
 const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
@@ -6,21 +7,14 @@ const pool = require('../database/connection.js');
 const tools = require("../functions.js");
 
 /**
- * Api Handler
+ * Basic Endpoint
  * @author @NewtTheWolf @CuzImStantac
  */
-
-/**
- * Main = Api
- * Interne = Api
- * Auth
- * User
- */
-
 module.exports = class Endpoint {
     _method = 0;
     _dynamic = null;
     _path = "/"
+    _code = null;
 
     //Methods
     static GET = 0;
@@ -66,14 +60,27 @@ module.exports = class Endpoint {
     }
 
     /**
+     * Code to execute
+     * @type {Function}
+     * @readonly
+     */
+    get code() {
+        return this._code;
+    }
+
+    /**
      * @param {Express.Application} server Server
+     * @param {String} fileName the endpoint name
      * @param {Object} config Endpoint config
      * @param {Number} config.method Endpoint mehtod
      * @param {String} [config.dynamic=false] Dynamic route
      * @param {String} [path=/] Path to use
      * @param {Function} execute Code to execute on request
+     * @param {String} [logName=ENDPOINT] Name to use in the console log
+     * @param {Boolean} [register=true] register endpoint or just setup class
      */
-    constructor(server, { method, dynamic, path } = {}, code) {
+    constructor(server, fileName, { method, dynamic, path } = {}, code, logName = "ENDPOINT", register = true) {
+        let fileStart = Date.now();
         if (method && typeof method != "number") {
             throw new Error(`Expected a number but received "${typeof method}"`);
         }
@@ -83,50 +90,87 @@ module.exports = class Endpoint {
         if (path && typeof path != "string") {
             throw new Error(`Expected a string but received "${typeof path}"`);
         }
+        if (!code || typeof code != "function") {
+            if (!code) throw new Error("There was no function provided");
+            throw new Error(`Expected a function but received "${typeof code}"`);
+        }
+        if (!logName || typeof logName != "string") {
+            if (!logName) throw new Error("There was no logName provided");
+            throw new Error(`Expected a string but received "${typeof logName}"`);
+        }
+        if (register == undefined || typeof register != "boolean") {
+            if (register == undefined) throw new Error("There was no boolean provided");
+            throw new Error(`Expected a boolean but received "${typeof register}"`);
+        }
 
         this._path = path || this.path;
         this._method = method || this.method;
         this._dynamic = dynamic || this.dynamic;
 
-        server[this.method.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
-              let endpointStatus = await tools.endpoints(fileName);
-            if (process.env.APP_DEBUG == "true") console.log(`[API] Status from "${fileName}" is "${endpointStatus}"`);
-            if (endpointStatus == false) {
-                return res.status('503').send({
-                    status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
-                }, null, 3);
-            }
+        this._code = code;
 
+        if (this.dynamic) {
+            if (!this.dynamic.startsWith("/")) this.dynamic = "/" + this.dynamic;
+            this._path += this.dynamic;
+        }
+
+        if (!this._path.endsWith("/")) this._path += "/";
+
+        if (register) {
             try {
-                await code(req, res, fileName, tools);
+                let endMethod = this.register(server, fileName);
+                if (process.env.APP_DEBUG == "true") console.log(`[${logName}] Loaded "${chalk.yellow(fileName)}" as ${chalk.yellow(`${this.path} (${endMethod.toUpperCase()})`)} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
+            } catch (e) {
+                return console.log(`[${logName}] Failed to register "${chalk.yellow(fileName)}"! ${e.name}: ${chalk.red(e.message)}`);
+            }
+        } else {
+            if (process.env.APP_DEBUG == "true") console.log(`[${logName}] Loaded "${chalk.yellow(fileName)}" - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
+        }
+    }
+
+    /**
+     * function to register the endpoint
+     * @param {Express.Application} server Server
+     * @param {String} filename the filename without extension
+     * @returns {String} endMethod as string
+     */
+    register(server) {
+        let endMethod;
+        switch (this._method) {
+            default:
+                throw new Error("Unknown method");
+            case 0: //? GET
+                endMethod = "get";
+                break;
+            case 1: //? POST
+                endMethod = "post";
+                break;
+            case 2: //? PUT
+                endMethod = "put";
+                break;
+            case 3: //? PATCH
+                endMethod = "patch";
+                break;
+            case 4: //? DELETE
+                endMethod = "delete";
+                break;
+        }
+
+        server[endMethod.toLowerCase()](this.path + filename != "index" ? filename : "", jsonParser, urlencodedParser, async (req, res) => {
+            try {
+                await this._code(req, res, filename, tools);
             } catch (err) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
-               /* pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
-                    const embed = {
-                        "title": `API Internal Server Error (${fileName})`,
-                        "description": `The system has noticed that there is an internal server error and has therefore switched off ${fileName}.`,
-                        "color": 16711680,
-                        "author": {
-                            "name": "System",
-                            "url": `https://evergene.io/api/${fileName}`,
-                            "icon_url": "https://cdn.evergene.io/website/evergene-logo.png"
-                        }
-                    };
-
-                    webhookClient.send({
-                        username: 'Evergene System',
-                        avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
-                        embeds: [embed],
-                    });
-                });*/
-
                 //return error on error
+                res.header("Content-Type", "application/json");
                 return res.status('500').send({
                     status: 500, reason: "Internal Server Error", msg: "please contact a administrator", url: "https://http.cat/500"
                 }, null, 3);
             }
         });
+
+        return endMethod;
     }
 }

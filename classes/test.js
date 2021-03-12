@@ -1,7 +1,34 @@
-const Endpoint = require('./Endpoint');
-const UserEndpoint = require("./UserEndpoint");
-const Log = require('./Log');
+const mysql = require("mysql");
+const dotenv = require('dotenv');
+dotenv.config();
 
-new UserEndpoint({}, function() {
-    console.log("runned!");
-},"1234", ["1","2","3"]);
+const Endpoint = require("./Endpoint.js");
+
+
+//! **************************************************
+//! * vom root mit "node .\classes\test.js" starten! *
+//! **************************************************
+
+// console.log(Endpoint.GET);
+new Endpoint(null, "blah", {}, function(res, req) {
+    console.log("foo");
+})
+
+// const pool = mysql.createPool({
+//     connectionLimit: 10,
+//     host: process.env.DATABASE_HOST,
+//     user: process.env.DATABASE_USER,
+//     password: process.env.DATABASE_PW,
+//     database: process.env.DATABASE_DB
+// });
+
+// pool.query('SELECT * FROM user', function (error, results, fields) {
+//     if (error) throw error;
+//     console.log(results);
+// });
+
+// const UserEndpoint = require("./UserEndpoint.js");
+
+// new UserEndpoint(null, null, {}, function(res, req) {
+//     console.log("foo");
+// }, "12345678", "I-AM-A-KEY", true, ["KEY1", "KEY2"])

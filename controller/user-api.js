@@ -1,3 +1,6 @@
+
+return console.log("[USER-ENDPOINT] UserEndpoints are currently disabled!")
+
 const fs = require("fs");
 const router = require('express').Router();
 const tools = require('../functions');
@@ -51,7 +54,7 @@ async function addPath(filename, filepath, path, currentDir) {
 
     // if(currentDir == "private") {
     //     let keys = null;
-        
+
     //     tools.checkKey()
     // }
 
