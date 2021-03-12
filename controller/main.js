@@ -31,34 +31,18 @@ function getFiles(filepath, mainpath, first = false) {
 }
 
 async function addPath(filename, filepath, path) {
-    let fileStart = Date.now()
-    let api = require(filepath + filename);
-    let name = filename.split(".").shift()
-    let endPath = `${path}`
-    if (name.toLowerCase() != "home") endPath += name.toLowerCase();
-    if (api.dynamic) {
-        if (typeof api.dynamic == "string") {
-            if (!api.dynamic.startsWith("/")) api.dynamic = "/" + api.dynamic
-            endPath += api.dynamic
-        }
+    path = path.toLowerCase();
+    filename = filename.split(".")[0];
+    let fileStart = Date.now();
+
+    if (filename.toLowerCase() != "home") path += filename;
+    try {
+        require(`${filepath}${filename}`)(router, filename, `${path}`);
+    } catch (e) {
+        return console.log(`[MAIN] Failed to register "${chalk.yellow(filename)}"! ${e.name}: ${chalk.red(e.message)}`);
     }
 
-let authFunction = async (req, res, next) => {
-    return next()
-}
-
-if(api.auth) authFunction = tools.forceAuth;
-
-    router[api.type ? api.type.toLowerCase() : "get"](endPath, authFunction, async (req, res) => {
-
-        let lang = tools.checkCookie(req, res)
-
-
-        filename = filename.split(".").shift().toLowerCase()
-        let title = filename.slice(0, 1).toUpperCase() + filename.slice(1).toLowerCase()
-        api.execute(req, res, name, lang, version, title, req.session.user || null);
-    });
-    if (process.env.APP_DEBUG == "true") console.log(`[MAIN] Loaded "${chalk.yellow(name)}" as ${chalk.yellow(endPath)} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
+    if (process.env.APP_DEBUG == "true") console.log(`[MAIN] Loaded "${chalk.yellow(filename)}" - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
 }
 
 module.exports = router;

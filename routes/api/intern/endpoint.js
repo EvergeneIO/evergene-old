@@ -1,10 +1,14 @@
-const pool = require('../../../database/connection');
+
 const { checkKey, endpoints } = require('../../../functions');
+const Endpoint = require('../../../classes/ApiEndpoint');
 
-module.exports = {
+module.exports = (server, filename, path) => {
 
-    "type": {
-        "post": async (req, res, endpoint, tools) => {
+    new Endpoint(server, filename, {
+        method: Endpoint.POST,
+        path,
+    },
+        async (req, res, endpoint, tools) => {
             const token = req.header('Authorization');
             if (!token) {
                 res.status('400').send({
@@ -20,7 +24,7 @@ module.exports = {
                 if (perms & 8) {
                     const end = req.body.endpoint;
                     if (await endpoints(end) == undefined) {
-                        pool.query(`INSERT INTO endpoints (name) VALUES ("${end}")`, function (err, result, fields) {
+                        Endpoint.con.query(`INSERT INTO endpoints (name) VALUES ("${end}")`, function (err, result, fields) {
                             if (err) throw err;
                             res.status('200').send({ status: 200, msg: "Inserted" })
                         });
@@ -35,8 +39,13 @@ module.exports = {
                     }, null, 3);
                 }
             }
-        },
-        "put": async (req, res, endpoint, tools) => {
+        });
+
+    new Endpoint(server, filename, {
+        method: Endpoint.PUT,
+        path,
+    },
+        async (req, res, endpoint, tools) => {
             const token = req.header('Authorization');
             if (!token) {
                 res.status('400').send({
@@ -56,7 +65,7 @@ module.exports = {
                         status: 404, reason: "Not Found", msg: `Endpoint not exist!`
                     }, null, 3);
                     if (await endpoints(end) == !status) {
-                        pool.query(`UPDATE endpoints SET status = ${status} WHERE name = "${end}"`, function (err, result, fields) {
+                        Endpoint.con.query(`UPDATE endpoints SET status = ${status} WHERE name = "${end}"`, function (err, result, fields) {
                             if (err) throw err;
                             res.status('200').send({ status: 200, msg: "Updated" })
                         });
@@ -71,8 +80,13 @@ module.exports = {
                     }, null, 3);
                 }
             }
-        },
-        "delete": async (req, res, endpoint, tools) => {
+        });
+
+    new Endpoint(server, filename, {
+        method: Endpoint.DELETE,
+        path,
+    },
+        async (req, res, endpoint, tools) => {
             const token = req.header('Authorization');
             if (!token) {
                 res.status('400').send({
@@ -89,7 +103,7 @@ module.exports = {
                     const end = req.body.endpoint;
                     console.log(await endpoints(end))
                     if (await endpoints(end) != undefined) {
-                        pool.query(`DELETE FROM endpoints WHERE name = "${end}"`, function (err, result, fields) {
+                        Endpoint.con.query(`DELETE FROM endpoints WHERE name = "${end}"`, function (err, result, fields) {
                             if (err) throw err;
                             res.status('200').send({ status: 200, msg: "Deleted" })
                         });
@@ -104,6 +118,6 @@ module.exports = {
                     }, null, 3);
                 }
             }
-        }
-    }
+        });
 }
+

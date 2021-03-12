@@ -1,8 +1,11 @@
+const Endpoint = require('../../../classes/AuthEndpoint.js');
 const FormData = require('form-data');
 const { makeid, checkKey } = require("../../../functions");
+const fetch = require('node-fetch');
 
-module.exports = {
-    execute: async (req, res, pool, fetch) => {
+
+module.exports = (server, filename, path) => {
+    new Endpoint(server, fileName, { method: Endpoint.GET, path }, function (req, res, fileName, tools) {
         if (req.session.user) return res.redirect('/');
 
         const accessCode = req.query.code;
@@ -78,14 +81,14 @@ module.exports = {
                             userResponse.avatarURL = userResponse.avatar ? `https://cdn.evergene.io/default.png` : null;
                         }
 
-                        pool.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
+                        Endpoint.con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
                             if (err) {
                                 console.log('Error in DB');
                                 console.error(err);
                                 return;
                             } else {
                                 if (result && result.length) {
-                                    pool.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
+                                    Endpoint.con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {
                                         if (err) throw err;
                                         const json = JSON.stringify(result);
                                         const obj = JSON.parse(json);
@@ -95,7 +98,7 @@ module.exports = {
                                     });
                                 } else {
                                     let token = makeid(24);
-                                    pool.query(`INSERT INTO user (discordId, token, perms) VALUES ("${userResponse.id}", "${token}", 1)`, function (err, result) {
+                                    Endpoint.con.query(`INSERT INTO user (discordId, token, perms) VALUES ("${userResponse.id}", "${token}", 1)`, function (err, result) {
                                         if (err) throw err;
                                         console.log('INSERT AND RENDER');
                                     });
@@ -106,5 +109,5 @@ module.exports = {
                         req.session.user = userResponse;
                     });
             });
-    }
-}
+    });
+};

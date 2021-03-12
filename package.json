@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "concurrently --kill-others \"npm run start\" \"npm run bot\"",
     "start": "node app.js",
     "bot": "node bot/bot.js",
 
