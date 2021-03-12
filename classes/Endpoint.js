@@ -97,7 +97,7 @@ module.exports = class Endpoint {
         if (!logName || typeof logName != "string") {
             if (!logName) throw new Error("There was no logName provided");
             throw new Error(`Expected a string but received "${typeof logName}"`);
-        }
+x        }
         if (register == undefined || typeof register != "boolean") {
             if (register == undefined) throw new Error("There was no boolean provided");
             throw new Error(`Expected a boolean but received "${typeof register}"`);
