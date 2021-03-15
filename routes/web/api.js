@@ -2,11 +2,12 @@ const Endpoint = require('../../classes/MainEndpoint');
 
 module.exports = (router, filename, path) => {
 
-    new Endpoint(router, filename, {
+    new Endpoint(server, filename, {
         method: Endpoint.GET,
         path
-    }, 
-    async (req, res, filename, lang, version, title, user) => {
-        res.render(`${filename}`, { version: version, pageTitle: title, user: user });
-    })
+    }, null,
+        async (req, res, filename, lang, version, title, user) => {
+            //throw new Error;
+            res.render(`${filename}`, { version: version, pageTitle: title, user: user });
+        })
 };

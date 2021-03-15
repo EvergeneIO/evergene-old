@@ -23,8 +23,8 @@ module.exports = class InternEndpoint extends Endpoint {
     * @param {String} [path=/] Path to use
     * @param {Function} execute Code to execute on request
     */
-    constructor(server, fileName, { method, dynamic, path } = {}, code) {
-        super(server, fileName, { method, dynamic, path } = {}, code, "INTERN-ENDPOINT");
+    constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
+        super(server, fileName, { method, dynamic, path } = {}, perms, code, "INTERN-ENDPOINT");
     }
 
     /**
@@ -56,16 +56,28 @@ module.exports = class InternEndpoint extends Endpoint {
         }
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
-            let endpointStatus = await tools.endpoints(filename);
-            if (process.env.APP_DEBUG == "true") console.log(`[API-ENDPOINT] Status from "${chalk.yellow(filename)}" is "${chalk.blue(endpointStatus)}"`);
-            if (endpointStatus == false) {
-                res.header("Content-Type", "application/json");
-                return res.status('503').send({
-                    status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
-                }, null, 3);
-            }
-
             try {
+                //res.removeHeader("ETag");
+                res.removeHeader("X-Powered-By");
+                let endpointStatus = await tools.endpoints(filename);
+                if (process.env.APP_DEBUG == "true") console.log(`[API-ENDPOINT] Status from "${chalk.yellow(filename)}" is "${chalk.blue(endpointStatus)}"`);
+                if (endpointStatus == false) {
+                    res.header("Content-Type", "application/json");
+                    return res.status('503').send({
+                        status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+                    }, null, 3);
+                }
+
+                if (typeof this._perm == "number") {
+                    let hasPerm = await Endpoint.checkKey(req.header("Authorization"), this._perm)
+                    if (!hasPerm) {
+                        res.header("Content-Type", "application/json");
+                        return res.status('401').send({
+                            status: 401, reason: "Unauthorized", msg: req.header("Authorization") ? "Not enough permissions!" : "No or invalid API-Key provided!", url: "https://http.cat/401"
+                        }, null, 3);
+                    }
+                }
+
                 await code(req, res, filename, tools);
             } catch (err) {
                 //Log error if debug mode is enabled

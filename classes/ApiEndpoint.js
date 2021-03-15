@@ -23,8 +23,8 @@ module.exports = class ApiEndpoint extends Endpoint {
     * @param {String} [path=/] Path to use
     * @param {Function} execute Code to execute on request
     */
-    constructor(server, fileName, { method, dynamic, path } = {}, code) {
-        super(server, fileName, { method, dynamic, path } = {}, code, "API-ENDPOINT");
+    constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
+        super(server, fileName, { method, dynamic, path } = {}, perms, code, "API-ENDPOINT");
     }
 
     /**
@@ -58,22 +58,34 @@ module.exports = class ApiEndpoint extends Endpoint {
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
 
-            let endpointStatus = await tools.endpoints(filename);
-            if (process.env.APP_DEBUG == "true") console.log(`[API-ENDPOINT] Status from "${chalk.yellow(filename)}" is "${chalk.blue(endpointStatus)}"`);
-            if (endpointStatus == false) {
-                res.header("Content-Type", "application/json");
-                return res.status('503').send({
-                    status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
-                }, null, 3);
-            }
-
             try {
+                //res.removeHeader("ETag");
+                res.removeHeader("X-Powered-By");
+                let endpointStatus = await tools.endpoints(filename);
+                if (process.env.APP_DEBUG == "true") console.log(`[API-ENDPOINT] Status from "${chalk.yellow(filename)}" is "${chalk.blue(endpointStatus)}"`);
+                if (endpointStatus == false) {
+                    res.header("Content-Type", "application/json");
+                    return res.status('503').send({
+                        status: 503, "reason": "Service Unavailable", "msg": "Endpoint not Active in Config file", "url": "https://http.cat/503"
+                    }, null, 3);
+                }
+
+                if (typeof this._perm == "number") {
+                    let hasPerm = await Endpoint.checkKey(req.header("Authorization"), this._perm)
+                    if (!hasPerm) {
+                        res.header("Content-Type", "application/json");
+                        return res.status('401').send({
+                            status: 401, reason: "Unauthorized", msg: req.header("Authorization") ? "Not enough permissions!" : "No or invalid API-Key provided!", url: "https://http.cat/401"
+                        }, null, 3);
+                    }
+                }
+
                 await this.code(req, res, filename, tools);
             } catch (err) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
-                 pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
+                pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
                     //  const embed = {
                     //      "title": `API Internal Server Error (${fileName})`,
                     //      "description": `The system has noticed that there is an internal server error and has therefore switched off ${fileName}.`,
@@ -84,15 +96,19 @@ module.exports = class ApiEndpoint extends Endpoint {
                     //          "icon_url": "https://cdn.evergene.io/website/evergene-logo.png"
                     //      }
                     //  };
- 
+
                     //  webhookClient.send({
                     //      username: 'Evergene System',
                     //      avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
                     //      embeds: [embed], 
                     //  });
-                 });
+                });
 
                 //return error on error
+
+                res.removeHeader("Connection");
+                res.removeHeader("ETag");
+                res.removeHeader("X-Powered-By");
                 res.header("Content-Type", "application/json");
                 return res.status('500').send({
                     status: 500, reason: "Internal Server Error", msg: "please contact a administrator", url: "https://http.cat/500"

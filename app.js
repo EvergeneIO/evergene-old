@@ -36,9 +36,8 @@ app.use(session({
     expires: 604800000,
 }));
 require('./router')(app);
-
+/*
 app.use(function (req, res, next) {
-    console.log()
     if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
         res.status('404').send('Sorry cant find that!');
     } else {
@@ -47,7 +46,7 @@ app.use(function (req, res, next) {
             status: 404, reason: "Not Found", url: "https://http.cat/404"
         }, null, 3);
     }
-});
+});*/
 
 app.listen(port, () => {
     console.log(chalk.bold.green(`Server started on port ${port}!`));
