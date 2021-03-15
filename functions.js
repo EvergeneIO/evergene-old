@@ -105,9 +105,16 @@ module.exports = {
 
       let posts = allPosts.data.children.filter((m) => !m.is_video && ["png","jpg", "jpeg","gif"].includes(m.data.url.split(".").pop()));
       let post = posts[Math.floor(Math.random() * posts.length)].data;
-      res.header("Content-Type", "application/json")
+      res.removeHeader("Connection");
+      res.removeHeader("ETag");
+      res.removeHeader("X-Powered-By");
+      res.header("Content-Type", "application/json");
       return res.send(JSON.stringify({ url: post.url }, null, 3));
     } catch (e) {
+      res.removeHeader("Connection");
+      res.removeHeader("ETag");
+      res.removeHeader("X-Powered-By");
+      res.header("Content-Type", "application/json");
       return res.status('500').send({
         status: 500, "reason": "Internal Server Error", "msg": "please contact a administrator", "url": "https://http.cat/500"
       }, null, 3);

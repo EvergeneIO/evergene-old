@@ -25,7 +25,7 @@ module.exports = class AuthEndpoint extends Endpoint {
      * @param {Function} execute Code to execute on request
      */
     constructor(server, fileName, { method, dynamic, path } = {}, code) {
-        super(server, fileName, { method, dynamic, path }, code, "AUTH-ENDPOINT");
+        super(server, fileName, { method, dynamic, path }, false, code, "AUTH-ENDPOINT");
     }
 
      /**
@@ -58,6 +58,8 @@ module.exports = class AuthEndpoint extends Endpoint {
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
             try {
+                res.removeHeader("X-Powered-By");
+                //res.removeHeader("ETag");
                 await this.code(req, res, fileName, tools);
             } catch (err) {
                 //Log error if debug mode is enabled

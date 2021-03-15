@@ -68,7 +68,7 @@ module.exports = class UserEndpoint extends Endpoint {
     * @param {Array<String>} keys trusted API-Keys
     */
     constructor(server, { method, dynamic, path } = {}, code, userID, ownerKey, isPrivate, keys) {
-        super();
+        super(server, fileName, { method, dynamic, path } = {}, false, code, "USER-ENDPOINT", false);
         if (userID && typeof userID != "string") {
             throw new Error(`Expected a string but received "${typeof userID}"`);
         }
@@ -98,7 +98,7 @@ module.exports = class UserEndpoint extends Endpoint {
          let entry = await checkKey(this.ownerKey);
          let out = false;
 
-         if(!entry.key) {
+         if(entry.key) {
             for(let tier in perms) {
                 if(entry.perms & perms) {
                     out = tier;
@@ -115,7 +115,7 @@ module.exports = class UserEndpoint extends Endpoint {
      * 
      */
 
-    checkKey(key) {
+    isKeyTrusted(key) {
 
     }
 
