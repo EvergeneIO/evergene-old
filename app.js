@@ -1,5 +1,6 @@
 const chalk = require('chalk');
-const Embed = require('./actions/Embed')
+const Embed = require('./actions/Embed');
+const { version } = require('./package.json')
 console.log(chalk.yellow('Server is starting...'))
 
 new Embed('817546892065505290', 'System', Embed.STARTING, {
@@ -40,7 +41,7 @@ require('./router')(app);
 app.use(function (req, res, next) {
     console.log()
     if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
-        res.status('404').send('Sorry cant find that!');
+        res.status('404').render('404', { version: version, pageTitle: '404', user: req.session.user || null });
     } else {
         res.header("Content-Type", "application/json");
         res.status('404').send({
