@@ -24,7 +24,7 @@ module.exports = class InternEndpoint extends Endpoint {
     * @param {Function} execute Code to execute on request
     */
     constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
-        super(server, fileName, { method, dynamic, path } = {}, perms, code, "INTERN-ENDPOINT");
+        super(server, fileName, { method, dynamic, path }, perms, code, "INTERN-ENDPOINT");
     }
 
     /**

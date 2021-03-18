@@ -24,7 +24,7 @@ module.exports = class ApiEndpoint extends Endpoint {
     * @param {Function} execute Code to execute on request
     */
     constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
-        super(server, fileName, { method, dynamic, path } = {}, perms, code, "API-ENDPOINT");
+        super(server, fileName, { method, dynamic, path }, perms, code, "API-ENDPOINT");
     }
 
     /**
@@ -54,7 +54,6 @@ module.exports = class ApiEndpoint extends Endpoint {
                 endMethod = "delete";
                 break;
         }
-        this.path += filename;
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
 

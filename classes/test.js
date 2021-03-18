@@ -2,15 +2,15 @@ const mysql = require("mysql");
 const dotenv = require('dotenv');
 dotenv.config();
 
-const Endpoint = require("./Endpoint.js");
+const Endpoint = require("./InternEndpoint.js");
 
 
 //! **************************************************
 //! * vom root mit "node .\classes\test.js" starten! *
 //! **************************************************
 
-console.log(Endpoint.GET);
-new Endpoint(null, "blah", {}, function (res, req) {
+
+new Endpoint(null, "blah", {dynamic: "lmao"},null, function (res, req) {
     console.log("foo");
 })
 /*

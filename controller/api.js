@@ -44,6 +44,9 @@ function getFiles(filepath, apipath, first = false) {
     });
 }
 
+
+// TODO: Automatische Endpoint migration im handler automatisch adden wenn nicht registriert / removen wenn nicht mehr da >> .env
+//! SELECT * FROM endpoint (WHERE name = "${nameVar}") 
 async function addPath(filename, filepath, path) {
     path = path.toLowerCase();
     filename = filename.split(".")[0];

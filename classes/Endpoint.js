@@ -6,6 +6,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const pool = require('../database/connection.js');
 const tools = require("../functions.js");
 
+
 /**
  * Basic Endpoint
  * @author @NewtTheWolf @CuzImStantac
@@ -128,13 +129,14 @@ module.exports = class Endpoint {
 
         this._code = code;
 
-        if (this.dynamic) {
-            if (!this.dynamic.startsWith("/")) this.dynamic = "/" + this.dynamic;
-            this._path += this.dynamic;
+        
+        if (this._dynamic) {
+            if (!this._dynamic.startsWith("/") && !this._path.endsWith("/")) this._dynamic = "/" + this._dynamic;
+            this._path += this._dynamic;
         }
 
         if (!this._path.endsWith("/")) this._path += "/";
-
+        console.log(this._path)
         if (register) {
             try {
                 let endMethod = this.register(server, fileName);

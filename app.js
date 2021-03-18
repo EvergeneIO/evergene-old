@@ -1,6 +1,7 @@
 const chalk = require('chalk');
-const Embed = require('./actions/Embed')
-console.log(chalk.yellow('Server is starting...'))
+const Embed = require('./actions/Embed');
+console.log(chalk.yellow('Server is starting...'));
+const { version } = require('./package.json');
 
 new Embed('817546892065505290', 'System', Embed.STARTING, {
     webID: process.env.WEBHOOK_IaD,
@@ -36,17 +37,17 @@ app.use(session({
     expires: 604800000,
 }));
 require('./router')(app);
-/*
+
 app.use(function (req, res, next) {
     if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
-        res.status('404').send('Sorry cant find that!');
+        res.render('404', { version: version, pageTitle: '404', user: req.session.user || null });
     } else {
         res.header("Content-Type", "application/json");
         res.status('404').send({
             status: 404, reason: "Not Found", url: "https://http.cat/404"
         }, null, 3);
     }
-});*/
+});
 
 app.listen(port, () => {
     console.log(chalk.bold.green(`Server started on port ${port}!`));
