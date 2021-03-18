@@ -136,12 +136,13 @@ module.exports = class Endpoint {
         }
 
         if (!this._path.endsWith("/")) this._path += "/";
-        console.log(this._path)
+        
         if (register) {
             try {
                 let endMethod = this.register(server, fileName);
                 if (process.env.APP_DEBUG == "true") console.log(`[${logName}] Loaded "${chalk.yellow(fileName)}" as ${chalk.yellow(`${this.path} (${endMethod.toUpperCase()})`)} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
             } catch (e) {
+                throw e
                 return console.log(`[${logName}] Failed to register "${chalk.yellow(fileName)}"! ${e.name}: ${chalk.red(e.message)}`);
             }
         } else {

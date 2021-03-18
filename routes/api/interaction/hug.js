@@ -4,7 +4,6 @@ module.exports = (server, filename, path) => {
 
     new Endpoint(server, filename, {
         method: Endpoint.GET,
-        dynamic: ":test",
         path
     }, null,
         async (req, res, endpoint, tools) => {

@@ -19,6 +19,8 @@ let startAll = Date.now();
 getFiles(`${process.cwd()}/routes/api/`, "/", true);
 console.log(`[API] Finished loading - took ${chalk.blue(`${Date.now() - startAll}ms`)}\n`);
 
+require("../classes/LeagueEndpoint").setup();
+
 function getFiles(filepath, apipath, first = false) {
     let allFiles = fs.readdirSync(filepath, { withFileTypes: true });
     let files = allFiles
@@ -54,6 +56,7 @@ async function addPath(filename, filepath, path) {
     try {
         require(`${filepath}${filename}`)(router, filename, `${path}${filename}`);
     } catch (e) {
+        throw e
         return console.log(`[API] Failed to load "${chalk.yellow(filename)}"! ${e.name}: ${chalk.red(e.message)}`);
     }
 
