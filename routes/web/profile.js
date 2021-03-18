@@ -4,7 +4,7 @@ module.exports = (router, filename, path) => {
     new Endpoint(router, filename, {
         method: Endpoint.GET,
         path
-    },
+    }, null,
         async (req, res, filename, lang, version, title, user) => {
             pool.query(`SELECT * FROM user WHERE discordId=${req.session.user.id}`, function (err, result, fields) {
                 if (err) {

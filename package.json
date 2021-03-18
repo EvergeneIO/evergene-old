@@ -1,10 +1,10 @@
 {
   "name": "evergene-website",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run start\" \"npm run bot\"",
+    "dev": "nodemon app.js",
     "start": "node app.js",
     "bot": "node bot/bot.js",
     "system-stop": "cross-env ID=817546892065505290 NAME=System MODE=STOPPING node ./actions/start.js",

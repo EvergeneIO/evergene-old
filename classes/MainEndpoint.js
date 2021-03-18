@@ -25,8 +25,8 @@ module.exports = class MainEndpoint extends Endpoint {
     * @param {Function} execute Code to execute on request
     * @param {Boolean} [authFunction] function to authorize the user
     */
-    constructor(server, fileName, { method, dynamic, path } = {}, code, authFunction = false) {
-        super(server, fileName, { method, dynamic, path }, code, "MAIN-ENDPOINT", false);
+    constructor(server, fileName, { method, dynamic, path } = {}, perms, code, authFunction = false) {
+        super(server, fileName, { method, dynamic, path }, perms, code, "MAIN-ENDPOINT", false);
         this.authFunction = async (req, res, next) => {
             return next()
         }
@@ -72,13 +72,40 @@ module.exports = class MainEndpoint extends Endpoint {
         }
 
         server[endMethod.toLowerCase()](this.path, this.authFunction, async (req, res) => {
+            try {
 
-            //let lang = tools.checkCookie(req, res)
+                //let lang = tools.checkCookie(req, res)
 
+                res.removeHeader("X-Powered-By");
+                //res.removeHeader("ETag");
+                if (typeof this._perm == "number") {
+                    let hasPerm = await Endpoint.checkKey(req.header("Authorization"), this._perm)
+                    if (!hasPerm) {
+                        res.header("Content-Type", "application/json");
+                        return res.status('401').send({
+                            status: 401, reason: "Unauthorized", msg: req.header("Authorization") ? "Not enough permissions!" : "No or invalid API-Key provided!", url: "https://http.cat/401"
+                        }, null, 3);
+                    }
+                }
 
-            filename = filename.split(".").shift().toLowerCase()
-            let title = filename.slice(0, 1).toUpperCase() + filename.slice(1).toLowerCase()
-            this.code(req, res, filename, /*Lang >*/null, version, title, req.session.user || null);
+                filename = filename.split(".").shift().toLowerCase()
+                let title = filename.slice(0, 1).toUpperCase() + filename.slice(1).toLowerCase()
+                await this.code(req, res, filename, /*Lang >*/null, version, title, req.session.user || null);
+            } catch (err) {
+                //Log error if debug mode is enabled
+                if (process.env.APP_DEBUG == "true") console.error(err);
+
+                //return error on error
+                if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
+                    return res.render('500', { version: version, pageTitle: '500', user: req.session.user || null });
+                } else {
+                    res.header("Content-Type", "application/json");
+                    return res.status('500').send({
+                        status: 500, reason: "Internal Server Error", url: "https://http.cat/500"
+                    }, null, 3);
+                }
+
+            }
         });
 
         return endMethod;
