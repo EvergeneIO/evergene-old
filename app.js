@@ -1,7 +1,8 @@
 const chalk = require('chalk');
 const Embed = require('./actions/Embed');
-console.log(chalk.yellow('Server is starting...'));
-const { version } = require('./package.json');
+
+const { version } = require('./package.json')
+console.log(chalk.yellow('Server is starting...'))
 
 new Embed('817546892065505290', 'System', Embed.STARTING, {
     webID: process.env.WEBHOOK_IaD,
@@ -40,7 +41,7 @@ require('./router')(app);
 
 app.use(function (req, res, next) {
     if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
-        res.render('404', { version: version, pageTitle: '404', user: req.session.user || null });
+        res.status('404').render('404', { version: version, pageTitle: '404', user: req.session.user || null });
     } else {
         res.header("Content-Type", "application/json");
         res.status('404').send({

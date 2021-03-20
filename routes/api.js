@@ -951,12 +951,12 @@ router.get('/api/hug', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
 
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -985,11 +985,11 @@ router.get('/api/tickle', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -1018,11 +1018,11 @@ router.get('/api/slap', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -1051,11 +1051,11 @@ router.get('/api/poke', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -1084,11 +1084,11 @@ router.get('/api/pat', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -1117,11 +1117,11 @@ router.get('/api/kiss', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -1150,11 +1150,11 @@ router.get('/api/feed', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });
@@ -1183,11 +1183,11 @@ router.get('/api/cuddle', jsonParser, urlencodedParser, (req, res) => {
         try {
             async function output() {
                 let number = getRandomInt(200);
-                await fetch('https://cdn.evergene.io/image.json')
+                await fetch('http://localhost:3002/image.json')
                     .then(res => res.json())
                     .then(json => {
                         let image = json[endpoint][number].image;
-                        let output = `https://cdn.evergene.io/${endpoint}/${image}`
+                        let output = `http://localhost:3002/${endpoint}/${image}`
                         res.header("Content-Type", "application/json");
                         res.send(JSON.stringify({ url: output }, null, 3));
                     });

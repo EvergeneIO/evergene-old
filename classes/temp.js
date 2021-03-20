@@ -62,7 +62,7 @@ async function update() {
                 author: {
                     name: "Evergene System",
                     url: `https://evergene.io/`,
-                    icon_url: "https://cdn.evergene.io/website/evergene-logo.png"
+                    icon_url: "http://localhost:3002/website/evergene-logo.png"
                 }
             }]
         };
