@@ -3,7 +3,6 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const pool = require('../database/connection.js');
 const tools = require("../functions.js");
 
 
@@ -27,8 +26,9 @@ module.exports = class Endpoint {
 
     //Connection
     static con = require('../database/connection');
+    static endpointTempCache = { cache: [], added: [], removed: [] }
 
-    /**
+    /**'
      * Method Type
      * @type {Number}
      */
@@ -129,20 +129,19 @@ module.exports = class Endpoint {
 
         this._code = code;
 
-        
+
         if (this._dynamic) {
             if (!this._dynamic.startsWith("/") && !this._path.endsWith("/")) this._dynamic = "/" + this._dynamic;
             this._path += this._dynamic;
         }
 
         if (!this._path.endsWith("/")) this._path += "/";
-        
+
         if (register) {
             try {
                 let endMethod = this.register(server, fileName);
                 if (process.env.APP_DEBUG == "true") console.log(`[${logName}] Loaded "${chalk.yellow(fileName)}" as ${chalk.yellow(`${this.path} (${endMethod.toUpperCase()})`)} - took ${chalk.blue(`${Date.now() - fileStart}ms`)}`);
             } catch (e) {
-                throw e
                 return console.log(`[${logName}] Failed to register "${chalk.yellow(fileName)}"! ${e.name}: ${chalk.red(e.message)}`);
             }
         } else {
@@ -228,5 +227,23 @@ module.exports = class Endpoint {
 
         return false;
     };
+
+    static loadEndpointNames(table = "endpoints") {
+        return new Promise((resolve, reject) => {
+            console.log("[ENDPOINTS] Loading endpoint names...");
+            Endpoint.con.query(`SELECT name FROM ${table}`, function (error, results, fields) {
+                if(error) console.log('error ' + error)
+                Endpoint.endpointTempCache.cache = results.map(r => r.name);
+                console.log(`[ENDPOINTS] Loaded ${chalk.yellowBright(Endpoint.endpointTempCache.cache.length)} endpoint name${Endpoint.endpointTempCache.cache.length == 1 ? "" : "s"}...`);
+                resolve(true);
+            });
+        });
+    }
+
+    static checkEndpoint(endpoint, table = "endpoints") {
+        if (Endpoint.endpointTempCache.cache.includes(endpoint)) return Endpoint.endpointTempCache.cache.splice(Endpoint.endpointTempCache.cache.indexOf(endpoint), 1);
+        if(!Endpoint.endpointTempCache.cache.includes(endpoint)){ Endpoint.con.query(`INSERT INTO ${table} (name) VALUES ("${endpoint}")`); Endpoint.endpointTempCache.added.push(endpoint); }
+
+    }
 }
 

@@ -129,24 +129,25 @@ module.exports = class LeagueEndpoint extends Endpoint {
      * @async
      */
     static async setup() {
+        if (process.env.APP_MODE != "production") return console.log('[LEAGUE-ENDPOINT] League-Endpoint only available in "production" mode');
         console.log("[LEAGUE-ENDPOINT] Registering categories...");
         let now = Date.now();
 
         let results = [null]
-       
+
         for (let page = 1; results.length <= 100 && results.length > 0; page++) {
             try {
-           
-            results = await (await fetch(`https://league-of-hentai.com/wp-json/wp/v2/tags?page=${page}&per_page=100`)).json();
 
-            results.forEach(async (result) => {
-                let slug = result.slug;
-                let id = result.id;
-                let count = result.count;
-                if (LeagueEndpoint._blackList.includes(slug)) return;
-                LeagueEndpoint._categories[slug] = { id, count, images: [] };
-            });
-            } catch(e) {}
+                results = await (await fetch(`https://league-of-hentai.com/wp-json/wp/v2/tags?page=${page}&per_page=100`)).json();
+
+                results.forEach(async (result) => {
+                    let slug = result.slug;
+                    let id = result.id;
+                    let count = result.count;
+                    if (LeagueEndpoint._blackList.includes(slug)) return;
+                    LeagueEndpoint._categories[slug] = { id, count, images: [] };
+                });
+            } catch (e) { }
         }
         LeagueEndpoint._ready = true;
         console.log(`[LEAGUE-ENDPOINT] Registered ${chalk.yellow(Object.keys(LeagueEndpoint._categories).length)} categorie${Object.keys(LeagueEndpoint._categories).length == 1 ? "" : "s"} and ${chalk.yellow(Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0))} image${Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0) == 1 ? "" : "s"} in ${chalk.blue(`${Date.now() - now}ms`)}`)

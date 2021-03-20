@@ -11,7 +11,7 @@ async function league(category) {
         let attachmentURL = posts[Math.floor(Math.random() * posts.length)]._links["wp:attachment"][0].href
         let imgJson = await (await fetch(attachmentURL)).json();
         let img = imgJson[0].media_details.sizes.large.source_url;
-        
+
         return img;
     } catch (e) {
         throw (e);
@@ -26,9 +26,16 @@ module.exports = async (server, filename, path) => {
         path
     }, null,
         async (req, res, endpoint, tools) => {
+            if (process.env.APP_MODE != "production") {
+                res.header("Content-Type", "application/json");
+                return res.status('503').send({
+                    status: 503, "reason": "Service Unavailable", "msg": "League-Endpoint only available in 'production' mode", "url": "https://http.cat/503"
+                }, null, 3);
+            }
+
             if (!Endpoint._ready) {
                 res.header("Content-Type", "application/json");
-                return res.status(102).send(JSON.stringify({ status: "102", msg: "Categories are still registering", url: "https://http.cat/102"}, null, 3))
+                return res.status(102).send(JSON.stringify({ status: "102", msg: "Categories are still registering", url: "https://http.cat/102" }, null, 3))
             }
             let tag = req.query.tag;
             if (tag && Endpoint._categories[tag.toLowerCase()]) {
@@ -37,7 +44,7 @@ module.exports = async (server, filename, path) => {
                 //JSON.stringify({ url: output }, null, 3)
             } else {
                 res.header("Content-Type", "application/json");
-                res.status(404).send(JSON.stringify({ status: "404", msg: "Tag not found", url: "https://http.cat/404", tags: Endpoint._categories }, null, 3))
+                res.status(404).send(JSON.stringify({ status: "404", msg: "Tag not found", url: "https://http.cat/404", tags: Object.keys(Endpoint._categories) }, null, 3))
             }
         });
 }
