@@ -1,13 +1,13 @@
-const Endpoint = require("../../../classes/ApiEndpoint.js");
+const Endpoint = require('../../classes/ApiEndpoint');
 
 module.exports = (server, filename, path) => {
 
     new Endpoint(server, filename, {
         method: Endpoint.GET,
         path
-    },  null,
+    },  null,  
         async (req, res, endpoint, tools) => {
-             await tools.reddit(res, "animegif");
+             await tools.reddit(res, "aww");
         });
     
     

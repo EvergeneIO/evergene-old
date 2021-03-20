@@ -1,4 +1,4 @@
-const Endpoint = require("../../../classes/ApiEndpoint.js");
+const Endpoint = require('../../classes/ApiEndpoint');
 
 module.exports = (server, filename, path) => {
 
@@ -7,7 +7,7 @@ module.exports = (server, filename, path) => {
         path
     },  null,  
         async (req, res, endpoint, tools) => {
-             await tools.reddit(res, "animemes");
+             await tools.reddit(res, "puppies");
         });
     
     
