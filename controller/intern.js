@@ -29,8 +29,6 @@ Endpoint.loadEndpointNames('intern').then(() => {
 
     console.log(`[API] Finished loading - took ${chalk.blue(`${Date.now() - startAll}ms`)}\n`);
 
-    require("../classes/LeagueEndpoint").setup();
-
     function getFiles(filepath, apipath, first = false) {
         let allFiles = fs.readdirSync(filepath, { withFileTypes: true });
         let files = allFiles
