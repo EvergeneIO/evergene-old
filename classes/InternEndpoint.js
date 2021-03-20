@@ -24,7 +24,7 @@ module.exports = class InternEndpoint extends Endpoint {
     * @param {Function} execute Code to execute on request
     */
     constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
-        super(server, fileName, { method, dynamic, path } = {}, perms, code, "INTERN-ENDPOINT");
+        super(server, fileName, { method, dynamic, path }, perms, code, "INTERN-ENDPOINT");
     }
 
     /**
@@ -91,13 +91,13 @@ module.exports = class InternEndpoint extends Endpoint {
                          "author": {
                              "name": "System",
                              "url": `https://evergene.io/api/${fileName}`,
-                             "icon_url": "https://cdn.evergene.io/website/evergene-logo.png"
+                             "icon_url": "http://localhost:3002/website/evergene-logo.png"
                          }
                      };
  
                      webhookClient.send({
                          username: 'Evergene System',
-                         avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
+                         avatarURL: 'http://localhost:3002/website/evergene-logo.png',
                          embeds: [embed], 
                      });
                  });*/

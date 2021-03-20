@@ -5,6 +5,8 @@ module.exports = (app) => {
     // '/api'
     app.use('/api', require('./controller/api'));
 
+    app.use('/api/intern', require('./controller/intern'));
+
     // '/user-api'
     //app.use('/api/u', require('./controller/user-api'));
 

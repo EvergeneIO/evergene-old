@@ -49,7 +49,7 @@ module.exports = (server, filename, path) => {
                                 features = obj[i].features
                                 let featureGif = features.includes("ANIMATED_ICON");
                                 if (guildIco === null) {
-                                    guildIconURL = `https://cdn.evergene.io/default.png`
+                                    guildIconURL = `http://localhost:3002/default.png`
                                 } else {
                                     if (featureGif) {
                                         guildIconURL = `<img src="https://cdn.discordapp.com/icons/${guildId}/${guildIco}.gif">`;
@@ -78,7 +78,7 @@ module.exports = (server, filename, path) => {
                         if (userResponse.avatar) {
                             userResponse.avatarURL = userResponse.avatar ? `https://cdn.discordapp.com/avatars/${userResponse.id}/${userResponse.avatar}.png?size=1024` : null;
                         } else {
-                            userResponse.avatarURL = userResponse.avatar ? `https://cdn.evergene.io/default.png` : null;
+                            userResponse.avatarURL = userResponse.avatar ? `http://localhost:3002/default.png` : null;
                         }
 
                         Endpoint.con.query(`SELECT * FROM user WHERE discordId=${userResponse.id}`, function (err, result, fields) {

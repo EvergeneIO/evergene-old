@@ -97,7 +97,7 @@ module.exports = class MainEndpoint extends Endpoint {
 
                 //return error on error
                 if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
-                    return res.status('500').send('Internal Server Error');
+                    return res.render('500', { version: version, pageTitle: '500', user: req.session.user || null });
                 } else {
                     res.header("Content-Type", "application/json");
                     return res.status('500').send({

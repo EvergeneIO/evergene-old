@@ -2,7 +2,7 @@ const Endpoint = require('../../classes/MainEndpoint');
 
 module.exports = (router, filename, path) => {
 
-    new Endpoint(server, filename, {
+    new Endpoint(router, filename, {
         method: Endpoint.GET,
         path
     }, null,

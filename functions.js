@@ -62,7 +62,7 @@ module.exports = {
 
   image: async function (endpoint) {
     try {
-      let images = await (await fetch('https://cdn.evergene.io/image.json')).json();
+      let images = await (await fetch('http://localhost:3002/image.json')).json();
 
       if (!images[endpoint]) throw new TypeError(`Invalid endpoint "${endpoint}"!`)
 

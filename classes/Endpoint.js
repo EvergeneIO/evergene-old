@@ -3,8 +3,8 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const pool = require('../database/connection.js');
 const tools = require("../functions.js");
+
 
 /**
  * Basic Endpoint
@@ -26,8 +26,9 @@ module.exports = class Endpoint {
 
     //Connection
     static con = require('../database/connection');
+    static endpointTempCache = { cache: [], added: [], removed: [] }
 
-    /**
+    /**'
      * Method Type
      * @type {Number}
      */
@@ -128,9 +129,10 @@ module.exports = class Endpoint {
 
         this._code = code;
 
-        if (this.dynamic) {
-            if (!this.dynamic.startsWith("/")) this.dynamic = "/" + this.dynamic;
-            this._path += this.dynamic;
+
+        if (this._dynamic) {
+            if (!this._dynamic.startsWith("/") && !this._path.endsWith("/")) this._dynamic = "/" + this._dynamic;
+            this._path += this._dynamic;
         }
 
         if (!this._path.endsWith("/")) this._path += "/";
@@ -225,5 +227,23 @@ module.exports = class Endpoint {
 
         return false;
     };
+
+    static loadEndpointNames(table = "endpoints") {
+        return new Promise((resolve, reject) => {
+            console.log("[ENDPOINTS] Loading endpoint names...");
+            Endpoint.con.query(`SELECT name FROM ${table}`, function (error, results, fields) {
+                if(error) console.log('error ' + error)
+                Endpoint.endpointTempCache.cache = results.map(r => r.name);
+                console.log(`[ENDPOINTS] Loaded ${chalk.yellowBright(Endpoint.endpointTempCache.cache.length)} endpoint name${Endpoint.endpointTempCache.cache.length == 1 ? "" : "s"}...`);
+                resolve(true);
+            });
+        });
+    }
+
+    static checkEndpoint(endpoint, table = "endpoints") {
+        if (Endpoint.endpointTempCache.cache.includes(endpoint)) return Endpoint.endpointTempCache.cache.splice(Endpoint.endpointTempCache.cache.indexOf(endpoint), 1);
+        if(!Endpoint.endpointTempCache.cache.includes(endpoint)){ Endpoint.con.query(`INSERT INTO ${table} (name) VALUES ("${endpoint}")`); Endpoint.endpointTempCache.added.push(endpoint); }
+
+    }
 }
 

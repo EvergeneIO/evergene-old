@@ -7,13 +7,17 @@ const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const pool = require('../database/connection.js');
 const tools = require("../functions.js");
+const fetch = require("node-fetch");
 
 /**
  * Api Endpoint
  * @author @NewtTheWolf @CuzImStantac
  */
 
-module.exports = class ApiEndpoint extends Endpoint {
+module.exports = class LeagueEndpoint extends Endpoint {
+    static _categories = {};
+    static _blackList = ["annie", "lulu", "yuumi", "zoe"];
+    static _ready = false;
     /**
     * @param {Express.Application} server Server
     * @param {String} fileName the endpoint name
@@ -24,7 +28,7 @@ module.exports = class ApiEndpoint extends Endpoint {
     * @param {Function} execute Code to execute on request
     */
     constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
-        super(server, fileName, { method, dynamic, path }, perms, code, "API-ENDPOINT");
+        super(server, fileName, { method, dynamic, path }, perms, code, "ENDPOINT");
     }
 
     /**
@@ -32,6 +36,7 @@ module.exports = class ApiEndpoint extends Endpoint {
      * @param {Express.Application} server Server
      * @param {String} filename the filename without extension
      * @returns {String} endMethod as string
+     * @async
      */
     register(server, filename) {
         let endMethod;
@@ -54,6 +59,7 @@ module.exports = class ApiEndpoint extends Endpoint {
                 endMethod = "delete";
                 break;
         }
+
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
 
@@ -92,13 +98,13 @@ module.exports = class ApiEndpoint extends Endpoint {
                     //      "author": {
                     //          "name": "System",
                     //          "url": `https://evergene.io/api/${fileName}`,
-                    //          "icon_url": "http://localhost:3002/website/evergene-logo.png"
+                    //          "icon_url": "https://cdn.evergene.io/website/evergene-logo.png"
                     //      }
                     //  };
 
                     //  webhookClient.send({
                     //      username: 'Evergene System',
-                    //      avatarURL: 'http://localhost:3002/website/evergene-logo.png',
+                    //      avatarURL: 'https://cdn.evergene.io/website/evergene-logo.png',
                     //      embeds: [embed], 
                     //  });
                 });
@@ -116,5 +122,34 @@ module.exports = class ApiEndpoint extends Endpoint {
         });
 
         return endMethod;
+    }
+
+    /**
+     * regusters all categories
+     * @async
+     */
+    static async setup() {
+        if (process.env.APP_MODE != "production") return console.log('[LEAGUE-ENDPOINT] League-Endpoint only available in "production" mode');
+        console.log("[LEAGUE-ENDPOINT] Registering categories...");
+        let now = Date.now();
+
+        let results = [null]
+
+        for (let page = 1; results.length <= 100 && results.length > 0; page++) {
+            try {
+
+                results = await (await fetch(`https://league-of-hentai.com/wp-json/wp/v2/tags?page=${page}&per_page=100`)).json();
+
+                results.forEach(async (result) => {
+                    let slug = result.slug;
+                    let id = result.id;
+                    let count = result.count;
+                    if (LeagueEndpoint._blackList.includes(slug)) return;
+                    LeagueEndpoint._categories[slug] = { id, count, images: [] };
+                });
+            } catch (e) { }
+        }
+        LeagueEndpoint._ready = true;
+        console.log(`[LEAGUE-ENDPOINT] Registered ${chalk.yellow(Object.keys(LeagueEndpoint._categories).length)} categorie${Object.keys(LeagueEndpoint._categories).length == 1 ? "" : "s"} and ${chalk.yellow(Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0))} image${Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0) == 1 ? "" : "s"} in ${chalk.blue(`${Date.now() - now}ms`)}`)
     }
 }
