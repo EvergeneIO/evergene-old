@@ -6,11 +6,19 @@ const fetch = require('node-fetch')
 async function league(category) {
     // return new Promise((reject, resolve) => {
     try {
-        let id = Endpoint._categories[category.toLowerCase()].id
-        let posts = await (await fetch(`https://league-of-hentai.com/wp-json/wp/v2/posts?tags=${id}`)).json();
-        let attachmentURL = posts[Math.floor(Math.random() * posts.length)]._links["wp:attachment"][0].href
+        let { id, count } = Endpoint._categories[category.toLowerCase()];
+        let page = Math.ceil(Math.random() * count);
+
+        let post = await (await fetch(`https://league-of-hentai.com/wp-json/wp/v2/posts?tags=${id}&page=${page}&per_page=1`)).json();
+
+        let attachmentURL = post[0]._links["wp:attachment"][0].href
+        if(Endpoint.filter("check", attachmentURL.split("=").pop())) return league(category);
         let imgJson = await (await fetch(attachmentURL)).json();
-        let img = imgJson[0].media_details.sizes.large.source_url;
+        if(imgJson.length != 1) {
+            Endpoint.filter("add", attachmentURL.split("=").pop());
+            return league(category);
+        }
+        let img = imgJson[0].source_url || imgJson[0].media_details.sizes.large.source_url;
 
         return img;
     } catch (e) {
