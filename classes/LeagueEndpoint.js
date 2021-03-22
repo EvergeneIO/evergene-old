@@ -64,7 +64,6 @@ module.exports = class LeagueEndpoint extends Endpoint {
                 break;
         }
 
-
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
 
             try {
