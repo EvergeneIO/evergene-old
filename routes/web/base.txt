@@ -1,8 +1,8 @@
-const Endpoint = require('../../classes/MainEndpoint');
+const Endpoint = require('../../classes/ApiEndpoint');
 
-module.exports = (router, filename, path) => {
+module.exports = (server, filename, path) => {
 
-    new Endpoint(router, filename, {
+    new Endpoint(server, filename, {
         method: Endpoint.GET,
         path,
        // dynamic: ":dynamic"
