@@ -8,6 +8,8 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const pool = require('../database/connection.js');
 const tools = require("../functions.js");
 const fetch = require("node-fetch");
+const { schedule } = require("node-cron");
+const fs = require("fs");
 
 /**
  * Api Endpoint
@@ -18,6 +20,8 @@ module.exports = class LeagueEndpoint extends Endpoint {
     static _categories = {};
     static _blackList = ["annie", "lulu", "yuumi", "zoe"];
     static _ready = false;
+    static _cron = null;
+
     /**
     * @param {Express.Application} server Server
     * @param {String} fileName the endpoint name
@@ -150,6 +154,57 @@ module.exports = class LeagueEndpoint extends Endpoint {
             } catch (e) { }
         }
         LeagueEndpoint._ready = true;
-        console.log(`[LEAGUE-ENDPOINT] Registered ${chalk.yellow(Object.keys(LeagueEndpoint._categories).length)} categorie${Object.keys(LeagueEndpoint._categories).length == 1 ? "" : "s"} and ${chalk.yellow(Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0))} image${Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0) == 1 ? "" : "s"} in ${chalk.blue(`${Date.now() - now}ms`)}`)
+        console.log(`[LEAGUE-ENDPOINT] Registered ${chalk.yellow(Object.keys(LeagueEndpoint._categories).length)} categorie${Object.keys(LeagueEndpoint._categories).length == 1 ? "" : "s"} and ${chalk.yellow(Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0))} image${Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0) == 1 ? "" : "s"} in ${chalk.blue(`${Date.now() - now}ms`)}`);
+
+        LeagueEndpoint._cron = schedule("0 */12 * * *", async () => {
+            LeagueEndpoint._ready = false;
+            LeagueEndpoint._categories = {};
+            console.log("[LEAGUE-ENDPOINT] Refreshing categories...");
+            let now = Date.now();
+
+            let results = [null]
+
+            for (let page = 1; results.length <= 100 && results.length > 0; page++) {
+                try {
+
+                    results = await (await fetch(`https://league-of-hentai.com/wp-json/wp/v2/tags?page=${page}&per_page=100`)).json();
+
+                    results.forEach(async (result) => {
+                        let slug = result.slug;
+                        let id = result.id;
+                        let count = result.count;
+                        if (LeagueEndpoint._blackList.includes(slug)) return;
+                        LeagueEndpoint._categories[slug] = { id, count, images: [] };
+                    });
+                } catch (e) { }
+            }
+            LeagueEndpoint._ready = true;
+            console.log(`[LEAGUE-ENDPOINT] Refreshed ${chalk.yellow(Object.keys(LeagueEndpoint._categories).length)} categorie${Object.keys(LeagueEndpoint._categories).length == 1 ? "" : "s"} and ${chalk.yellow(Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0))} image${Object.values(LeagueEndpoint._categories).reduce((a, b) => a + b.images.length, 0) == 1 ? "" : "s"} in ${chalk.blue(`${Date.now() - now}ms`)}`);
+        })
+        console.log("[LEAGUE-ENDPOINT] Started cron job...")
+    }
+
+
+    static filter(methode = "check", postID = "0000") {
+        if(!(methode || postID || ["add", "remove", "check"].includes(methode))) return false;
+        let temp = null;
+        switch (methode) {
+            case "add":
+                if(this.filter("check", postID)) return;
+                fs.appendFileSync("./classes/data/league/filtered.txt", `${postID};`);
+                break;
+            case "remove":
+                if(!this.filter("check", postID)) return;
+                temp = fs.readFileSync("./classes/data/league/filtered.txt", "utf-8");
+                temp = temp.split(";");
+                temp.splice(temp.indexOf(postID.toString()), 1);
+                fs.writeFileSync("./classes/data/league/filtered.txt", temp.join(";"));
+                break;
+            case "check":
+                temp = fs.readFileSync("./classes/data/league/filtered.txt", "utf-8");
+                temp = temp.split(";");
+                return temp.some(id => id == postID)
+                break;
+        }
     }
 }
