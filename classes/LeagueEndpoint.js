@@ -16,6 +16,7 @@ const fs = require("fs");
  * @author @NewtTheWolf @CuzImStantac
  */
 
+
 module.exports = class LeagueEndpoint extends Endpoint {
     static _categories = {};
     static _blackList = ["annie", "lulu", "yuumi", "zoe"];
