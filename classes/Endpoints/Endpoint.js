@@ -3,7 +3,8 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const tools = require("../functions.js");
+const tools = require("../../functions.js");
+const CustomTypeError = require('./../Errors/CustomTypeError');
 
 
 /**
@@ -25,7 +26,7 @@ module.exports = class Endpoint {
     static DELETE = 4;
 
     //Connection
-    static con = require('../database/connection');
+    static con = require('../../database/connection');
     static endpointTempCache = { cache: [], added: [], removed: [] }
 
     /**'
@@ -96,29 +97,25 @@ module.exports = class Endpoint {
     constructor(server, fileName, { method, dynamic, path } = {}, perm = false, code, logName = "ENDPOINT", register = true) {
         let fileStart = Date.now();
         if (method && typeof method != "number") {
-            throw new Error(`Expected a number but received "${typeof method}"`);
+            throw new CustomTypeError("number", method);
         }
         if (dynamic && typeof dynamic != "string") {
-            throw new Error(`Expected a string but received "${typeof dynamic}"`);
+            throw new CustomTypeError("string", dynamic);
         }
         if (path && typeof path != "string") {
-            throw new Error(`Expected a string but received "${typeof path}"`);
+            throw new CustomTypeError("string", path);
         }
-        if (perm != undefined && perm != false && typeof perm != "number") {
-            throw new Error(`Expected a number but received "${typeof perm}"`);
+        if (perm != null && perm !== false && typeof perm != "number") {
+            throw new CustomTypeError("number", perm);
         }
-        if (!code || typeof code != "function") {
-            if (!code) throw new Error("There was no function provided");
-            throw new Error(`Expected a function but received "${typeof code}"`);
+        if (typeof code != "function") {
+            throw new CustomTypeError("function", code);
         }
-        if (!logName || typeof logName != "string") {
-            if (!logName) throw new Error("There was no logName provided");
-            throw new Error(`Expected a string but received "${typeof logName}"`);
-            x
+        if (typeof logName != "string") {
+            throw new CustomTypeError("string", logName);
         }
-        if (register == undefined || typeof register != "boolean") {
-            if (register == undefined) throw new Error("There was no boolean provided");
-            throw new Error(`Expected a boolean but received "${typeof register}"`);
+        if (typeof register != "boolean") {
+            throw new CustomTypeError("boolean", register);
         }
 
 
@@ -232,7 +229,7 @@ module.exports = class Endpoint {
         return new Promise((resolve, reject) => {
             console.log("[ENDPOINTS] Loading endpoint names...");
             Endpoint.con.query(`SELECT name FROM ${table}`, function (error, results, fields) {
-                if(error) console.log('error ' + error)
+                if (error) console.log('error ' + error)
                 Endpoint.endpointTempCache.cache = results.map(r => r.name);
                 console.log(`[ENDPOINTS] Loaded ${chalk.yellowBright(Endpoint.endpointTempCache.cache.length)} endpoint name${Endpoint.endpointTempCache.cache.length == 1 ? "" : "s"}...`);
                 resolve(true);
@@ -242,7 +239,7 @@ module.exports = class Endpoint {
 
     static checkEndpoint(endpoint, table = "endpoints") {
         if (Endpoint.endpointTempCache.cache.includes(endpoint)) return Endpoint.endpointTempCache.cache.splice(Endpoint.endpointTempCache.cache.indexOf(endpoint), 1);
-        if(!Endpoint.endpointTempCache.cache.includes(endpoint)){ Endpoint.con.query(`INSERT INTO ${table} (name) VALUES ("${endpoint}")`); Endpoint.endpointTempCache.added.push(endpoint); }
+        if (!Endpoint.endpointTempCache.cache.includes(endpoint)) { Endpoint.con.query(`INSERT INTO ${table} (name) VALUES ("${endpoint}")`); Endpoint.endpointTempCache.added.push(endpoint); }
 
     }
 }

@@ -1,4 +1,4 @@
-const Endpoint = require('../../../classes/LeagueEndpoint');
+const Endpoint = require('../../../classes/Endpoints/LeagueEndpoint');
 const fetch = require('node-fetch')
 
 // * https://evergene.io/api/league?tag=yuri

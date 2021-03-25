@@ -1,4 +1,4 @@
-const Endpoint = require('../../classes/MainEndpoint');
+const Endpoint = require('../../classes/Endpoints/MainEndpoint');
 const pool = require(`${process.cwd()}/database/connection`);
 module.exports = (router, filename, path) => {
     new Endpoint(router, filename, {

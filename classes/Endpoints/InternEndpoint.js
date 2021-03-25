@@ -5,15 +5,15 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const pool = require('../database/connection.js');
-const tools = require("../functions.js");
+const pool = require('../../database/connection.js');
+const tools = require("../../functions.js");
 
 /**
- * Api Endpoint
+ * Intern Endpoint
  * @author @NewtTheWolf @CuzImStantac
  */
 
-module.exports = class ApiEndpoint extends Endpoint {
+module.exports = class InternEndpoint extends Endpoint {
     /**
     * @param {Express.Application} server Server
     * @param {String} fileName the endpoint name
@@ -24,7 +24,7 @@ module.exports = class ApiEndpoint extends Endpoint {
     * @param {Function} execute Code to execute on request
     */
     constructor(server, fileName, { method, dynamic, path } = {}, perms, code) {
-        super(server, fileName, { method, dynamic, path }, perms, code, "API-ENDPOINT");
+        super(server, fileName, { method, dynamic, path }, perms, code, "INTERN-ENDPOINT");
     }
 
     /**
@@ -33,7 +33,7 @@ module.exports = class ApiEndpoint extends Endpoint {
      * @param {String} filename the filename without extension
      * @returns {String} endMethod as string
      */
-    register(server, filename) {
+    register(server) {
         let endMethod;
         switch (this._method) {
             default:
@@ -56,7 +56,6 @@ module.exports = class ApiEndpoint extends Endpoint {
         }
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
-
             try {
                 //res.removeHeader("ETag");
                 res.removeHeader("X-Powered-By");
@@ -79,35 +78,31 @@ module.exports = class ApiEndpoint extends Endpoint {
                     }
                 }
 
-                await this.code(req, res, filename, tools);
+                await code(req, res, filename, tools);
             } catch (err) {
                 //Log error if debug mode is enabled
                 if (process.env.APP_DEBUG == "true") console.error(err);
 
-                pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
-                    //  const embed = {
-                    //      "title": `API Internal Server Error (${fileName})`,
-                    //      "description": `The system has noticed that there is an internal server error and has therefore switched off ${fileName}.`,
-                    //      "color": 16711680,
-                    //      "author": {
-                    //          "name": "System",
-                    //          "url": `https://evergene.io/api/${fileName}`,
-                    //          "icon_url": "http://localhost:3002/website/evergene-logo.png"
-                    //      }
-                    //  };
-
-                    //  webhookClient.send({
-                    //      username: 'Evergene System',
-                    //      avatarURL: 'http://localhost:3002/website/evergene-logo.png',
-                    //      embeds: [embed], 
-                    //  });
-                });
+                /* pool.query(`UPDATE endpoints SET status = 0 WHERE name = "${fileName}"`, function (err, result, fields) {
+                     const embed = {
+                         "title": `API Internal Server Error (${fileName})`,
+                         "description": `The system has noticed that there is an internal server error and has therefore switched off ${fileName}.`,
+                         "color": 16711680,
+                         "author": {
+                             "name": "System",
+                             "url": `https://evergene.io/api/${fileName}`,
+                             "icon_url": "http://localhost:3002/website/evergene-logo.png"
+                         }
+                     };
+ 
+                     webhookClient.send({
+                         username: 'Evergene System',
+                         avatarURL: 'http://localhost:3002/website/evergene-logo.png',
+                         embeds: [embed], 
+                     });
+                 });*/
 
                 //return error on error
-
-                res.removeHeader("Connection");
-                res.removeHeader("ETag");
-                res.removeHeader("X-Powered-By");
                 res.header("Content-Type", "application/json");
                 return res.status('500').send({
                     status: 500, reason: "Internal Server Error", msg: "please contact a administrator", url: "https://http.cat/500"

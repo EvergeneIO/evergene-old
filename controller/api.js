@@ -13,7 +13,7 @@ const fetch = require('node-fetch');
 const pool = require(`${process.cwd()}/database/connection`);
 const Discord = require('discord.js');
 const webhookClient = new Discord.WebhookClient(process.env.WEBHOOK_ID || '813143436621643806', process.env.WEBHOOK_TOKEN || 'CZBAIJBwv2AiKAl7NfGTLmHigLhjS9P_X_eGN8Br1B6PM8B-uadkk1qomaokeK0B21eu');
-const Endpoint = require("../classes/Endpoint");
+const Endpoint = require("../classes/Endpoints/Endpoint");
 
 console.log("\n[API] Loading...");
 let startAll = Date.now();
@@ -29,7 +29,7 @@ Endpoint.loadEndpointNames().then(() => {
 
     console.log(`[API] Finished loading - took ${chalk.blue(`${Date.now() - startAll}ms`)}\n`);
 
-    require("../classes/LeagueEndpoint").setup();
+    require("../classes/Endpoints/LeagueEndpoint").setup();
 
     function getFiles(filepath, apipath, first = false) {
         let allFiles = fs.readdirSync(filepath, { withFileTypes: true });

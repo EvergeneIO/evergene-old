@@ -1,4 +1,4 @@
-const Endpoint = require('../../classes/MainEndpoint');
+const Endpoint = require('../../classes/Endpoints/MainEndpoint');
 
 module.exports = (router, filename, path) => {
 

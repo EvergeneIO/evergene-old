@@ -5,8 +5,8 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const pool = require('../database/connection.js');
-const tools = require("../functions.js");
+const pool = require('../../database/connection.js');
+const tools = require("../../functions.js");
 
 /**
  * Main Endpoint
@@ -49,7 +49,7 @@ module.exports = class MainEndpoint extends Endpoint {
     * @returns {String} endMethod as string
     */
     register(server, filename) {
-        let version = require('../package.json').version;
+        let version = require('../../package.json').version;
         let endMethod;
         switch (this._method) {
             default:
