@@ -18,7 +18,7 @@ console.log(chalk.blue(
 console.log(chalk.yellow('Server is starting...'))
 
 new Embed('817546892065505290', 'System', Embed.STARTING, {
-    webID: process.env.WEBHOOK_IaD,
+    webID: process.env.WEBHOOK_ID,
     webTOKEN: process.env.WEBHOOK_TOKEN
 }, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
 
