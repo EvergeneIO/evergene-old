@@ -5,7 +5,7 @@ module.exports = (server, filename, path) => {
     new Endpoint(server, filename, {
         method: Endpoint.GET,
         path
-    }, 'null',
+    }, null,
         async (req, res, endpoint, tools) => {
             console.log(req.params.test)
             let output = await tools.image(endpoint);
