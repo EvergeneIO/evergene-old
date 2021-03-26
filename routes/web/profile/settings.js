@@ -1,5 +1,5 @@
 const { makeid, checkKey } = require("../../../functions");
-const Endpoint = require('../../../classes/MainEndpoint');
+const Endpoint = require('../../../classes/Endpoints/MainEndpoint');
 
 const pool = require(`${process.cwd()}/database/connection`);
 

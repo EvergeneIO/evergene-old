@@ -1,4 +1,4 @@
-const Endpoint = require("../../classes/ApiEndpoint.js");
+const Endpoint = require("../../classes/Endpoints/ApiEndpoint");
 
 module.exports = (server, filename, path) => {
 

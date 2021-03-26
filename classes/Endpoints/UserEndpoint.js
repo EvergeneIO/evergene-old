@@ -1,5 +1,5 @@
 const Endpoint = require("./Endpoint");
-const { checkKey } = require("../functions.js");
+const { checkKey } = require("../../functions.js");
 
 /** 
  * Register a UserEndpoint

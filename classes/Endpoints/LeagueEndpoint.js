@@ -5,8 +5,8 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const pool = require('../database/connection.js');
-const tools = require("../functions.js");
+const pool = require('../../database/connection.js');
+const tools = require("../../functions.js");
 const fetch = require("node-fetch");
 const { schedule } = require("node-cron");
 const fs = require("fs");
@@ -15,6 +15,7 @@ const fs = require("fs");
  * Api Endpoint
  * @author @NewtTheWolf @CuzImStantac
  */
+
 
 module.exports = class LeagueEndpoint extends Endpoint {
     static _categories = {};
@@ -63,7 +64,6 @@ module.exports = class LeagueEndpoint extends Endpoint {
                 endMethod = "delete";
                 break;
         }
-
 
         server[endMethod.toLowerCase()](this.path, jsonParser, urlencodedParser, async (req, res) => {
 

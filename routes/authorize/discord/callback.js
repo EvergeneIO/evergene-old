@@ -1,4 +1,4 @@
-const Endpoint = require('../../../classes/AuthEndpoint.js');
+const Endpoint = require('../../../classes/Endpoints/AuthEndpoint');
 const FormData = require('form-data');
 const { makeid, checkKey } = require("../../../functions");
 const fetch = require('node-fetch');

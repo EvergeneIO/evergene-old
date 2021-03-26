@@ -2,10 +2,23 @@ const chalk = require('chalk');
 const Embed = require('./actions/Embed');
 
 const { version } = require('./package.json')
+
+console.log(chalk.blue(
+    chalk.gray(`\n **************************************************************\n`),
+    `${chalk.gray("*")}  ________      ________ _____   _____ ______ _   _ ______  ${chalk.gray("*")}\n`,
+    `${chalk.gray("*")} |  ____\\ \\    / /  ____|  __ \\ / ____|  ____| \\ | |  ____| ${chalk.gray("*")}\n`,
+    `${chalk.gray("*")} | |__   \\ \\  / /| |__  | |__) | |  __| |__  |  \\| | |__    ${chalk.gray("*")}\n`,
+    `${chalk.gray("*")} |  __|   \\ \\/ / |  __| |  _  /| | |_ |  __| | . \` |  __|   ${chalk.gray("*")}\n`,
+    `${chalk.gray("*")} | |____   \\  /  | |____| | \\ \\| |__| | |____| |\\  | |____  ${chalk.gray("*")}\n`,
+    `${chalk.gray("*")} |______|   \\/   |______|_|  \\_\\\\_____|______|_| \\_|______| ${chalk.gray("*")}\n`,
+    `${chalk.gray("*")}                                                            ${chalk.gray("*")}\n`,
+    chalk.gray(`**************************************************************\n`)
+));
+
 console.log(chalk.yellow('Server is starting...'))
 
 new Embed('817546892065505290', 'System', Embed.STARTING, {
-    webID: process.env.WEBHOOK_IaD,
+    webID: process.env.WEBHOOK_ID,
     webTOKEN: process.env.WEBHOOK_TOKEN
 }, "./actions/data/temp.txt", Date.now(), process.env.APP_MODE);
 
