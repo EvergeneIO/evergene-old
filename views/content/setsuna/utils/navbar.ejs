@@ -1,0 +1,86 @@
+<!--<nav class="navbar navbar-expand-lg navbar-darker bg-darker">
+    <a class="navbar-brand" href="#">ETCROOT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/blog"><i class="fas fa-blog"></i> Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/safe"><i class="fas fa-cloud-upload-alt"></i> Safe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/extras"><i class="fab fa-buffer"></i> Extras</a>
+            </li>
+            <span class="navbar-text">
+                <% if (user) { %>
+                <a class="nav-link" href="/me"><%- user.tag %></a>
+                <a class="nav-link" href="/authorize/logout">Logout</a>
+                <% } else { %>
+                <a class="nav-link" href="/authorize" tabindex="-1">Login</a>
+                <% } %>
+            </span>
+        </ul>
+    </div>
+</nav>-->
+<nav class="navbar navbar-expand-md navbar-dark bg-darker">
+    <div class="navbar-collapse collapse w-80 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto row">
+            <li class="nav-item active">
+                <a class="nav-link" href="/setsuna"><i class="far fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/setsuna/commands"><i class="far fa-rocket"></i> Commands</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/setsuna/partners"><i class="far fa-handshake"></i> Partners</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://discord.com/invite/hMJfp22DxD"><i class="fab fa-discord"></i> Discord</a>
+            </li>
+           <!-- <li class="nav-item">
+                <a class="nav-link" href="/discord"><i class="fab fa-discord"></i> Discord</a>
+            </li>-->
+           <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-plus"></i> Extras
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/team"><i class="far fa-users"></i> The Team</a>
+                    <a class="dropdown-item" href="/bugs"><i class="far fa-bug"></i> Bugtracker</a>
+                    <a class="dropdown-item" href="/changelog"><i class="far fa-notes-medical"></i> Changelog</a>
+                    <a class="dropdown-item" href="/partner"><i class="far fa-handshake"></i> Partners</a>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+
+<!-- 
+<div class="navbar">
+    <a href="/"><%- pageTitle %></a>
+
+    <div class="right">
+        <% if (user) { %>
+        <a href="/me"><%- user.tag %></a>
+        <a href="/authorize/logout">Logout</a>
+        <% } else { %>
+        <a href="/authorize">Login</a>
+        <% } %>
+    </div>
+</div>
+-->
