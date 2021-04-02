@@ -1,1 +1,0 @@
-INSERT INTO (test, owo) VALUES ('haha', 2)
