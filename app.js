@@ -33,44 +33,47 @@ const webhookClient = new Discord.WebhookClient(process.env.WEBHOOK_ID || '81314
 
 dotenv.config();
 
-const port = process.env.APP_PORT
+//require("./controller/migration")().then(() => {
 
-app.set('port', port);
+    const port = process.env.APP_PORT
 
-const session = require('express-session');
-const router = require('./router');
+    app.set('port', port);
 
-app.set('view engine', 'ejs');
-app.use(express.static('static'));
-app.use(cookieParser());
-app.use(morgan('dev'))
-app.use(session({
-    secret: '48738924783748273742398747238',
-    resave: false,
-    saveUninitialized: false,
-    expires: 604800000,
-}));
-require('./router')(app);
+    const session = require('express-session');
+    const router = require('./router');
 
-app.use(function (req, res, next) {
-    if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
-        res.status('404').render('404', { version: version, pageTitle: '404', user: req.session.user || null });
-    } else {
-        res.header("Content-Type", "application/json");
-        res.status('404').send({
-            status: 404, reason: "Not Found", url: "https://http.cat/404"
-        }, null, 3);
-    }
-});
+    app.set('view engine', 'ejs');
+    app.use(express.static('static'));
+    app.use(cookieParser());
+    app.use(morgan('dev'))
+    app.use(session({
+        secret: '48738924783748273742398747238',
+        resave: false,
+        saveUninitialized: false,
+        expires: 604800000,
+    }));
+    require('./router')(app);
 
-app.listen(port, () => {
-    console.log(chalk.bold.green(`Server started on port ${port}!`));
-    let date = Date.now();
-    setTimeout(() => {
-        new Embed('817546892065505290', 'System', Embed.STARTED, {
-            webID: process.env.WEBHOOK_ID,
-            webTOKEN: process.env.WEBHOOK_TOKEN
-        }, "./actions/data/temp.txt", date, process.env.APP_MODE);
-    }, 1000);
+    app.use(function (req, res, next) {
+        if (req.header('accept').split(',')[0].split('/')[1] == 'html') {
+            res.status('404').render('404', { version: version, pageTitle: '404', user: req.session.user || null });
+        } else {
+            res.header("Content-Type", "application/json");
+            res.status('404').send({
+                status: 404, reason: "Not Found", url: "https://http.cat/404"
+            }, null, 3);
+        }
+    });
 
-});
+    app.listen(port, () => {
+        console.log(chalk.bold.green(`Server started on port ${port}!`));
+        let date = Date.now();
+        setTimeout(() => {
+            new Embed('817546892065505290', 'System', Embed.STARTED, {
+                webID: process.env.WEBHOOK_ID,
+                webTOKEN: process.env.WEBHOOK_TOKEN
+            }, "./actions/data/temp.txt", date, process.env.APP_MODE);
+        }, 1000);
+
+    });
+//});
