@@ -33,7 +33,7 @@ const webhookClient = new Discord.WebhookClient(process.env.WEBHOOK_ID || '81314
 
 dotenv.config();
 
-require("./controller/migration")().then(() => {
+//require("./controller/migration")().then(() => {
 
     const port = process.env.APP_PORT
 
@@ -76,4 +76,4 @@ require("./controller/migration")().then(() => {
         }, 1000);
 
     });
-});
+//});
