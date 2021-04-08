@@ -23,7 +23,7 @@ module.exports = () => {
             files = files.filter((f) => f.split(" ")[0] > res[0]);
           }
           files.forEach(async (f) => await require(f)(con));
-          con.query("INSERT"); //! QUERY TO INSERT TIMESTAMP (HELP)
+          con.query("UPDATE migrations SET timestamp = 123 WHERE id = 1"); //! QUERY TO INSERT TIMESTAMP (HELP)
           resolve();
         } catch (e) {
           throw e;
