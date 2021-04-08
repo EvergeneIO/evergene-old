@@ -99,6 +99,11 @@ html {
   border:0px !important;
 }
 
+.card-body-blog {
+  background: #46505a !important;
+  border:0px !important;
+}
+
 .card-body-endpoint {
   background: #383e44 !important;
   border-radius: 6px;
